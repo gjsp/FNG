@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+	<siteMapNode>
+		<!--<siteMapNode url="~/Default.aspx" title="Home" />-->
+		<siteMapNode url="~/ticket_deal.aspx" title="New Ticket" />
+		<siteMapNode title="Customer Portfolio">
+			<siteMapNode url="~/customer_detail.aspx" title="Create Customer" />
+			<siteMapNode url="~/customers.aspx" title="Customer" />
+		</siteMapNode>
+		
+		<siteMapNode url="~/ticket_daily.aspx" title="Summary Order" />
+		
+		<siteMapNode  title="Settlement">
+			<siteMapNode url="customer_trans.aspx" title="Deposit Trans" />
+			<siteMapNode url="stock_tickets.aspx" title="Stock Tickets" />
+			<siteMapNode url="~/stock_daily.aspx" title="Summary Report" />
+			<siteMapNode url="~/stock_inout_prove.aspx" title="Stock In/Out" />
+			<siteMapNode url="~/stock_deposit_pre.aspx" title="Stock Deposit" />
+			<siteMapNode url="~/stock_cheq.aspx" title="Stock Cheque" />
+      <siteMapNode url="ticket_overclearing.aspx" title="Over Clearing" />
+      <siteMapNode url="purity_convert.aspx" title="Convert Purity" />
+			
+		</siteMapNode>
+    <siteMapNode title="Gold Ornament" >
+      <siteMapNode url="~/ticket_deal_g.aspx" title="New Ticket" />
+      <siteMapNode url="~/ticket_daily_g.aspx" title="Summary Order" />
+    </siteMapNode>
+    
+		<siteMapNode  title="Management" >
+			<siteMapNode url="~/ticket_report.aspx" title="Ticket Report" />
+			<siteMapNode url="~/stock_inout.aspx" title="Stock In/Out" />
+			<!--<siteMapNode url="~/stock_planning.aspx" title="Planning Stock" />-->
+			<siteMapNode url="~/stock_actual.aspx" title="Actual Stock" />
+			<siteMapNode url="~/stock_deposit.aspx" title="Deposit Stock" />
+		</siteMapNode>
+		<siteMapNode title="Setting" >
+			<siteMapNode url="~/users.aspx" title="Users" />
+			<!--<siteMapNode url="~/user_team.aspx" title="Team" />-->
+			<siteMapNode url="~/stock_config.aspx" title="Price" />
+      <siteMapNode url="~/guarantee.aspx" title="Guarantee" />
+		</siteMapNode>
+		<siteMapNode title="Profile" >
+			<siteMapNode url="~/user_profile.aspx" title="My Profile" />
+			<siteMapNode url="~/log_in.aspx?mode=logout" title="Log Out" />
+		</siteMapNode>
+		
+	</siteMapNode>
+</siteMap>

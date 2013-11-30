@@ -1,0 +1,83 @@
+body
+{ 
+	font-family: Tahoma, Arial, sans-serif;
+	font-size:75%;
+	margin:0px;
+}
+.pre-login-k{
+    margin-top:100px;
+    text-align:center;
+}
+.login-block-k
+{
+    height:418px;
+	width:482px;
+	margin:auto;
+	background: url('image/login-bg.png');
+}
+.login-tb-k
+{
+   padding-top:160px;
+}
+.login-tbl-k
+{
+    float:left;
+    width:100px;
+    padding-top:5px;
+    margin-left:80px;
+    font-family: Tahoma, MS Sans Serif;
+	font-size:16px;
+	color:#ffffff;
+    }
+.login-tbr-k
+{
+    float:left;
+}
+.txtkk1
+{
+   	font-family: Tahoma, MS Sans Serif;
+	font-size:22px;
+	color:#000000;
+	border: solid #D5E0A9 1px;
+	background-color:#D5E0A9;
+	width:200px;
+	height:25px;
+}
+.clear
+{
+    clear:both;
+}
+    
+
+/* Menu */
+.menu{ padding:6px 0px 0px 25px;font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #F0F8FF; text-align: left;}
+.menu ul li a, .menu ul li a:visited {display:block; text-decoration:none; color:#000; margin-right:30px; height:20px; text-align:left; color:#fff;  line-height:20px; overflow:hidden;}
+.menu ul {padding:0; margin:0; list-style: none;}
+.menu ul li {float:left; position:relative; font-weight:bold;}
+.menu ul li ul {display: none;}
+
+/* specific to non IE browsers */
+.menu ul li:hover a {color:#D4FF27;}
+.menu ul li:hover ul {display:block; position:absolute; top:19px; left:0; width:150px; background:#d5de23; border:1px solid #4D9C12; list-style: none;}
+.menu ul li:hover ul li a.hide { color:#fff; }
+.menu ul li:hover ul li{float:left; position:relative;}
+.menu ul li:hover ul li:hover a.hide {background:#000;}
+.menu ul li:hover ul li ul {display: none;}
+.menu ul li:hover ul li a {display:block; color:#13881A; width:145px; padding-left:5px; font-weight:normal;}
+.menu ul li:hover ul li a:hover {background:#008A00; color:#fff;}
+.menu ul li:hover ul li:hover ul {display:block; position:absolute; left:150px; top:0;}
+.menu ul li:hover ul li:hover ul.left {left:-150px;}
+
+
+.bidtxt
+{
+    text-align: right;
+    width: 55px;
+    font-size: 12px;
+    height: 12px;
+    color: #0066FF;
+    font-weight: bold;
+    font-size: x-large;
+}
+.asktxt{text-align: right; width: 55px; font-size: 12px; height: 12px;color: #FF6600; font-weight: bold;font-size: x-large}
+.nortxt{text-align: right; width: 55px; font-size: 12px; height: 12px;color: #000000; font-weight: bold;font-size: x-large}

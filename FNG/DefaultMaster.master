@@ -1,0 +1,94 @@
+﻿<%@ Master Language="VB" CodeFile="DefaultMaster.master.vb" Inherits="DefaultMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <link href="main.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery-1.4.1.js" type="text/javascript"></script>
+    <script src="js/functionst.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-1.4.1.js" type="text/javascript"></script>
+    <script type="text/javascript" language="javascript">
+        function disableCtrlAltrKeyCombination(e) {
+            var ctrlb = 'b';
+            var ctrls = 's';
+            var key;
+            var isCtrl;
+            var isAltr;
+
+            //For Ctrl
+            //For Internet Explorer
+            if (window.event) {
+                key = window.event.keyCode;
+                if (window.event.ctrlKey)
+                    isCtrl = true;
+                else
+                    isCtrl = false;
+            }
+            //For Firefox
+            else {
+                key = e.which;
+                if (e.ctrlKey)
+                    isCtrl = true;
+                else
+                    isCtrl = false;
+            }
+
+            if (isCtrl) {
+                if (ctrls.toLowerCase() == String.fromCharCode(key).toLowerCase()) {
+                    window.open('ticket_deal.aspx?type=sell');
+                    return false;
+                }
+                else if (ctrlb.toLowerCase() == String.fromCharCode(key).toLowerCase()) {
+                    window.open('ticket_deal.aspx?type=buy');
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body onkeydown="return disableCtrlAltrKeyCombination(event);">
+    <form id="MasterPageForm" runat="server">
+    <asp:ScriptManager ID="SMmaster" runat="server" EnablePageMethods="true">
+    </asp:ScriptManager>
+    <div id="master_header">
+        <p align="center" style="height: 55px; margin-top: 5px; background-color: #000000"
+            align="left">
+            <br />
+            <span class="companyncontent">Gold Trade System </span>
+        </p>
+    </div>
+    <div id="master_page">
+        <div id="master_content">
+            <div id="master_contentplaceholder">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td valign="top" align="left">
+                            <div id="master_menu">
+                                <asp:Menu ID="mnu" runat="server" DataSourceID="MenuSiteMap" ForeColor="White" StaticHoverStyle-Font-Underline="true"
+                                    Orientation="Horizontal">
+                                    <StaticMenuItemStyle HorizontalPadding="7px" />
+                                    <DynamicHoverStyle Font-Overline="False" Font-Underline="True" />
+                                    <DynamicMenuStyle BackColor="#000000" HorizontalPadding="10px" VerticalPadding="5px"
+                                        Width="100px" />
+                                    <DataBindings>
+                                        <asp:MenuItemBinding DataMember="SiteMapNode" Depth="2" NavigateUrlField="Url" PopOutImageUrlField="Url"
+                                            SelectableField="Url" />
+                                    </DataBindings>
+                                    <StaticHoverStyle Font-Underline="True"></StaticHoverStyle>
+                                </asp:Menu>
+                                <asp:SiteMapDataSource ID="MenuSiteMap" runat="server" SiteMapProvider="MenuSiteMap"
+                                    ShowStartingNode="false" />
+                            </div>
+                            <asp:ContentPlaceHolder ID="SampleContent" runat="server" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    </form>
+</body>
+</html>

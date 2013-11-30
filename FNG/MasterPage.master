@@ -1,0 +1,36 @@
+﻿<%@ Master Language="VB" CodeFile="MasterPage.master.vb" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="main.css" rel="stylesheet" type="text/css" />
+    <script src="js/functionst.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-1.4.1.js" type="text/javascript"></script>
+
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="MasterPageForm" runat="server">
+     <div id="master_header">
+        <p align="center" style="height: 55px; margin-top: 5px; background-color: #274B98"
+            align="left">
+            <br />
+            <span class="companyncontent">Gold Trade System </span>
+        </p>
+    </div>
+    <asp:ScriptManager ID="SMmaster" runat="server">
+    </asp:ScriptManager>
+    <div id="master_page">
+        <div id="master_content">
+            <div id="master_contentplaceholder">
+                <asp:ContentPlaceHolder ID="SampleContent" runat="server" />
+            </div>
+        </div>
+       
+    </div>
+    </form>
+</body>
+</html>

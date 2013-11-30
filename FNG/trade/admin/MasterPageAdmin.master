@@ -1,0 +1,85 @@
+﻿<%@ Master Language="VB" CodeFile="MasterPageAdmin.master.vb" Inherits="admin_MasterPageAdmin" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>Admin</title>
+    <link href="../style.css" rel="stylesheet" type="text/css">
+    <link href="../../button/css/buttonPro.css" rel="stylesheet" type="text/css" />
+    <script src="../js/function.js" type="text/javascript"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0" background="image/bg2.jpg"
+    style="background-repeat: no-repeat; background-position: top; center">
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="SM" EnablePageMethods="true" runat="server">
+    </asp:ScriptManager>
+    <table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td align="center" height="75">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td background="../image_cust/top_menu_bg.jpg" height="31">
+                    <table width="900" cellspacing="0" cellpadding="0" border="0" height="19">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="nav">
+                                        <div class="menu">
+                                            <ul>
+                                                <li><a href="trade_trans.aspx">Transaction</a></li>
+                                                <li><a href="tran_auto_accept.aspx">Auto Accept</a></li>
+                                                <li><a href="manage_spotprice.aspx">Manage Price</a></li>
+                                                <li><a href="manage_admin.aspx">Manage Admin</a></li>
+                                                <li><a href="manage_users.aspx">Manage User</a></li>
+                                                <li><a href="config_trade.aspx">Config</a></li>
+                                                <li><a href="price_log.aspx">Price Log</a></li>
+                                                <li><a href="logout.aspx" onclick="return confirm('Do you want to Log out?');">Log out</a></li>
+                                                <li><a style="color: White; font-size: small">(<%=Application("OnlineUser")%>
+                                                    Online)</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: White;">
+                        <tr>
+                            <td>
+                                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="40%" height="50" align="center" background="image/line_grey.jpg" style="background-repeat: repeat-x;
+                                background-position: center">
+                            </td>
+                            <td width="20%" align="center" class="text_copy">
+                                Copyright © 2012 . All Rights Reserved.
+                            </td>
+                            <td width="40%" height="50" align="center" background="image/line_grey.jpg" style="background-repeat: repeat-x;
+                                background-position: center">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </form>
+</body>
+</html>

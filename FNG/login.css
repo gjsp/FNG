@@ -1,0 +1,117 @@
+﻿html
+{
+	background: #FFFFFF;
+	padding: 15px 10px 30px 10px;
+}
+body
+{
+	background: none;
+	width: 800px;
+	margin: 0 auto;
+    font: 10pt Tahoma, Arial, sans-serif;
+    line-height: 1.4em;
+	color: #666666;
+}
+a:link, a:visited, a:hover, a:active
+{
+	color: #165E98;
+}
+a:hover
+{
+	text-decoration: none;
+}
+h2
+{
+	font-size: 175%;
+}
+#form_login
+{
+    margin:0;
+}
+#div_login
+{
+    padding:0px 0px 150px 0px;
+}
+#div_login .login
+{
+    width:500px;
+}
+#div_login h3
+{
+    color: #1B6099;
+	margin:0px;
+	text-align:left;
+	font-size: 175%;
+	padding: 10px 0 50px 50px;
+	background-position: left top;
+	background-repeat: no-repeat;
+	font-weight: normal;
+}
+#main
+{
+	background: #FFFFFF;
+	margin: 15px 0 15px 0;
+}
+#main .border
+{
+	border: 5px solid #DCE7F6;
+}
+#main .border2
+{
+    padding:10px 10px 10px 10px;
+}
+#main h2
+{
+	color: #1B6099;
+	padding: 10px 0 90px 110px;
+	margin: 10px 0 0 0;
+	background-position: left top;
+	background-repeat: no-repeat;
+	font-weight: normal;
+}
+#main .text
+{
+	color: #364650;
+	margin: 0 50px;
+}
+#footer
+{
+	margin: 5px;
+	font-family:Verdana,Tahoma;
+}
+#footer .links
+{
+	list-style: none;
+	margin: 0 0 15px 0;
+	font-size: 5px;
+}
+#footer .links li
+{
+	display: inline;
+	margin: 0 10px 0 0;
+}
+#footer .creator
+{
+	float: right;
+	font-size: 70%;
+}
+#footer .banners
+{
+	float: right;
+	list-style: none;
+}
+#footer .banners li
+{
+	float: left;
+	margin: 0 0 0 25px;
+}
+#footer .copyright
+{
+	font-size: 70%;
+	line-height: 1.2em;
+}
+.validator
+{
+    font-size: 7pt;
+    color: #FF5050;
+}

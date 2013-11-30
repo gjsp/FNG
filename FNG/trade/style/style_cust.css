@@ -1,0 +1,421 @@
+body
+{ 
+	font-family: Tahoma, Arial, sans-serif;
+	font-size:75%;
+	margin:0px;
+}
+.text_login
+{
+	font-family: Trajan Pro, Times New Roman, serif;
+	font-size: 12px;
+	color: #A20000;
+	font-style: normal;
+	text-decoration: none;
+}
+.text_copy
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #828282;
+	font-style: normal;
+	text-decoration: none;
+}
+	
+.text_white
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 45px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+}
+.text_head2
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 20px;
+	color: #454545;
+	font-style: normal;
+	text-decoration: none;
+	font-weight:normal ;
+}
+.text_head3
+{
+	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #583c01;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+}
+.text_white14
+{
+	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+    font-weight: bold;
+}
+.text_white12
+{
+	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+    font-weight: bold;
+}
+.text_white11
+{
+	font-family:  Arial, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+}
+.text_red 
+{
+	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #BE1E2D;
+	font-style: normal;
+	text-decoration: none;
+
+}
+.textbody_th
+{
+	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #231f20;
+	font-style: normal;
+	text-decoration: none;
+}
+.textbody13
+{
+	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+}
+.textbody12
+{
+	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #231f20;
+	font-style: normal;
+	text-decoration: none;
+}
+.texthead
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 18px;
+	color: #583c01;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+}
+.texthead_red
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #da5923;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+	
+}
+.text_orange
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 40px;
+	color: #fcd600;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+	
+}
+.text_white18
+{
+	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 18px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+}
+a.linktopmenu:link
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+}
+a.linktopmenu:visited
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+}
+a.linktopmenu:hover
+{
+	font-family:  Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #da5923;
+	font-style: normal;
+	text-decoration: none;
+    font-weight: bold;
+}
+a.linktopmenu2:link
+{
+	font-family:   Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #a0780c;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+}
+a.linktopmenu2:visited
+{
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #a0780c;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+}
+a.linktopmenu2:hover
+{
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #da5923;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+}
+a.link2:link
+{
+	font-family:   Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+}
+a.link2:visited
+{
+	font-family:  Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+}
+a.link2:hover
+{
+	font-family:  Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #da5923;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+}
+a.linkbutton:link
+{
+	font-family:   Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+
+}
+a.linkbutton::visited
+{
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+
+}
+a.linkbutton:hover
+{
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #dc0606;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+
+}
+
+
+a.linkbutton2:link
+{
+	font-family:   Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #1c4f6e;
+	font-style: normal;
+	text-decoration: none;
+}
+a.linkbutton2::visited
+{
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+}
+a.linkbutton2:hover
+{
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #69fff3;
+	font-style: normal;
+	text-decoration: none;
+}
+a.link:link
+{
+	font-family:   Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	font-style: normal;
+	text-decoration:  underline;
+}
+a.link:visited
+{
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	font-style: normal;
+	text-decoration:  underline;
+}
+a.link:hover
+{
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12x;
+	color: #da5923;
+	font-style: normal;
+	text-decoration: underline;
+}
+a.link3:link
+{
+	font-family:   Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #8E6925;
+	font-style: normal;
+	text-decoration:  underline;
+}
+a.link3:visited
+{
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #8E6925;
+	font-style: normal;
+	text-decoration:  underline;
+}
+a.link3:hover
+{
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13x;
+	color: #da5923;
+	font-style: normal;
+	text-decoration: underline;
+}
+.ft_1b{
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000000;
+	padding-right: 10px; 
+	padding-top: 8px; 
+	padding-bottom: 8px;
+	text-align:right;
+	border-bottom: #d6e0e9 1px solid;
+}
+.ft_2b {
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000000;
+	padding-left: 10px; 
+	padding-top: 8px; 
+	padding-bottom: 8px;
+	text-align:left;
+	border-bottom: #d6e0e9 1px solid;
+}
+.ft_3b {
+	font-family:  Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000000;
+	padding-left: 5px; 
+	padding-top: 8px; 
+	padding-bottom: 8px;
+	text-align:left;
+	border-bottom: #d6e0e9 1px solid;
+	border-right: #FFFFFF 4px solid; 
+}
+.inputtext1
+{
+	font-family: Tahoma, MS Sans Serif;
+	font-size:13px;
+	color:#000000;
+	border: 1px solid #587c8a;
+	background-color:#FFFFFF;
+	height:17px;
+	width:160px;
+}
+.inputtext3
+{
+	font-family: Tahoma, MS Sans Serif;
+	font-size:11px;
+	color:#555555;
+	border: 1px solid #587c8a;
+	background-color:#FFFFFF;
+	height:17px;
+    width:60px;
+
+}
+.lbluser
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #FFFFFF;
+	font-style: normal;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.tbl
+{
+	border: 1px solid #d6e0e9;
+	
+}
+.tb2{
+	
+	border-right: #d6e0e9 1px solid;
+	
+}
+
+.select
+{
+	font-family:  Tahoma, MS Sans Serif;
+	font-size:11px;
+	border: 1px solid #587c8a;
+	background-color:#FFFFFF;
+	height:20px;
+	width:165px;
+}
+.select2
+{
+	font-family:  Tahoma, MS Sans Serif;
+	font-size:11px;
+	border: 1px solid #587c8a;
+	background-color:#FFFFFF;
+	height:20px;
+}

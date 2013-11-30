@@ -1,0 +1,820 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="FNG" Class="dcDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=FNG;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="GTCConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.asset" Member="assets">
+    <Type Name="asset">
+      <Column Name="asset_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="asset_type" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="purity" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="quantity" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(2000)" CanBeNull="true" />
+      <Column Name="created_by" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="datetime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="modifier_by" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="modifier_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="payment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="payment_bank" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="payment_duedate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="payment_cheq_no" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.gold_type" Member="gold_types">
+    <Type Name="gold_type">
+      <Column Name="gold_type_id" Type="System.String" DbType="VarChar(4) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="gold_type_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="detail" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="gold_unit" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.quantity_accept" Member="quantity_accepts">
+    <Type Name="quantity_accept">
+      <Column Name="quan_max96_buy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="quan_per96_buy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="quan_max96_sell" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="quan_per96_sell" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="quan_max99_buy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="quan_per99_buy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="quan_max99_sell" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="quan_per99_sell" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.quantity_order" Member="quantity_orders">
+    <Type Name="quantity_order">
+      <Column Name="price" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="type" Type="System.String" DbType="VarChar(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="purity" Type="System.String" DbType="VarChar(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="max" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.stock" Member="stocks">
+    <Type Name="stock">
+      <Column Name="stock_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="gold_base" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="gold" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="gold_wait" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="cash" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="trans" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="cheq" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="cash_wait" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="trans_wait" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="cheq_wait" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="cash_nobill" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="trans_nobill" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="cheq_nobill" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="cash_wait_nobill" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="trans_wait_nobill" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="cheq_wait_nobill" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="margin" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="margin_call" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="price_now" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid96" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask96" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask99" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="pwd_auth" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="price_base" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="G96_base" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="G99N_base" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="G99L_base" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="price_branch" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="G96_branch" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="G99N_branch" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="G99L_branch" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ticket_runno" Member="ticket_runnos">
+    <Type Name="ticket_runno">
+      <Column Name="run_no" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="stringWord" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="datetime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ticket_split" Member="ticket_splits">
+    <Type Name="ticket_split">
+      <Column Name="ticket_sp_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ref_no" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="row" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="quantity" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="amount" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="payment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="payment_bank" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="payment_cheq_no" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="payment_duedate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="created_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="status_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="receipt" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="paid" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="dep" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tickets" Member="tickets">
+    <Type Name="ticket">
+      <Column Name="ticket_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ref_no" Type="System.String" DbType="VarChar(12)" CanBeNull="true" />
+      <Column Name="book_no" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="run_no" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="cust_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="invoice" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="gold_type_id" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
+      <Column Name="delivery" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="quantity" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="delivery_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ticket_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="billing" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="checker" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="authorize" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(4000)" CanBeNull="true" />
+      <Column Name="payment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="payment_detail" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="payment_bank" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="payment_duedate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="payment_cheq_no" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="status_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="payment_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="created_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="modifier_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="modifier_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="active" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+      <Column Name="gold_dep" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+      <Column Name="cash_receipt" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+      <Column Name="before_status_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="trade" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.trade" Member="trades">
+    <Type Name="trade">
+      <Column Name="trade_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ref_no" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="cust_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="gold_type_id" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
+      <Column Name="quantity" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="leave_order" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+      <Column Name="ip" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="reject_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="accept_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="mode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="created_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="modifier_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="modifier_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.trade_runno" Member="trade_runnos">
+    <Type Name="trade_runno">
+      <Column Name="type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="book_word_bill" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="book_run_bill" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="no_run_bill" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="book_word_nobill" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="book_run_nobill" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="no_run_nobill" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.usernames" Member="usernames">
+    <Type Name="username">
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cust_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="username" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="role" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cust_level" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="active" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="halt" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="reg_code" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="first_trade" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="lock_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="online" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="online_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="online_id" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="created_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="modifier_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="modifier_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.users" Member="users">
+    <Type Name="user">
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="team_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="firstname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="lastname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="status" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="position" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cust_list" Member="cust_lists">
+    <Type Name="cust_list">
+      <Column Name="No" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="lastname" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="bank" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="account_no" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="username" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="pwd" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.customer" Member="customers">
+    <Type Name="customer">
+      <Column Name="cust_id" Type="System.String" DbType="VarChar(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="cust_refno" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cust_type_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="titlename" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="firstname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="lastname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="person_contact" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bill_address" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="bank1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="account_no1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="account_name1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="account_type1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="account_branch1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bank2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="account_no2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="account_name2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="account_type2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="account_branch2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bank3" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="account_no3" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="account_name3" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="account_type3" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="account_branch3" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="mobile" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="tel" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="fax" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="cash_credit" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="margin" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="margin_call" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="quan_96" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="quan_99N" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="quan_99L" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="created_by" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="team_id" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="firstname_eng" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="lastname_eng" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="id_card" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="birthday" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="free_margin" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="trade_limit" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="margin_unlimit" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.customer_trans" Member="customer_trans">
+    <Type Name="customer_tran">
+      <Column Name="cust_tran_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cust_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="row" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="datetime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="cash_type" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bill_no" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="gold_type_id" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="quantity" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
+      <Column Name="created_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ticket_refno" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="pre" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+      <Column Name="ref_no" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="payment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="payment_bank" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="payment_duedate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="payment_cheq_no" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.actual" Member="actuals">
+    <Type Name="actual">
+      <Column Name="actual_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="asset_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ref_no" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="cust_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="asset_type" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="created_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="datetime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="purity" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="quantity" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="status_id" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="before_status_id" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="status_name" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="note" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="order_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="price_base" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="G96_base" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="G96G_base" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="G99_base" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="payment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cash" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="trans" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="cheq" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.guarantee" Member="guarantees">
+    <Type Name="guarantee">
+      <Column Name="grt_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="grt_value" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="grt_type" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="grt_rate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="grt_trade96" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="grt_trade99" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_grt" Member="v_grts">
+    <Type Name="v_grt">
+      <Column Name="grt_value" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="grt_type" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="grt_trade96" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="grt_trade99" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="grt_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_ticket_sum_split" Member="v_ticket_sum_splits">
+    <Type Name="v_ticket_sum_split">
+      <Column Name="ticket_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ref_no" Type="System.String" DbType="VarChar(12)" CanBeNull="true" />
+      <Column Name="book_no" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="run_no" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="cust_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="gold_type_id" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
+      <Column Name="delivery" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="quantity" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="amount" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="delivery_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ticket_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="billing" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="checker" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="authorize" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(4000)" CanBeNull="true" />
+      <Column Name="payment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="payment_detail" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="payment_bank" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="payment_duedate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="payment_cheq_no" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="status_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="payment_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="created_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="modifier_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="modifier_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="sp_quan" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="sp_price" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="sp_amount" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="active" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+      <Column Name="gold_dep" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+      <Column Name="invoice" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="before_status_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="trade" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.users_menu" Member="users_menus">
+    <Type Name="users_menu">
+      <Column Name="menu_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="menu_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="menu_group" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="detail" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="created_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="created_by" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="modifier_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="modifier_by" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.users_role" Member="users_roles">
+    <Type Name="users_role">
+      <Column Name="role_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="menu_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="role_view" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="role_add" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="role_update" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="role_delete" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="role_export" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="role_print" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="created_by" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="modifier_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="modifier_by" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.spot_log" Member="spot_logs">
+    <Type Name="spot_log">
+      <Column Name="spot_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="bid" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid_thb" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask_thb" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="datetime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.stock_online" Member="stock_onlines">
+    <Type Name="stock_online">
+      <Column Name="stock_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask99_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask99_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask99_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid96_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask96_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid96_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask96_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid96_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask96_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="time" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="time_update" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="purity99_default" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="min" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max_baht" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max_kg" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max_mini" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="msg" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="pwd_auth" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="modifier_by" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="order_timeout" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="max_per" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="min_ask_dif_9699" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max_ask_dif_9699" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="halt" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+      <Column Name="range_leave_order" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99_plus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ask99_plus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="bid96_plus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ask96_plus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="self_price" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="self_halt" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="quantity_limit" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="system_halt" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="grt_pay" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="grt_trade" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="space_kg99" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="space_bg99" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="space_bg96" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="premium" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="fx_bid" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="fx_ask" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="melting_cost" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.getQuantityAcceptAdap" Method="getQuantityAcceptAdap">
+    <Parameter Name="type" Type="System.String" DbType="VarChar(5)" />
+    <Parameter Name="purity" Type="System.String" DbType="VarChar(5)" />
+    <ElementType Name="getQuantityAcceptAdapResult">
+      <Column Name="quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="max" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getQuantityOrder" Method="getQuantityOrder">
+    <Parameter Name="type" Type="System.String" DbType="VarChar(5)" />
+    <Parameter Name="purity" Type="System.String" DbType="VarChar(5)" />
+    <ElementType Name="getQuantityOrderResult">
+      <Column Name="price" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="max" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStock" Method="getStock">
+    <ElementType Name="getStockResult">
+      <Column Name="gold" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="silver" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_wait" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="silver_wait" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="cash" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="trans" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="cheq" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_wait" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="trans_wait" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="cheq_wait" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_nobill" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="trans_nobill" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="cheq_nobill" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_wait_nobill" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="trans_wait_nobill" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="cheq_wait_nobill" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="money_all" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="money_wait_all" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getSummaryStock" Method="getSummaryStock">
+    <ElementType Name="getSummaryStockResult">
+      <Column Name="gold_ticket96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_ticket99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_ticket99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_base96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_base99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_base99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_Branch96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_Branch99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_Branch99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_deposit96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_deposit99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_deposit99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="sumGoldCredit96" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="sumGoldCredit99N" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="sumGoldCredit99L" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="cash_ticket_complete" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_base" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_Branch" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_deposit" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_CreditCash" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="gold_pending96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_pending99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_pending99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_ticket_pending" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getSummaryStockActual" Method="getSummaryStockActual">
+    <ElementType Name="getSummaryStockActualResult">
+      <Column Name="gold_ticket96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_ticket99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_ticket99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_base96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_base99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_base99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_Branch96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_Branch99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_Branch99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_deposit96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_deposit99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_deposit99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="sumGoldCredit96" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="sumGoldCredit99N" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="sumGoldCredit99L" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="cash_ticket_complete" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_base" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_Branch" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_deposit" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_CreditCash" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="gold_pending96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_pending99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_pending99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_ticket_pending" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getSummaryStockPlanning" Method="getSummaryStockPlanning">
+    <Parameter Name="day" Type="System.Int32" DbType="Int" />
+    <ElementType Name="getSummaryStockPlanningResult">
+      <Column Name="gold_ticket96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_ticket99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_ticket99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_base96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_base99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_base99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_Branch96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_Branch99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_Branch99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_deposit96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_deposit99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_deposit99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="sumGoldCredit96" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="sumGoldCredit99N" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="sumGoldCredit99L" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="cash_ticket_complete" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_base" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_Branch" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_deposit" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_CreditCash" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="gold_pending96" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_pending99N" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="gold_pending99L" Type="System.Decimal" DbType="Decimal(38,5) NOT NULL" CanBeNull="false" />
+      <Column Name="cash_ticket_pending" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getSumPortfolioByCust_id" Method="getSumPortfolioByCust_id">
+    <Parameter Name="cust_id" Type="System.String" DbType="VarChar(5)" />
+    <ElementType Name="getSumPortfolioByCust_idResult">
+      <Column Name="quan96" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="amount96" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="quan99" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="amount99" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="pwd_auth" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="margin" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="trade_limit" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="free_margin" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="bid96" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask96" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask99" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="cash" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
+      <Column Name="gold96" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+      <Column Name="gold96G" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+      <Column Name="gold96M" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+      <Column Name="gold99" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+      <Column Name="gold99N" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+      <Column Name="gold99L" Type="System.Decimal" DbType="Decimal(38,3) NOT NULL" CanBeNull="false" />
+      <Column Name="amount99_buy" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="quan99_buy" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="amount99_sell" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="quan99_sell" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="amount96_buy" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="quan96_buy" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="amount96_sell" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="quan96_sell" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="self_price" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="[level]" Member="level" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStockSumDeposit" Method="getStockSumDeposit">
+    <ElementType Name="getStockSumDepositResult">
+      <Column Name="cash" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="cheq" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="trans" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="price_base" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="G96_base" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="G96G_base" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="G99_base" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="priceDep" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="G96Dep" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="G96GDep" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="G99Dep" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="cashDep" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="cheqDep" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="transDep" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getSummaryBuySellByCust_id" Method="getSummaryBuySellByCust_id">
+    <Parameter Name="cust_id" Type="System.String" DbType="VarChar(5)" />
+    <ElementType Name="getSummaryBuySellByCust_idResult">
+      <Column Name="SQ96" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="SA96" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="SQ99" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="SA99" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="BQ96" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="BA96" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+      <Column Name="BQ99" Type="System.Decimal" DbType="Decimal(38,5)" CanBeNull="true" />
+      <Column Name="BA99" Type="System.Decimal" DbType="Decimal(38,3)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getSpot" Method="getSpot">
+    <ElementType Name="getSpotResult">
+      <Column Name="spot_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="bid" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid_thb" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask_thb" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="datetime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStockOnline" Method="getStockOnline">
+    <ElementType Name="getStockOnlineResult">
+      <Column Name="stock_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask99_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask99_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask99_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid96_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask96_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid96_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask96_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid96_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask96_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="time" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="time_update" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="purity99_default" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="min" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max_baht" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max_kg" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max_mini" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="msg" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="pwd_auth" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="modifier_by" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="order_timeout" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="max_per" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="min_ask_dif_9699" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max_ask_dif_9699" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="halt" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+      <Column Name="range_leave_order" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99_plus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ask99_plus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="bid96_plus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ask96_plus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="self_price" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="self_halt" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="quantity_limit" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="system_halt" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="grt_pay" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="grt_trade" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="space_kg99" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="space_bg99" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="space_bg96" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="premium" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="fx_bid" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="fx_ask" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="melting_cost" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="time_end" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="time_trade" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStockOnlineForPrice" Method="getStockOnlineForPrice">
+    <Parameter Name="cust_id" Type="System.String" DbType="VarChar(5)" />
+    <ElementType Name="getStockOnlineForPriceResult">
+      <Column Name="stock_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask99_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask99_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask99_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid96_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask96_1" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid96_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask96_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid96_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ask96_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="time" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="time_update" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="purity99_default" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="min" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max_baht" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max_kg" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max_mini" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="msg" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="pwd_auth" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="modifier_by" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="order_timeout" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="max_per" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="min_ask_dif_9699" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="max_ask_dif_9699" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="halt" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+      <Column Name="range_leave_order" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="bid99_plus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ask99_plus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="bid96_plus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ask96_plus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="self_price" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="self_halt" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="quantity_limit" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="system_halt" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="grt_pay" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="grt_trade" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="space_kg99" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="space_bg99" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="space_bg96" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="premium" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="fx_bid" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="fx_ask" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="melting_cost" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cust_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="username" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="role" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cust_level" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="active" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="halt1" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="reg_code" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="first_trade" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="lock_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="online" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="online_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="online_id" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="created_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="modifier_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="modifier_by1" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="time_end" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="time_trade" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_halt" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="admin_halt" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

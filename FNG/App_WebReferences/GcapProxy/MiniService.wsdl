@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EncodeMD5">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="x_string" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EncodeMD5Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EncodeMD5Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPrice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPriceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getPriceResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getBidAsk">
+        <s:complexType />
+      </s:element>
+      <s:element name="getBidAskResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getBidAskResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="EncodeMD5SoapIn">
+    <wsdl:part name="parameters" element="tns:EncodeMD5" />
+  </wsdl:message>
+  <wsdl:message name="EncodeMD5SoapOut">
+    <wsdl:part name="parameters" element="tns:EncodeMD5Response" />
+  </wsdl:message>
+  <wsdl:message name="getPriceSoapIn">
+    <wsdl:part name="parameters" element="tns:getPrice" />
+  </wsdl:message>
+  <wsdl:message name="getPriceSoapOut">
+    <wsdl:part name="parameters" element="tns:getPriceResponse" />
+  </wsdl:message>
+  <wsdl:message name="getBidAskSoapIn">
+    <wsdl:part name="parameters" element="tns:getBidAsk" />
+  </wsdl:message>
+  <wsdl:message name="getBidAskSoapOut">
+    <wsdl:part name="parameters" element="tns:getBidAskResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MiniServiceSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EncodeMD5">
+      <wsdl:input message="tns:EncodeMD5SoapIn" />
+      <wsdl:output message="tns:EncodeMD5SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPrice">
+      <wsdl:input message="tns:getPriceSoapIn" />
+      <wsdl:output message="tns:getPriceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBidAsk">
+      <wsdl:input message="tns:getBidAskSoapIn" />
+      <wsdl:output message="tns:getBidAskSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MiniServiceSoap" type="tns:MiniServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EncodeMD5">
+      <soap:operation soapAction="http://tempuri.org/EncodeMD5" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPrice">
+      <soap:operation soapAction="http://tempuri.org/getPrice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBidAsk">
+      <soap:operation soapAction="http://tempuri.org/getBidAsk" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MiniServiceSoap12" type="tns:MiniServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EncodeMD5">
+      <soap12:operation soapAction="http://tempuri.org/EncodeMD5" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPrice">
+      <soap12:operation soapAction="http://tempuri.org/getPrice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBidAsk">
+      <soap12:operation soapAction="http://tempuri.org/getBidAsk" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MiniService">
+    <wsdl:port name="MiniServiceSoap" binding="tns:MiniServiceSoap">
+      <soap:address location="http://miniadmin.gcaponline.com/WebService/MiniService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MiniServiceSoap12" binding="tns:MiniServiceSoap12">
+      <soap12:address location="http://miniadmin.gcaponline.com/WebService/MiniService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
