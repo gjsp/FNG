@@ -79,12 +79,6 @@ Partial Public Class dcDBDataContext
     End Sub
   Partial Private Sub Deleteusername(instance As username)
     End Sub
-  Partial Private Sub Insertuser(instance As user)
-    End Sub
-  Partial Private Sub Updateuser(instance As user)
-    End Sub
-  Partial Private Sub Deleteuser(instance As user)
-    End Sub
   Partial Private Sub Insertcustomer(instance As customer)
     End Sub
   Partial Private Sub Updatecustomer(instance As customer)
@@ -132,6 +126,12 @@ Partial Public Class dcDBDataContext
   Partial Private Sub Updatestock_online(instance As stock_online)
     End Sub
   Partial Private Sub Deletestock_online(instance As stock_online)
+    End Sub
+  Partial Private Sub Insertuser(instance As user)
+    End Sub
+  Partial Private Sub Updateuser(instance As user)
+    End Sub
+  Partial Private Sub Deleteuser(instance As user)
     End Sub
   #End Region
 	
@@ -226,12 +226,6 @@ Partial Public Class dcDBDataContext
 		End Get
 	End Property
 	
-	Public ReadOnly Property users() As System.Data.Linq.Table(Of user)
-		Get
-			Return Me.GetTable(Of user)
-		End Get
-	End Property
-	
 	Public ReadOnly Property cust_lists() As System.Data.Linq.Table(Of cust_list)
 		Get
 			Return Me.GetTable(Of cust_list)
@@ -295,6 +289,12 @@ Partial Public Class dcDBDataContext
 	Public ReadOnly Property stock_onlines() As System.Data.Linq.Table(Of stock_online)
 		Get
 			Return Me.GetTable(Of stock_online)
+		End Get
+	End Property
+	
+	Public ReadOnly Property users() As System.Data.Linq.Table(Of user)
+		Get
+			Return Me.GetTable(Of user)
 		End Get
 	End Property
 	
@@ -4133,222 +4133,6 @@ Partial Public Class username
 				Me._modifier_by = value
 				Me.SendPropertyChanged("modifier_by")
 				Me.Onmodifier_byChanged
-			End If
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-End Class
-
-<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.users")>  _
-Partial Public Class user
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _user_id As Integer
-	
-	Private _user_name As String
-	
-	Private _team_id As System.Nullable(Of Integer)
-	
-	Private _password As String
-	
-	Private _firstname As String
-	
-	Private _lastname As String
-	
-	Private _status As String
-	
-	Private _position As String
-	
-    #Region "Extensibility Method Definitions"
-    Partial Private Sub OnLoaded()
-    End Sub
-    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
-    End Sub
-    Partial Private Sub OnCreated()
-    End Sub
-    Partial Private Sub Onuser_idChanging(value As Integer)
-    End Sub
-    Partial Private Sub Onuser_idChanged()
-    End Sub
-    Partial Private Sub Onuser_nameChanging(value As String)
-    End Sub
-    Partial Private Sub Onuser_nameChanged()
-    End Sub
-    Partial Private Sub Onteam_idChanging(value As System.Nullable(Of Integer))
-    End Sub
-    Partial Private Sub Onteam_idChanged()
-    End Sub
-    Partial Private Sub OnpasswordChanging(value As String)
-    End Sub
-    Partial Private Sub OnpasswordChanged()
-    End Sub
-    Partial Private Sub OnfirstnameChanging(value As String)
-    End Sub
-    Partial Private Sub OnfirstnameChanged()
-    End Sub
-    Partial Private Sub OnlastnameChanging(value As String)
-    End Sub
-    Partial Private Sub OnlastnameChanged()
-    End Sub
-    Partial Private Sub OnstatusChanging(value As String)
-    End Sub
-    Partial Private Sub OnstatusChanged()
-    End Sub
-    Partial Private Sub OnpositionChanging(value As String)
-    End Sub
-    Partial Private Sub OnpositionChanged()
-    End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-	End Sub
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_user_id", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
-	Public Property user_id() As Integer
-		Get
-			Return Me._user_id
-		End Get
-		Set
-			If ((Me._user_id = value)  _
-						= false) Then
-				Me.Onuser_idChanging(value)
-				Me.SendPropertyChanging
-				Me._user_id = value
-				Me.SendPropertyChanged("user_id")
-				Me.Onuser_idChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_user_name", DbType:="VarChar(50)")>  _
-	Public Property user_name() As String
-		Get
-			Return Me._user_name
-		End Get
-		Set
-			If (String.Equals(Me._user_name, value) = false) Then
-				Me.Onuser_nameChanging(value)
-				Me.SendPropertyChanging
-				Me._user_name = value
-				Me.SendPropertyChanged("user_name")
-				Me.Onuser_nameChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_team_id", DbType:="Int")>  _
-	Public Property team_id() As System.Nullable(Of Integer)
-		Get
-			Return Me._team_id
-		End Get
-		Set
-			If (Me._team_id.Equals(value) = false) Then
-				Me.Onteam_idChanging(value)
-				Me.SendPropertyChanging
-				Me._team_id = value
-				Me.SendPropertyChanged("team_id")
-				Me.Onteam_idChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_password", DbType:="VarChar(50)")>  _
-	Public Property password() As String
-		Get
-			Return Me._password
-		End Get
-		Set
-			If (String.Equals(Me._password, value) = false) Then
-				Me.OnpasswordChanging(value)
-				Me.SendPropertyChanging
-				Me._password = value
-				Me.SendPropertyChanged("password")
-				Me.OnpasswordChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_firstname", DbType:="VarChar(50)")>  _
-	Public Property firstname() As String
-		Get
-			Return Me._firstname
-		End Get
-		Set
-			If (String.Equals(Me._firstname, value) = false) Then
-				Me.OnfirstnameChanging(value)
-				Me.SendPropertyChanging
-				Me._firstname = value
-				Me.SendPropertyChanged("firstname")
-				Me.OnfirstnameChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_lastname", DbType:="VarChar(50)")>  _
-	Public Property lastname() As String
-		Get
-			Return Me._lastname
-		End Get
-		Set
-			If (String.Equals(Me._lastname, value) = false) Then
-				Me.OnlastnameChanging(value)
-				Me.SendPropertyChanging
-				Me._lastname = value
-				Me.SendPropertyChanged("lastname")
-				Me.OnlastnameChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_status", DbType:="NChar(10)")>  _
-	Public Property status() As String
-		Get
-			Return Me._status
-		End Get
-		Set
-			If (String.Equals(Me._status, value) = false) Then
-				Me.OnstatusChanging(value)
-				Me.SendPropertyChanging
-				Me._status = value
-				Me.SendPropertyChanged("status")
-				Me.OnstatusChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_position", DbType:="VarChar(50)")>  _
-	Public Property position() As String
-		Get
-			Return Me._position
-		End Get
-		Set
-			If (String.Equals(Me._position, value) = false) Then
-				Me.OnpositionChanging(value)
-				Me.SendPropertyChanging
-				Me._position = value
-				Me.SendPropertyChanged("position")
-				Me.OnpositionChanged
 			End If
 		End Set
 	End Property
@@ -9215,6 +8999,244 @@ Partial Public Class stock_online
 				Me._melting_cost = value
 				Me.SendPropertyChanged("melting_cost")
 				Me.Onmelting_costChanged
+			End If
+		End Set
+	End Property
+	
+	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+	
+	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+	
+	Protected Overridable Sub SendPropertyChanging()
+		If ((Me.PropertyChangingEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+		End If
+	End Sub
+	
+	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+		If ((Me.PropertyChangedEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+		End If
+	End Sub
+End Class
+
+<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.users")>  _
+Partial Public Class user
+	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	
+	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+	
+	Private _user_id As Integer
+	
+	Private _user_name As String
+	
+	Private _team_id As System.Nullable(Of Integer)
+	
+	Private _password As String
+	
+	Private _firstname As String
+	
+	Private _lastname As String
+	
+	Private _status As String
+	
+	Private _position As String
+	
+	Private _position_id As System.Nullable(Of Integer)
+	
+    #Region "Extensibility Method Definitions"
+    Partial Private Sub OnLoaded()
+    End Sub
+    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
+    End Sub
+    Partial Private Sub OnCreated()
+    End Sub
+    Partial Private Sub Onuser_idChanging(value As Integer)
+    End Sub
+    Partial Private Sub Onuser_idChanged()
+    End Sub
+    Partial Private Sub Onuser_nameChanging(value As String)
+    End Sub
+    Partial Private Sub Onuser_nameChanged()
+    End Sub
+    Partial Private Sub Onteam_idChanging(value As System.Nullable(Of Integer))
+    End Sub
+    Partial Private Sub Onteam_idChanged()
+    End Sub
+    Partial Private Sub OnpasswordChanging(value As String)
+    End Sub
+    Partial Private Sub OnpasswordChanged()
+    End Sub
+    Partial Private Sub OnfirstnameChanging(value As String)
+    End Sub
+    Partial Private Sub OnfirstnameChanged()
+    End Sub
+    Partial Private Sub OnlastnameChanging(value As String)
+    End Sub
+    Partial Private Sub OnlastnameChanged()
+    End Sub
+    Partial Private Sub OnstatusChanging(value As String)
+    End Sub
+    Partial Private Sub OnstatusChanged()
+    End Sub
+    Partial Private Sub OnpositionChanging(value As String)
+    End Sub
+    Partial Private Sub OnpositionChanged()
+    End Sub
+    Partial Private Sub Onposition_idChanging(value As System.Nullable(Of Integer))
+    End Sub
+    Partial Private Sub Onposition_idChanged()
+    End Sub
+    #End Region
+	
+	Public Sub New()
+		MyBase.New
+		OnCreated
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_user_id", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
+	Public Property user_id() As Integer
+		Get
+			Return Me._user_id
+		End Get
+		Set
+			If ((Me._user_id = value)  _
+						= false) Then
+				Me.Onuser_idChanging(value)
+				Me.SendPropertyChanging
+				Me._user_id = value
+				Me.SendPropertyChanged("user_id")
+				Me.Onuser_idChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_user_name", DbType:="VarChar(50)")>  _
+	Public Property user_name() As String
+		Get
+			Return Me._user_name
+		End Get
+		Set
+			If (String.Equals(Me._user_name, value) = false) Then
+				Me.Onuser_nameChanging(value)
+				Me.SendPropertyChanging
+				Me._user_name = value
+				Me.SendPropertyChanged("user_name")
+				Me.Onuser_nameChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_team_id", DbType:="Int")>  _
+	Public Property team_id() As System.Nullable(Of Integer)
+		Get
+			Return Me._team_id
+		End Get
+		Set
+			If (Me._team_id.Equals(value) = false) Then
+				Me.Onteam_idChanging(value)
+				Me.SendPropertyChanging
+				Me._team_id = value
+				Me.SendPropertyChanged("team_id")
+				Me.Onteam_idChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_password", DbType:="VarChar(50)")>  _
+	Public Property password() As String
+		Get
+			Return Me._password
+		End Get
+		Set
+			If (String.Equals(Me._password, value) = false) Then
+				Me.OnpasswordChanging(value)
+				Me.SendPropertyChanging
+				Me._password = value
+				Me.SendPropertyChanged("password")
+				Me.OnpasswordChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_firstname", DbType:="VarChar(50)")>  _
+	Public Property firstname() As String
+		Get
+			Return Me._firstname
+		End Get
+		Set
+			If (String.Equals(Me._firstname, value) = false) Then
+				Me.OnfirstnameChanging(value)
+				Me.SendPropertyChanging
+				Me._firstname = value
+				Me.SendPropertyChanged("firstname")
+				Me.OnfirstnameChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_lastname", DbType:="VarChar(50)")>  _
+	Public Property lastname() As String
+		Get
+			Return Me._lastname
+		End Get
+		Set
+			If (String.Equals(Me._lastname, value) = false) Then
+				Me.OnlastnameChanging(value)
+				Me.SendPropertyChanging
+				Me._lastname = value
+				Me.SendPropertyChanged("lastname")
+				Me.OnlastnameChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_status", DbType:="NChar(10)")>  _
+	Public Property status() As String
+		Get
+			Return Me._status
+		End Get
+		Set
+			If (String.Equals(Me._status, value) = false) Then
+				Me.OnstatusChanging(value)
+				Me.SendPropertyChanging
+				Me._status = value
+				Me.SendPropertyChanged("status")
+				Me.OnstatusChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_position", DbType:="VarChar(50)")>  _
+	Public Property position() As String
+		Get
+			Return Me._position
+		End Get
+		Set
+			If (String.Equals(Me._position, value) = false) Then
+				Me.OnpositionChanging(value)
+				Me.SendPropertyChanging
+				Me._position = value
+				Me.SendPropertyChanged("position")
+				Me.OnpositionChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_position_id", DbType:="Int")>  _
+	Public Property position_id() As System.Nullable(Of Integer)
+		Get
+			Return Me._position_id
+		End Get
+		Set
+			If (Me._position_id.Equals(value) = false) Then
+				Me.Onposition_idChanging(value)
+				Me.SendPropertyChanging
+				Me._position_id = value
+				Me.SendPropertyChanged("position_id")
+				Me.Onposition_idChanged
 			End If
 		End Set
 	End Property

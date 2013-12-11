@@ -20,6 +20,7 @@ Partial Class log_in
                 clsDB.log_users(dt.Rows(0)("user_id").ToString, "login")
                 Session(clsManage.iSession.user_id_center.ToString) = dt.Rows(0)("user_id")
                 Session(clsManage.iSession.user_name_center.ToString) = dt.Rows(0)("user_name")
+                Session(clsManage.iSession.user_position_center.ToString) = dt.Rows(0)("position_id").ToString
 
                 Dim dtRole As Data.DataTable
                 dtRole = clsDB.getMenuRole(dt.Rows(0)("user_id").ToString)

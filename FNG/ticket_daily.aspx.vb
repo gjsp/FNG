@@ -34,10 +34,16 @@ Partial Class ticket_daily
 
                     End If
                 End If
+
             Catch ex As Exception
                 clsManage.alert(Page, ex.Message)
             End Try
         End If
+
+        'cbRefresh.Attributes("value") = cbRefresh.Text
+
+        'clsManage.Script(Page, "$get('cbRefresh').checked = 
+
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -361,16 +367,17 @@ Partial Class ticket_daily
             creatCels1.Add("7", "" + Double.Parse(sell_quan99).ToString(formatQuan) + ",1,1")
             creatCels1.Add("8", "" + Double.Parse(sell_amount99).ToString(formatAmount) + ",1,1")
 
-            'Dim creatCels2 As New SortedList
-            'creatCels2.Add("1", "96.50(กรัม),1,1")
-            'creatCels2.Add("2", "" + Double.Parse(averagePriceBuy99).ToString(formatAmount) + ",1,1")
-            'creatCels2.Add("3", "" + Double.Parse(buy_quan99).ToString(formatQuan) + ",1,1")
-            'creatCels2.Add("4", "" + Double.Parse(buy_amount99).ToString(formatAmount) + ",1,1")
-            'creatCels2.Add("5", "" + Double.Parse(averagePriceSell99).ToString(formatAmount) + ",1,1")
-            'creatCels2.Add("6", "" + Double.Parse(sell_quan99).ToString(formatQuan) + ",1,1")
-            'creatCels2.Add("7", "" + Double.Parse(sell_amount99).ToString(formatAmount) + ",1,1")
+            Dim balQuan96 As Double = Double.Parse(buy_quan96) - Double.Parse(sell_quan96)
+            Dim balQuan99 As Double = Double.Parse(buy_quan99) - Double.Parse(sell_quan99)
+            Dim balAmount96 As Double = Double.Parse(buy_amount96) - Double.Parse(sell_amount96)
+            Dim balAmount99 As Double = Double.Parse(buy_amount99) - Double.Parse(sell_amount99)
+            Dim strBalance As String = String.Format("Quantity 96.50 : {0} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Amount 96.50 : {1} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity 99.99 : {2} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Amount 99.99 : {3}", balQuan96.ToString(formatQuan), balAmount96.ToString(formatAmount), balQuan99.ToString(formatQuan), balAmount99.ToString(formatAmount))
 
-            'getMultiFooter(e, creatCels2)
+            Dim creatCels2 As New SortedList
+            creatCels2.Add("1", "Balance 96.50/99.99,4,2")
+            creatCels2.Add("2", strBalance + ",7,1")
+
+            getMultiFooter(e, creatCels2)
             getMultiFooter(e, creatCels1)
             getMultiFooter(e, creatCels)
         End If
@@ -441,7 +448,6 @@ Partial Class ticket_daily
     End Sub
 
     Public Overloads Overrides Sub VerifyRenderingInServerForm(ByVal control As Control)
-
     End Sub
 
     Protected Sub upgSearch_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles upgSearch.Load

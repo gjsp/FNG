@@ -5,6 +5,17 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script type="text/javascript" language="javascript">
+        function pageLoad() {
+            setTimeout("autoRefresh();", 3000);
+        }
+
+        function autoRefresh() {
+            
+            if ($get('<%=cbRefresh.ClientID%>').checked == true) {
+                $get('<%=btnSearchAdv.ClientId %>').click();
+            }
+        }
+
         function search() {
             $get('<%=btnSearchAdv.ClientId %>').click();
         }
@@ -93,7 +104,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="SampleContent" runat="Server">
     <div class="demoarea">
         <div class="demoheading">
-            <br />
             Summary Order</div>
         <div>
             <div id="div_ticket">
@@ -265,9 +275,19 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3" valign="top">
+                                        <table>
+                                            <tr>
+                                                <td>
                                         <asp:CheckBoxList ID="cblStatus" runat="server" RepeatDirection="Horizontal">
                                         </asp:CheckBoxList>
-                                        <asp:HiddenField ID="hdfPwd" runat="server" />
+                                                    <td>
+                                                        <div style="margin-left: 2cm">
+                                                        <input type="checkbox" id="cbRefresh" onchange="autoRefresh()" runat="server" />Auto Refresh
+                                                    </div>
+                                                    </td>
+                                            </tr>
+                                        </table>
+                                        <asp:HiddenField ID="hdfPwd" runat="server" /></td>
                                     </td>
                                 </tr>
                                 <tr>
@@ -277,6 +297,7 @@
                                     <td class="style5">
                                         <asp:Button ID="btnSearchAdv" runat="server" Text="Search" />
                                     </td>
+                                  
                                     <td valign="top">
                                         <asp:UpdateProgress ID="upgSearch" runat="server">
                                             <ProgressTemplate>

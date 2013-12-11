@@ -22,26 +22,27 @@ Partial Class user_profile
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
-            clsManage.getDropDownlistValue(ddlTeam, clsDB.getTeam, "-- All --")
-            ddlTeam.Items.Insert(IIf(ddlTeam.Items.Count > 0, 1, 0), New ListItem(clsManage.msgRequireSelect, "none"))
+
+            Dim strPos As String = ConfigurationManager.AppSettings("User_Position") ' "-None-,0|Account,1|Trader,2|Marketing,3"
+            For Each pos As String In strPos.Split("|")
+                ddlPos.Items.Add(New ListItem(pos.Split(",")(0), pos.Split(",")(1)))
+            Next
 
             hdfUser_id.Value = Session(clsManage.iSession.user_id_center.ToString).ToString
-
             If hdfUser_id.Value <> "" Then
-                Dim da As New dsTableAdapters.usersTableAdapter
-                Dim dt As New ds.usersDataTable
-                da.FillByUser_id(dt, hdfUser_id.Value)
-                If dt.Rows.Count > 0 Then
-                    lblRef.Text = dt.Rows(0)(dt.user_idColumn).ToString
-                    txtUsername.Text = dt.Rows(0)(dt.user_nameColumn).ToString
-                    txtPassword.Text = dt.Rows(0)("password").ToString
-                    txtFname.Text = dt.Rows(0)(dt.firstnameColumn).ToString
-                    txtLname.Text = dt.Rows(0)(dt.lastnameColumn).ToString
-                    txtPosition.Text = dt.Rows(0)(dt.positionColumn).ToString
-                    ddlTeam.SelectedValue = dt.Rows(0)(dt.team_idColumn).ToString
+                Dim dc As New dcDBDataContext()
+                Dim us = (From usr In dc.users Where usr.user_id = hdfUser_id.Value Select usr).FirstOrDefault
+
+                If us IsNot Nothing Then
+                    lblRef.Text = us.user_id.ToString
+                    txtUsername.Text = us.user_name.ToString
+                    txtPassword.Text = us.password.ToString
+                    txtFname.Text = us.firstname.ToString
+                    txtLname.Text = us.lastname.ToString
+                    ddlPos.SelectedValue = IIf(us.position_id Is Nothing, 0, us.position_id)
+
                 End If
             End If
-
         End If
         txtPassword.Attributes("value") = txtPassword.Text
 
@@ -57,10 +58,10 @@ Partial Class user_profile
                 u.firstname = txtFname.Text
                 u.lastname = txtLname.Text
                 u.status = "active"
-                u.position = txtPosition.Text
                 u.password = txtPassword.Text
-                If ddlTeam.SelectedValue <> "none" Then
-                    u.team_id = ddlTeam.SelectedValue
+                If Not ddlPos.SelectedIndex = 0 Then
+                    u.position_id = ddlPos.SelectedValue
+                    u.position = ddlPos.SelectedItem.Text
                 End If
                 dc.users.InsertOnSubmit(u)
                 dc.SubmitChanges()
@@ -72,10 +73,13 @@ Partial Class user_profile
                     u.firstname = txtFname.Text
                     u.lastname = txtLname.Text
                     u.status = "active"
-                    u.position = txtPosition.Text
                     u.password = txtPassword.Text
-                    If ddlTeam.SelectedValue <> "none" Then
-                        u.team_id = ddlTeam.SelectedValue
+                    If Not ddlPos.SelectedIndex = 0 Then
+                        u.position_id = ddlPos.SelectedValue
+                        u.position = ddlPos.SelectedItem.Text
+                    Else
+                        u.position_id = Nothing
+                        u.position = ""
                     End If
                     dc.SubmitChanges()
                     clsManage.alert(Page, "Update complete.")

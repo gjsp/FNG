@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" MasterPageFile="~/DefaultMaster.master" AutoEventWireup="false" CodeFile="user_detail.aspx.vb" Inherits="user_detail" title="Untitled Page" %>
+﻿<%@ Page Language="VB" MasterPageFile="~/DefaultMaster.master" AutoEventWireup="false" CodeFile="user_detail.aspx.vb" Inherits="user_detail" title="User Profile" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
@@ -33,14 +33,8 @@
             </tr>
             <tr>
             <td>Position :</td>
-                <td><asp:TextBox ID="txtPosition" runat="server" Width="150px" /></td>
-            </tr>
-            
-            <tr style="display:none">
-            <td valign="top">Team :</td>
                 <td>
-                    <asp:DropDownList ID="ddlTeam" runat="server"
-                        DataTextField="team_name" DataValueField="team_id">
+                    <asp:DropDownList ID="ddlPos" runat="server" >
                     </asp:DropDownList>
                 </td>
             </tr>

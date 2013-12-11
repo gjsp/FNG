@@ -194,6 +194,13 @@ Partial Class stock_daily
             ViewState("buy_trans") += clsManage.convert2zero(e.Row.DataItem("buy_trans"))
             ViewState("buy_cheq") += clsManage.convert2zero(e.Row.DataItem("buy_cheq"))
         End If
+
+        If e.Row.RowType = DataControlRowType.Footer Then
+            Dim sw As New IO.StringWriter()
+            Dim htw As New HtmlTextWriter(sw)
+            gvTicket.RenderControl(htw)
+            ViewState("htmlExcel") = sw.ToString
+        End If
     End Sub
 
     Private Sub getMultiHeader(ByVal e As GridViewRowEventArgs, ByVal getCels As SortedList)
@@ -240,34 +247,65 @@ Partial Class stock_daily
 
     Protected Sub linkExport_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles linkExport.Click
 
-        Dim mode As String = ""
-        If cbMode.Items(0).Selected = True Then mode = "1" Else mode = "0"
-        If cbMode.Items(1).Selected = True Then mode += "1" Else mode += "0"
-        If cbMode.Items(2).Selected = True Then mode += "1" Else mode += "0"
+        'Dim mode As String = ""
+        'If cbMode.Items(0).Selected = True Then mode = "1" Else mode = "0"
+        'If cbMode.Items(1).Selected = True Then mode += "1" Else mode += "0"
+        'If cbMode.Items(2).Selected = True Then mode += "1" Else mode += "0"
 
-        Dim dt As New Data.DataTable
-        dt = clsDB.getStockDialy(txtDate.Text, ddlStatus.SelectedValue, mode, rdoPurity.SelectedValue)
-        If dt.Rows.Count > 0 Then
-            Dim htSum As New Hashtable
+        'Dim dt As New Data.DataTable
+        'dt = clsDB.getStockDialy(txtDate.Text, ddlStatus.SelectedValue, mode, rdoPurity.SelectedValue)
+        'If dt.Rows.Count > 0 Then
+        '    Dim htSum As New Hashtable
 
-            htSum.Add("sell_99", ViewState("sell_99"))
-            htSum.Add("sell_96", ViewState("sell_96"))
-            htSum.Add("sell_96G", ViewState("sell_96G"))
-            htSum.Add("buy_99", ViewState("buy_99"))
-            htSum.Add("buy_96", ViewState("buy_96"))
-            htSum.Add("buy_96G", ViewState("buy_96G"))
-            htSum.Add("amount", ViewState("amount"))
+        '    htSum.Add("sell_99", ViewState("sell_99"))
+        '    htSum.Add("sell_96", ViewState("sell_96"))
+        '    htSum.Add("sell_96G", ViewState("sell_96G"))
+        '    htSum.Add("buy_99", ViewState("buy_99"))
+        '    htSum.Add("buy_96", ViewState("buy_96"))
+        '    htSum.Add("buy_96G", ViewState("buy_96G"))
+        '    htSum.Add("amount", ViewState("amount"))
 
-            htSum.Add("sell_cash", ViewState("sell_cash"))
-            htSum.Add("sell_trans", ViewState("sell_trans"))
-            htSum.Add("sell_cheq", ViewState("sell_cheq"))
-            htSum.Add("buy_cash", ViewState("buy_cash"))
-            htSum.Add("buy_trans", ViewState("buy_trans"))
-            htSum.Add("buy_cheq", ViewState("buy_cheq"))
+        '    htSum.Add("sell_cash", ViewState("sell_cash"))
+        '    htSum.Add("sell_trans", ViewState("sell_trans"))
+        '    htSum.Add("sell_cheq", ViewState("sell_cheq"))
+        '    htSum.Add("buy_cash", ViewState("buy_cash"))
+        '    htSum.Add("buy_trans", ViewState("buy_trans"))
+        '    htSum.Add("buy_cheq", ViewState("buy_cheq"))
 
 
-            clsManage.ExportToExcelStock(dt, "Summary_Report_" + txtDate.Text, htSum)
-        End If
+        '    clsManage.ExportToExcelStock(dt, "Summary_Report_" + txtDate.Text, htSum)
+        'End If
+
+        Try
+            If ViewState("htmlExcel") IsNot Nothing AndAlso ViewState("htmlExcel").ToString <> "" Then
+                ExportToExcel(ViewState("htmlExcel").ToString)
+            End If
+        Catch ex As Exception
+            clsManage.alert(Page, ex.Message, , , "err")
+        End Try
+
+    End Sub
+
+    Public Overrides Sub VerifyRenderingInServerForm(ByVal control As System.Web.UI.Control)
+    End Sub
+
+    Private Sub ExportToExcel(ByVal data_temp As String, Optional excelName As String = "Performance_Report")
+
+        HttpContext.Current.Response.Clear()
+        HttpContext.Current.Response.Buffer = True
+        HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.Unicode
+        HttpContext.Current.Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble())
+        HttpContext.Current.Response.AddHeader("content-disposition", "attachment; filename=" & excelName & ".xls")
+        HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache)
+        HttpContext.Current.Response.Charset = String.Empty
+        HttpContext.Current.Response.ContentType = "application/vnd.ms-excel"
+        Dim sw As System.IO.StringWriter = New System.IO.StringWriter()
+        Dim hw As System.Web.UI.HtmlTextWriter = New HtmlTextWriter(sw)
+
+        HttpContext.Current.Response.Output.Write(data_temp)
+        HttpContext.Current.Response.Flush()
+        HttpContext.Current.Response.End()
+
     End Sub
 
     Protected Sub upgSearch_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles upgSearch.Load

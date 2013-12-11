@@ -37,7 +37,7 @@
                 <asp:GridView ID="gvUser" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False"
                     BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px"
                     CellPadding="3" DataKeyNames="user_id" DataSourceID="objSrcUser" GridLines="Vertical"
-                    Width="90%">
+                    Width="90%" PageSize="20">
                     <RowStyle BackColor="#EEEEEE" ForeColor="Black" />
                     <Columns>
                         <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/i_detail.png" ShowSelectButton="True">
@@ -60,7 +60,7 @@
                         </asp:TemplateField>
                     </Columns>
                     <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />
-                    <PagerStyle BackColor="#999999" ForeColor="Black" HorizontalAlign="Center" />
+                    <PagerStyle BackColor="#999999" ForeColor="Black" HorizontalAlign="Center" Font-Size="Large" />
                     <SelectedRowStyle BackColor="#008A8C" Font-Bold="True" ForeColor="White" />
                     <HeaderStyle BackColor="#274B98" Font-Bold="True" ForeColor="White" />
                     <AlternatingRowStyle BackColor="Gainsboro" />

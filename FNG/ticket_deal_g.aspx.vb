@@ -88,6 +88,26 @@ Partial Class ticket_deal_g
                     End If
                 End If
 
+                'check position  Account: only edit payment,trader:edit price
+                'Account,1|Trader,2|Marketing,3|Admin,4
+                Select Case Session(clsManage.iSession.user_position_center.ToString)
+                    Case "1"
+                        rdoType.Enabled = False
+                        txtQuan.Enabled = False
+                        txtPrice.Enabled = False
+                        txtAmount.Enabled = False
+                        rdoDelivery.Enabled = False
+                        rdoBilling.Enabled = False
+                        txtCustName.Enabled = False
+                        imgSearchCustRef.Enabled = False
+                    Case "2"
+                        ddlPayment.Enabled = False
+                        ddlBank.Enabled = False
+                        txtCheq.Enabled = False
+                        txtDuedate.Enabled = False
+                        imgDuedate.Enabled = False
+                End Select
+
                 If Request.QueryString("id") IsNot Nothing Then
 
                     objSrcLog.SelectParameters("ref_no").DefaultValue = Request.QueryString("id").ToString

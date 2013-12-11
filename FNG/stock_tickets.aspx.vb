@@ -400,6 +400,12 @@ Partial Class stock_tickets
                 End If
             End If
 
+            'check Payment
+            If gvTicket.Rows(i).Cells(6).Text = "" Then
+                clsManage.alert(Page, "Please Update Payment in Ticket.")
+                Exit Sub
+            End If
+
             ''check Payment (don't cheque)
             'If status_id = "901" Or status_id = "902" Or status_id = "903" Then
             '    If gvTicket.Rows(i).Cells(7).Text = "cheq" Then

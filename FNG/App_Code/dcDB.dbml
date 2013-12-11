@@ -207,18 +207,6 @@
       <Column Name="modifier_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.users" Member="users">
-    <Type Name="user">
-      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="user_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="team_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="firstname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="lastname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="status" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="position" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.cust_list" Member="cust_lists">
     <Type Name="cust_list">
       <Column Name="No" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -485,6 +473,19 @@
       <Column Name="fx_bid" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="fx_ask" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="melting_cost" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.users" Member="users">
+    <Type Name="user">
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="team_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="firstname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="lastname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="status" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="position" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="position_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.getQuantityAcceptAdap" Method="getQuantityAcceptAdap">

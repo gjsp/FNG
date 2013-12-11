@@ -851,14 +851,15 @@
                  <table border="0" width="100%">
                                      <tr>
                         <td class="style54">
-                            Payment* :
+                            Payment :
                         </td>
                         <td valign="top">
                             <table>
                                 <tr>
                                     <td>
                                         <asp:DropDownList ID="ddlPayment" runat="server">
-                                            <asp:ListItem Selected="True" Value="cash">Cash</asp:ListItem>
+                                            <asp:ListItem Selected="True" Value="">--None--</asp:ListItem>
+                                            <asp:ListItem Value="cash">Cash</asp:ListItem>
                                             <asp:ListItem Value="cheq">Cheque</asp:ListItem>
                                             <asp:ListItem Value="trans">Payin</asp:ListItem>
                                         </asp:DropDownList>
@@ -950,7 +951,7 @@
                                 TargetControlID="Panel1" PopupControlID="Panel1" OkControlID="btnOk" OnOkScript="okClick();"
                                 CancelControlID="btnNo" OnCancelScript="cancelClick();" BackgroundCssClass="modalBackground">
                             </ajaxToolkit:ModalPopupExtender>
-                            <asp:Panel ID="Panel1" runat="server" Style="display:none" CssClass="modalPopup">
+                            <asp:Panel ID="Panel1" runat="server" Style="display:none" CssClass="modalPopup"  DefaultButton="btnOk">
                                 <asp:Panel ID="Panel2" runat="server" Style="cursor: move; background-color: #DDDDDD;
                                     border: solid 1px Gray; color: Black">
                                     <div style="text-align: center">

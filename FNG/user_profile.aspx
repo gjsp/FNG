@@ -55,16 +55,8 @@
                             Position :
                         </td>
                         <td>
-                            <asp:TextBox ID="txtPosition" runat="server" Width="150px" />
-                        </td>
-                    </tr>
-                    <tr style="display: none">
-                        <td valign="top">
-                            Team :
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="ddlTeam" runat="server" DataTextField="team_name" DataValueField="team_id">
-                            </asp:DropDownList>
+                             <asp:DropDownList ID="ddlPos" runat="server" >
+                    </asp:DropDownList>
                         </td>
                     </tr>
                     <tr>

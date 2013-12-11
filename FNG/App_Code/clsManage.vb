@@ -41,6 +41,7 @@ Public Class clsManage
         user_name_center
         cust_id_center
         user_role_center
+        user_position_center
 
         user_id_gram
         user_name_gram

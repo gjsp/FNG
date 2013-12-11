@@ -73,7 +73,7 @@
                             <td style="font-weight: bold">
                                 Melting Cost (Baht)</td>
                             <td>
-                                <asp:TextBox ID="txtMeltingCost" runat="server" MaxLength="3" 
+                                <asp:TextBox ID="txtMeltingCost" runat="server" MaxLength="5" 
                                     Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                         </tr>

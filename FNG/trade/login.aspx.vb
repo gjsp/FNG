@@ -4,6 +4,8 @@ Partial Class login
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         'If Not Request.ServerVariables("HTTP_USER_AGENT").Contains("MSIE") Then Response.Redirect("logout3.aspx")
+        ''
+
         If Request.QueryString("h") = "y" Then
             Session.Clear()
             clsManage.alert(Page, "ระบบถูกปิดชั่วคราว")
