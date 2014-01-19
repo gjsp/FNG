@@ -29,7 +29,7 @@ Partial Class customer_detail
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
-
+            txtDiscount.Attributes.Add("style", "text-align:right;")
             txtCredit_cash.Attributes.Add("style", "text-align:right;")
             txtQuan96.Attributes.Add("style", "text-align:right;")
             txtQuan99N.Attributes.Add("style", "text-align:right;")
@@ -40,7 +40,7 @@ Partial Class customer_detail
             txtMobilePhone.Attributes.Add("onkeypress", "numberOnly();")
             txtIDCard.Attributes.Add("onkeypress", "numberOnly();")
             txtFreeMargin.Attributes.Add("onkeypress", "numberOnly();")
-          
+            txtDiscount.Attributes.Add("onkeypress", "numberOnly();")
             hdfPwd.Value = clsDB.getStockField("pwd_auth")
 
             txtCredit_cash.Text = "0"
@@ -120,6 +120,16 @@ Partial Class customer_detail
                     txtQuan96.Text = clsManage.convert2StringNormal(dr("quan_96").ToString)
                     txtQuan99N.Text = clsManage.convert2StringNormal(dr("quan_99N").ToString)
                     txtFreeMargin.Text = clsManage.convert2StringNormal(dr("free_margin").ToString)
+                    If dr("VIP") IsNot DBNull.Value Then
+                        cbVIP.Checked = dr("VIP")
+                        If Not dr("VIP") Then
+                            txtDiscount.Enabled = False
+                        End If
+                    Else
+                        txtDiscount.Enabled = False
+                    End If
+                    txtDiscount.Text = dr("discount").ToString
+
                     If Not IsDBNull(dr("margin_unlimit")) Then
                         cbUnlimitedMargin.Checked = dr("margin_unlimit")
                     End If
@@ -166,18 +176,13 @@ Partial Class customer_detail
 
             If txtCredit_cash.Text.Trim <> "" Then cash_credit = txtCredit_cash.Text
             If Request.QueryString("id") Is Nothing Then
-
-                'Dim fNameEng As String = txtFnameEngz1.Text + txtFnameEngz2.Text + txtFnameEngz3.Text + txtFnameEngz4.Text + txtFnameEngz5.Text + txtFnameEngz6.Text + txtFnameEngz7.Text + txtFnameEngz8.Text + txtFnameEngz9.Text + txtFnameEngz10.Text + txtFnameEngz11.Text + txtFnameEngz12.Text + txtFnameEngz13.Text + txtFnameEngz14.Text + txtFnameEngz15.Text + txtFnameEngz16.Text
-                'Dim lNameEng As String = txtLnameEngz1.Text + txtLnameEngz2.Text + txtLnameEngz3.Text + txtLnameEngz4.Text + txtLnameEngz5.Text + txtLnameEngz6.Text + txtLnameEngz7.Text + txtLnameEngz8.Text + txtLnameEngz9.Text + txtLnameEngz10.Text + txtLnameEngz11.Text + txtLnameEngz12.Text + txtLnameEngz13.Text + txtLnameEngz14.Text + txtLnameEngz15.Text + txtLnameEngz16.Text
-
                 Dim birthday As Date = DateTime.ParseExact(ddlday.SelectedValue + "/" + ddlMonth.SelectedValue + "/" + ddlYear.SelectedValue, clsManage.formatDateTime, Nothing)
-
                 Dim result As String = clsDB.insertCustomer("", rdoType.SelectedValue, ddlTitle.SelectedValue, txtFname.Text, txtLname.Text, txtFnameEng.Text, txtLnameEng.Text, idCard, birthday, txtEmail.Text, txtPerson.Text, txtAddress.Text, _
                 txtBankName1.Text, txtBankAccNo1.Text, txtBankAccName1.Text, txtBankAccType1.Text, txtBankAccBranch1.Text, _
                 txtBankName2.Text, txtBankAccNo2.Text, txtBankAccName2.Text, txtBankAccType2.Text, txtBankAccBranch2.Text, _
                 txtBankName3.Text, txtBankAccNo3.Text, txtBankAccName3.Text, txtBankAccType3.Text, txtBankAccBranch3.Text, _
                 txtMobilePhone.Text, txtTel.Text, txtFax.Text, cash_credit, txtRemark.Text, 0, 0, quan96, quan99, Session(clsManage.iSession.user_id_center.ToString).ToString, "", _
-                0, freeMargin, cbUnlimitedMargin.Checked)
+                0, freeMargin, cbUnlimitedMargin.Checked, cbVIP.Checked, IIf(txtDiscount.Text.Trim = "", 0, txtDiscount.Text))
                 If result <> "" Then
                     Dim type As String = ""
                     Dim pure As String = ""
@@ -283,12 +288,16 @@ Partial Class customer_detail
                 'Dim fNameEng As String = txtFnameEngz1.Text + txtFnameEngz2.Text + txtFnameEngz3.Text + txtFnameEngz4.Text + txtFnameEngz5.Text + txtFnameEngz6.Text + txtFnameEngz7.Text + txtFnameEngz8.Text + txtFnameEngz9.Text + txtFnameEngz10.Text + txtFnameEngz11.Text + txtFnameEngz12.Text + txtFnameEngz13.Text + txtFnameEngz14.Text + txtFnameEngz15.Text + txtFnameEngz16.Text
                 'Dim lNameEng As String = txtLnameEngz1.Text + txtLnameEngz2.Text + txtLnameEngz3.Text + txtLnameEngz4.Text + txtLnameEngz5.Text + txtLnameEngz6.Text + txtLnameEngz7.Text + txtLnameEngz8.Text + txtLnameEngz9.Text + txtLnameEngz10.Text + txtLnameEngz11.Text + txtLnameEngz12.Text + txtLnameEngz13.Text + txtLnameEngz14.Text + txtLnameEngz15.Text + txtLnameEngz16.Text
                 Dim idCard As String = txtIDCard.Text
+                Dim discount As Double = 0
+                If txtDiscount.Text.Trim <> "" Then
+                    discount = txtDiscount.Text
+                End If
                 Dim result As Integer = da.UpdateQuery(cust_id, "", rdoType.SelectedValue, ddlTitle.SelectedValue, txtFname.Text, txtLname.Text, txtPerson.Text, txtAddress.Text, _
                 txtBankName1.Text, txtBankAccNo1.Text, txtBankAccName1.Text, txtBankAccType1.Text, txtBankAccBranch1.Text, _
                 txtBankName2.Text, txtBankAccNo2.Text, txtBankAccName2.Text, txtBankAccType2.Text, txtBankAccBranch2.Text, _
                 txtBankName3.Text, txtBankAccNo3.Text, txtBankAccName3.Text, txtBankAccType3.Text, txtBankAccBranch3.Text, _
                 txtMobilePhone.Text, txtTel.Text, txtFax.Text, txtRemark.Text, cash_credit, 0, 0, _
-                quan96, quan99, "", txtEmail.Text, txtFnameEng.Text, txtLnameEng.Text, idCard, birthday, freeMargin, tradeLimit, cbUnlimitedMargin.Checked)
+                quan96, quan99, "", txtEmail.Text, txtFnameEng.Text, txtLnameEng.Text, idCard, birthday, freeMargin, tradeLimit, cbUnlimitedMargin.Checked, cbVIP.Checked, discount)
                 'Dim result As Integer = 0
                 If result > 0 Then
 
@@ -349,7 +358,6 @@ Partial Class customer_detail
         If result > 0 Then
             'No set First Trade
             btnReset.Enabled = False
-
             Dim msgBody As String = ""
             If active = "y" Then
                 msgBody = String.Format("Reset Username and Password Complete Please Click Link to Login.<br/>User Name : {0} <br/>Password : {2}<br/>" & _
@@ -360,13 +368,19 @@ Partial Class customer_detail
                            "<a href='{2}/trade/register_confirm.aspx?u={0}&r={1}'>{2}/trade/register_confirm.aspx?u={0}&r={1}</a>", username, regCode, ConfigurationManager.AppSettings("DOMAIN_NAME").ToString, pwd)
                 clsMain.sendEmailRegisterTrade(txtEmail.Text, txtFname.Text, msgBody, , Server.MapPath(docPath))
             End If
-
-
             clsManage.alert(Page, "Reset Username Password And Send E-Mail Complete.")
         End If
     End Sub
 
     Protected Sub udPgs_Load(sender As Object, e As System.EventArgs) Handles udPgs.Load
         System.Threading.Thread.Sleep(udPgs.DisplayAfter + 300)
+    End Sub
+
+    Protected Sub cbVIP_CheckedChanged(sender As Object, e As EventArgs) Handles cbVIP.CheckedChanged
+        txtDiscount.Enabled = cbVIP.Checked
+        txtDiscount.Text = ""
+        If cbVIP.Checked Then
+            txtDiscount.Focus()
+        End If
     End Sub
 End Class

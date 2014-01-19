@@ -4,8 +4,7 @@ Partial Class login
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         'If Not Request.ServerVariables("HTTP_USER_AGENT").Contains("MSIE") Then Response.Redirect("logout3.aspx")
-        ''
-
+       
         If Request.QueryString("h") = "y" Then
             Session.Clear()
             clsManage.alert(Page, "ระบบถูกปิดชั่วคราว")
@@ -16,7 +15,11 @@ Partial Class login
             hasSession()
 
             If Session(clsManage.iSession.cust_id.ToString) IsNot Nothing Then
-                Response.Redirect("trading.aspx")
+                If Session(clsManage.iSession.role.ToString) = "cust" Then
+                    Response.Redirect("trading.aspx")
+                ElseIf Session(clsManage.iSession.role.ToString) = "sale" Then
+                    Response.Redirect("trading_sale.aspx")
+                End If
             End If
 
             If Session(clsManage.iSession.user_id.ToString) IsNot Nothing Then
@@ -31,6 +34,8 @@ Partial Class login
     Sub hasSession()
         If Session(clsManage.iSession.user_id.ToString) IsNot Nothing Then
             If Session(clsManage.iSession.role.ToString) = "cust" Then
+                Response.Redirect("trading.aspx")
+            ElseIf Session(clsManage.iSession.role.ToString) = "sale" Then
                 Response.Redirect("trading.aspx")
             Else
                 Response.Redirect("admin/trade_trans.aspx")
@@ -67,6 +72,12 @@ Partial Class login
                         clsManage.alert(Page, "This Account is Lock.Please Wait " + minuteDiff.ToString + " minutes to New Login")
                         Exit Sub
                     Else
+                        '** For Admin
+                        If dtUsername.Rows(0)("role") = "admin" Then
+                            clsManage.alert(Page, "This Account is Lock.Please Contact System Administrator.")
+                            Exit Sub
+                        End If
+                        '**
                         If dtUsername.Rows(0)("lock_time") IsNot DBNull.Value Then
                             clsManage.alert(Page, "This Account is Lock Please enter the information for receive information via email.", , "cust_forget.aspx")
                         End If
@@ -89,14 +100,20 @@ Partial Class login
                             Exit Sub
                         Else
                             'Diff User Login
-                            'clsManage.alert(Page, "เครื่องคอมพิวเตอร์ของคุณได้มีการใช้งานระบบอยู่แล้ว โปรดออกจากระบบก่อนเข้าระบบอีกครั้ง", , "logout.aspx?s=n", "Dup")
+                            Response.Redirect("logout2.aspx")
+                            Exit Sub
+                        End If
+                    ElseIf Session(clsManage.iSession.role.ToString) = "sale" Then
+                        If Session(clsManage.iSession.user_id.ToString).ToString = dtPwd.Rows(0)("user_id").ToString Then
+                            Response.Redirect("trading_sale.aspx")
+                            Exit Sub
+                        Else
                             Response.Redirect("logout2.aspx")
                             Exit Sub
                         End If
                     Else
                         Response.Redirect("admin/trade_trans.aspx")
                     End If
-
                 Else
                     Session(clsManage.iSession.user_id.ToString) = dtPwd.Rows(0)("user_id").ToString
                     Session(clsManage.iSession.user_name.ToString) = dtPwd.Rows(0)("username").ToString
@@ -108,10 +125,14 @@ Partial Class login
 
                     If dtPwd.Rows(0)("role").ToString = "admin" Then
                         Response.Redirect("admin/trade_trans.aspx")
+                    ElseIf dtPwd.Rows(0)("role").ToString = "sale" Then
+                        'update status online
+                        clsMain.updateLoginStatus(dtPwd.Rows(0)(clsManage.iSession.cust_id.ToString).ToString, "y", Session.SessionID)
+                        Session(clsManage.iSession.cust_id.ToString) = dtPwd.Rows(0)(clsManage.iSession.cust_id.ToString)
+                        Response.Redirect("trading_sale.aspx")
                     ElseIf dtPwd.Rows(0)("role").ToString = "cust" Then
                         'update status online
                         clsMain.updateLoginStatus(dtPwd.Rows(0)("cust_id").ToString, "y", Session.SessionID)
-
                         Session(clsManage.iSession.cust_id.ToString) = dtPwd.Rows(0)("cust_id")
                         Response.Redirect("trading.aspx")
                     End If

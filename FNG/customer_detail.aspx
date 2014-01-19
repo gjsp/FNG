@@ -503,46 +503,50 @@
                         </tr>
                         <tr>
                             <td valign="top">
-                                &nbsp;
-                            </td>
+                                &nbsp;</td>
                             <td>
                                 <%--  <asp:LinkButton ID="linkReset" runat="server" OnClientClick="showConfirmReset(this); return false;"
                                 Text="Reset Username and Password"></asp:LinkButton>--%>
-                                <ajaxToolkit:ModalPopupExtender ID="mppReset" runat="server" BackgroundCssClass="modalBackground"
-                                    BehaviorID="mppReset" CancelControlID="btnNoReset" OkControlID="btnOkReset" OnCancelScript="cancelClick();"
-                                    OnOkScript="okResetClick();" PopupControlID="Panel3" TargetControlID="Panel3">
-                                </ajaxToolkit:ModalPopupExtender>
-                                <asp:Panel ID="Panel3" runat="server" CssClass="modalPopup" Style="display: none" DefaultButton="btnOkReset">
-                                    <asp:Panel ID="Panel4" runat="server" Style="cursor: move; background-color: #DDDDDD;
-                                        border: solid 1px Gray; color: Black">
-                                        <div style="text-align: center">
-                                            <p>
-                                                <h4>
-                                                    Do you want to Reset Username and Password?</h4>
-                                            </p>
-                                            <p id="p1" style="text-align: justify">
-                                            </p>
-                                            <br />
-                                            <div>
-                                                <h4>
-                                                    Please Enter Password.</h4>
-                                                <asp:TextBox ID="txtPwdReset" runat="server" TextMode="Password"></asp:TextBox>
-                                                <asp:RequiredFieldValidator ID="rfvPwdReset" runat="server" ControlToValidate="txtPwdReset"
-                                                    ErrorMessage="*" ValidationGroup="mppReset"></asp:RequiredFieldValidator>
-                                            </div>
-                                        </div>
-                                    </asp:Panel>
-                                    <div>
-                                        <p style="text-align: center;">
-                                            <asp:Button ID="btnOkReset" runat="server" Text="Yes" ValidationGroup="mppReset"
-                                                Width="50px" />
-                                            <asp:Button ID="btnNoReset" runat="server" Text="No" Width="50px" />
-                                        </p>
-                                    </div>
-                                </asp:Panel>
-                                <br />
+                                <asp:CheckBox ID="cbVIP" runat="server" AutoPostBack="True" Text="VIP" />
+                                <div>
+                                    Discount
+                                    <asp:TextBox ID="txtDiscount" runat="server" Width="100px"></asp:TextBox>
+                                </div>
                             </td>
                         </tr>
+                         <tr>
+                             <td valign="top">&nbsp; </td>
+                             <td><%--  <asp:LinkButton ID="linkReset" runat="server" OnClientClick="showConfirmReset(this); return false;"
+                                Text="Reset Username and Password"></asp:LinkButton>--%>
+                                 <ajaxToolkit:ModalPopupExtender ID="mppReset" runat="server" BackgroundCssClass="modalBackground" BehaviorID="mppReset" CancelControlID="btnNoReset" OkControlID="btnOkReset" OnCancelScript="cancelClick();" OnOkScript="okResetClick();" PopupControlID="Panel3" TargetControlID="Panel3">
+                                 </ajaxToolkit:ModalPopupExtender>
+                                 <asp:Panel ID="Panel3" runat="server" CssClass="modalPopup" DefaultButton="btnOkReset" Style="display: none">
+                                     <asp:Panel ID="Panel4" runat="server" Style="cursor: move; background-color: #DDDDDD;
+                                        border: solid 1px Gray; color: Black">
+                                         <div style="text-align: center">
+                                             <p>
+                                                 <h4>Do you want to Reset Username and Password?</h4>
+                                             </p>
+                                             <p id="p1" style="text-align: justify">
+                                             </p>
+                                             <br />
+                                             <div>
+                                                 <h4>Please Enter Password.</h4>
+                                                 <asp:TextBox ID="txtPwdReset" runat="server" TextMode="Password"></asp:TextBox>
+                                                 <asp:RequiredFieldValidator ID="rfvPwdReset" runat="server" ControlToValidate="txtPwdReset" ErrorMessage="*" ValidationGroup="mppReset"></asp:RequiredFieldValidator>
+                                             </div>
+                                         </div>
+                                     </asp:Panel>
+                                     <div>
+                                         <p style="text-align: center;">
+                                             <asp:Button ID="btnOkReset" runat="server" Text="Yes" ValidationGroup="mppReset" Width="50px" />
+                                             <asp:Button ID="btnNoReset" runat="server" Text="No" Width="50px" />
+                                         </p>
+                                     </div>
+                                 </asp:Panel>
+                                 <br />
+                             </td>
+                         </tr>
                         <tr>
                             <td valign="top">
                                 &nbsp;

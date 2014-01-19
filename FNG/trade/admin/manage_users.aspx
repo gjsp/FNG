@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="VB" MasterPageFile="~/trade/admin/MasterPageAdmin.master" AutoEventWireup="false"
-    CodeFile="manage_users.aspx.vb" Inherits="admin_manage_users" Title="Manage User" %>
+    CodeFile="manage_users.aspx.vb" Inherits="admin_manage_users" Title="Manage Users" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>

@@ -8,6 +8,9 @@ Partial Class price
             If Session(clsManage.iSession.cust_id.ToString) IsNot Nothing Then
                 hdfLv.Value = Session(clsManage.iSession.cust_lv.ToString).ToString
                 hdfCust_id.Value = Session(clsManage.iSession.cust_id.ToString).ToString
+                If Session(clsManage.iSession.role.ToString).ToString = "sale" Then
+                    clsManage.Script(Page, "divMini.style.display='none';", "sale")
+                End If
             Else
                 hdfLv.Value = ""
                 hdfCust_id.Value = ""
@@ -54,7 +57,6 @@ Partial Class price
             Throw ex
         End Try
     End Sub
-
 
     Private Sub getStock()
         Try

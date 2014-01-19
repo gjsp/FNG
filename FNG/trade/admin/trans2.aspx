@@ -540,6 +540,7 @@
                                 <asp:Parameter ConvertEmptyStringToNull="False" Name="pDate1" Type="DateTime" />
                                 <asp:Parameter ConvertEmptyStringToNull="False" Name="pDate2" Type="DateTime" />
                                 <asp:Parameter ConvertEmptyStringToNull="False" Name="onlyLeave" Type="String" />
+                                <asp:Parameter ConvertEmptyStringToNull="False" Name="sale_id" Type="String" />
                             </SelectParameters>
                         </asp:ObjectDataSource>
                         <asp:HiddenField ID="hdfTimeDB" runat="server" />
@@ -1118,6 +1119,7 @@
                                 <asp:Parameter ConvertEmptyStringToNull="False" Name="pDate1" Type="DateTime" />
                                 <asp:Parameter ConvertEmptyStringToNull="False" Name="pDate2" Type="DateTime" />
                                 <asp:Parameter ConvertEmptyStringToNull="False" Name="onlyLeave" Type="String" />
+                                <asp:Parameter ConvertEmptyStringToNull="False" Name="sale_id" Type="String" />
                             </SelectParameters>
                         </asp:ObjectDataSource>
                     </fieldset>

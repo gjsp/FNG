@@ -995,8 +995,8 @@
                                             <asp:BoundField DataField="firstname" HeaderText="Cust_Name">
                                                 <ItemStyle Wrap="False" />
                                             </asp:BoundField>
-                                            <asp:BoundField DataField="book_no" HeaderText="Book_No" />
-                                            <asp:BoundField DataField="run_no" HeaderText="Run_No" />
+                                            <asp:BoundField DataField="book_no" HeaderText="Book_No" Visible="False" />
+                                            <asp:BoundField DataField="run_no" HeaderText="Run_No" Visible="False" />
                                             <asp:BoundField DataField="invoice" HeaderText="Invoice" />
                                             <asp:BoundField DataField="gold_type_id" HeaderText="Purity" />
                                             <asp:BoundField DataField="delivery" HeaderText="Delivery" />

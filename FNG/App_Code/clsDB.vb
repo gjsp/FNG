@@ -434,7 +434,7 @@ Public Class clsDB
         End Try
     End Function
 
-    Public Shared Function insertCustomer(ByVal cust_refno As String, ByVal cust_type_id As String, ByVal titlename As String, ByVal firstname As String, ByVal lastname As String, ByVal firstnameEng As String, ByVal lastnameEng As String, ByVal idCard As String, ByVal birthday As Date, ByVal email As String, ByVal person_contact As String, ByVal bill_address As String, ByVal bank1 As String, ByVal account_no1 As String, ByVal account_name1 As String, ByVal account_type1 As String, ByVal account_branch1 As String, ByVal bank2 As String, ByVal account_no2 As String, ByVal account_name2 As String, ByVal account_type2 As String, ByVal account_branch2 As String, ByVal bank3 As String, ByVal account_no3 As String, ByVal account_name3 As String, ByVal account_type3 As String, ByVal account_branch3 As String, ByVal mobilePhone As String, ByVal tel As String, ByVal fax As String, ByVal cash_credit As String, ByVal remark As String, ByVal margin As String, ByVal margin_call As String, ByVal quan_96 As String, ByVal quan_99 As String, ByVal created_by As String, ByVal team_id As String, ByVal trade_limit As String, ByVal free_margin As String, margin_unlimit As Boolean) As String
+    Public Shared Function insertCustomer(ByVal cust_refno As String, ByVal cust_type_id As String, ByVal titlename As String, ByVal firstname As String, ByVal lastname As String, ByVal firstnameEng As String, ByVal lastnameEng As String, ByVal idCard As String, ByVal birthday As Date, ByVal email As String, ByVal person_contact As String, ByVal bill_address As String, ByVal bank1 As String, ByVal account_no1 As String, ByVal account_name1 As String, ByVal account_type1 As String, ByVal account_branch1 As String, ByVal bank2 As String, ByVal account_no2 As String, ByVal account_name2 As String, ByVal account_type2 As String, ByVal account_branch2 As String, ByVal bank3 As String, ByVal account_no3 As String, ByVal account_name3 As String, ByVal account_type3 As String, ByVal account_branch3 As String, ByVal mobilePhone As String, ByVal tel As String, ByVal fax As String, ByVal cash_credit As String, ByVal remark As String, ByVal margin As String, ByVal margin_call As String, ByVal quan_96 As String, ByVal quan_99 As String, ByVal created_by As String, ByVal team_id As String, ByVal trade_limit As String, ByVal free_margin As String, margin_unlimit As Boolean, VIP As Boolean, discount As Double) As String
         Try
             Dim con As New SqlConnection(strcon)
             con.Open()
@@ -490,8 +490,8 @@ Public Class clsDB
                                                     "", "0", "", "Gold", created_by, gold_type, quan_99, "0", "999", "", "ฝากทอง", "D/W", price, G96, G99, cust_id, "000", "ฝากทองในการลงทะเบียนครั้งแรก", "", cash_stock, trans_stock, cheq_stock)
                 End If
 
-                sql = "INSERT INTO [customer] ([cust_id], [cust_refno], [cust_type_id], [titlename], [firstname], [lastname], [firstname_eng], [lastname_eng], [email], [id_card], [birthday], [person_contact], [bill_address], [bank1], [account_no1], [account_name1], [account_type1], [account_branch1], [bank2], [account_no2], [account_name2], [account_type2], [account_branch2], [bank3], [account_no3], [account_name3], [account_type3], [account_branch3], [mobile], [tel], [fax], [remark], [cash_credit], [margin], [margin_call], [quan_96], [quan_99N], [created_by], [created_date], [team_id], [trade_limit], [free_margin],[margin_unlimit]) VALUES " & _
-                      "(@cust_id, @cust_refno, @cust_type_id, @titlename, @firstname, @lastname, @firstname_eng, @lastname_eng, @email, @id_card, @birthday, @person_contact, @bill_address, @bank1, @account_no1, @account_name1, @account_type1, @account_branch1, @bank2, @account_no2, @account_name2, @account_type2, @account_branch2, @bank3, @account_no3, @account_name3, @account_type3, @account_branch3, @mobile, @tel, @fax, @remark, @cash_credit, @margin, @margin_call, @quan_96, @quan_99N,@created_by,getdate(),@team_id,@trade_limit,@free_margin,@margin_unlimit)"
+                sql = "INSERT INTO [customer] ([cust_id], [cust_refno], [cust_type_id], [titlename], [firstname], [lastname], [firstname_eng], [lastname_eng], [email], [id_card], [birthday], [person_contact], [bill_address], [bank1], [account_no1], [account_name1], [account_type1], [account_branch1], [bank2], [account_no2], [account_name2], [account_type2], [account_branch2], [bank3], [account_no3], [account_name3], [account_type3], [account_branch3], [mobile], [tel], [fax], [remark], [cash_credit], [margin], [margin_call], [quan_96], [quan_99N], [created_by], [created_date], [team_id], [trade_limit], [free_margin],[margin_unlimit],[VIP],[discount]) VALUES " & _
+                      "(@cust_id, @cust_refno, @cust_type_id, @titlename, @firstname, @lastname, @firstname_eng, @lastname_eng, @email, @id_card, @birthday, @person_contact, @bill_address, @bank1, @account_no1, @account_name1, @account_type1, @account_branch1, @bank2, @account_no2, @account_name2, @account_type2, @account_branch2, @bank3, @account_no3, @account_name3, @account_type3, @account_branch3, @mobile, @tel, @fax, @remark, @cash_credit, @margin, @margin_call, @quan_96, @quan_99N,@created_by,getdate(),@team_id,@trade_limit,@free_margin,@margin_unlimit,@VIP,@discount)"
 
                 cmd = New SqlCommand(sql + sql_dep + sql_act, con)
 
@@ -665,6 +665,14 @@ Public Class clsDB
 
                 parameter = New SqlParameter("@margin_unlimit", SqlDbType.Bit)
                 parameter.Value = margin_unlimit
+                cmd.Parameters.Add(parameter)
+
+                parameter = New SqlParameter("@VIP", SqlDbType.Bit)
+                parameter.Value = VIP
+                cmd.Parameters.Add(parameter)
+
+                parameter = New SqlParameter("@discount", SqlDbType.Float)
+                parameter.Value = discount
                 cmd.Parameters.Add(parameter)
 
                 cmd.Transaction = tr
@@ -3205,7 +3213,7 @@ Public Class clsDB
         End Try
     End Function
 
-    Public Shared Function updatetTicket(ByVal refNo As String, ByVal book_no As String, ByVal run_no As String, ByVal cust_id As String, ByVal type As String, ByVal gold_type_id As String, ByVal Dalevery_date As String, ByVal ticket_date As DateTime, ByVal billing As String, ByVal payment As String, ByVal payment_bank As String, ByVal payment_duedate As String, ByVal payment_cheq_no As String, ByVal remark As String, ByVal delivery As String, ByVal modifier_by As String, ByVal quan As String, ByVal price As String, ByVal amount As String, ByVal active As Boolean, ByVal gold_dep As Boolean, ByVal invoice As String, clearingday As Integer) As String
+    Public Shared Function updatetTicket(ByVal refNo As String, ByVal cust_id As String, ByVal type As String, ByVal gold_type_id As String, ByVal Dalevery_date As String, ByVal ticket_date As DateTime, ByVal billing As String, ByVal payment As String, ByVal payment_bank As String, ByVal payment_duedate As String, ByVal payment_cheq_no As String, ByVal remark As String, ByVal delivery As String, ByVal modifier_by As String, ByVal quan As String, ByVal price As String, ByVal amount As String, ByVal active As Boolean, ByVal gold_dep As Boolean, ByVal invoice As String, clearingday As Integer) As String
 
         Try
             Dim con As New SqlConnection(strcon)
@@ -3215,21 +3223,13 @@ Public Class clsDB
             created_t = clsDB.getTicket__Byidk(refNo)
 
             Try
-                Dim sql As String = "UPDATE [tickets] SET [book_no] = @book_no, [run_no] = @run_no, [cust_id] = @cust_id, [type] = @type, [delivery] = @delivery, [delivery_date] = @delivery_date, [ticket_date] = @ticket_date,[gold_type_id]=@gold_type_id, " & _
+                Dim sql As String = "UPDATE [tickets] SET [cust_id] = @cust_id, [type] = @type, [delivery] = @delivery, [delivery_date] = @delivery_date, [ticket_date] = @ticket_date,[gold_type_id]=@gold_type_id, " & _
                                     "[billing] = @billing, [remark] = @remark, [payment] = @payment, [payment_bank] = @payment_bank, [payment_duedate] = @payment_duedate, [payment_cheq_no] = @payment_cheq_no, [modifier_date] = getdate(), [modifier_by] = @modifier_by, [quantity] = @quantity, [price] = @price, [amount] = @amount, [active] = @active ,[gold_dep]= @gold_dep, [invoice] = @invoice, [clearingday] = @clearingday " & _
                                     " WHERE (([ref_no] = @ref_no))"
                 Dim cmd As New SqlCommand(sql, con)
 
                 Dim parameter As New SqlParameter("@ref_no", SqlDbType.VarChar, 20)
                 parameter.Value = refNo
-                cmd.Parameters.Add(parameter)
-
-                parameter = New SqlParameter("@book_no", SqlDbType.VarChar, 10)
-                parameter.Value = book_no
-                cmd.Parameters.Add(parameter)
-
-                parameter = New SqlParameter("@run_no", SqlDbType.VarChar, 10)
-                parameter.Value = run_no
                 cmd.Parameters.Add(parameter)
 
                 parameter = New SqlParameter("@cust_id", SqlDbType.Int)
@@ -4847,6 +4847,7 @@ Public Class clsDB
 
     Public Shared Function getTicketOrderNobill(ByVal refno As String, preview As Boolean, report_by As String, Optional view As Boolean = False) As DataTable
         'parameter optional view for ค้นหาจาก runno อาจมีหลาย ticket
+        'Change Requirment from jack 07/0/12014 >> report by to modifer_by
         If Not refno.Contains("','") Then
             refno = refno.Replace(",", "','")
         End If
@@ -4870,14 +4871,14 @@ Public Class clsDB
  ",case when ticket.gold_type_id ='96' then ticket.quantity else 0 end as G96 " & _
  ",case when substring(cast(ticket.gold_type_id as varchar),1,2)='99' then ticket.quantity else 0 end as G99 " & _
  ",case when ticket.gold_type_id ='96G' then ticket.quantity else 0 end as G96G  " & _
- ",ticket.Amount,ticket.ref_no,ticket.cust_id, customer.firstname,'' as quantity_no_split,ticket.gold_type_id as purity,'" + report_by + "' as report_by  " & _
+ ",ticket.Amount,ticket.ref_no,ticket.cust_id, customer.firstname,'' as quantity_no_split,ticket.gold_type_id as purity,u.user_name as report_by  " & _
  ",case when run_no <> '' then run_no else (SELECT  stringWord + RIGHT('00' + cast( day(getdate()) as varchar),2) +RIGHT('00' + cast( month(getdate()) as varchar),2) + RIGHT('00'+ cast( year(getdate()) as varchar),2) + '-' + RIGHT('0000'+ CONVERT(VARCHAR,run_no),4) as bill_runno FROM ticket_runno  where type = 'NB') end as 'run_no' " & _
  "FROM  (" & _
  "	select receipt_date,ticket.[type],ticket.price,gold_type_id,ticket.ref_no,ticket.cust_id,run_no," & _
  "	case when ticket.type ='sell' then -(ticket.quantity) else ticket.quantity end as quantity, " & _
- "	case when ticket.type ='sell' then -(ticket.amount) else ticket.amount end as amount " & _
+ "	case when ticket.type ='sell' then -(ticket.amount) else ticket.amount end as amount,modifier_by " & _
  "	from ticket " & _
- ")ticket INNER JOIN  customer ON ticket.cust_id = customer.cust_id " & _
+ ")ticket INNER JOIN  customer ON ticket.cust_id = customer.cust_id left join users u on u.user_id = ticket.modifier_by " & _
  "" & sqlCondition & ""
 
         Dim sqlUpdate As String = ""
@@ -4909,13 +4910,26 @@ Public Class clsDB
                             " FROM   customer INNER JOIN   ticket ON customer.cust_id = ticket.cust_id LEFT OUTER JOIN " & _
                             " users ON ticket.modifier_by = users.user_id " & _
                             " where ticket.ref_no in ('" & refno & "')"
+
+
         Dim sqlUpdate As String = ""
         If editType = "n" Then
-            sqlUpdate = String.Format(";update tickets set billing = '{0}' where ref_no='{1}'", bill, refno)
+            sql += String.Format(";update tickets set billing = '{0}' where ref_no='{1}'", bill, refno)
         End If
+
+        'Dim sqlCheck As String =
+        '" if (select billing from tickets where ref_no in ('" & refno & "')) = '" + bill + "' " & _
+        '"	begin " & _
+        '"" + sql + "" & _
+        '"	end " & _
+        '" else " & _
+        '"	begin " & _
+        '"		select getdate()" & _
+        '"	end"
+
         Dim con As New SqlConnection(strcon)
         Try
-            Dim da As New SqlDataAdapter(sql + sqlUpdate, con)
+            Dim da As New SqlDataAdapter(sql, con)
             Dim dt As New DataTable
             da.Fill(dt)
             If dt.Rows.Count > 0 Then

@@ -321,7 +321,7 @@
                         </div>
                     </td>
                     <td>
-                        <div id="divMini" style="text-align: center; float: left; padding-left: 20px;">
+                        <div id="divMini" style="text-align: center; float: left; padding-left: 20px">
                             <table cellpadding="1" cellspacing="1">
                                 <tr>
                                     <td colspan="2" class="text_head2" background="image_cust/head_bg2.jpg" height="40"

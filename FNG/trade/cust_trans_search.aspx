@@ -300,6 +300,7 @@
                             <asp:Parameter ConvertEmptyStringToNull="False" Name="period" Type="String" />
                             <asp:Parameter ConvertEmptyStringToNull="False" Name="pDate1" Type="DateTime" />
                             <asp:Parameter ConvertEmptyStringToNull="False" Name="pDate2" Type="DateTime" />
+                            <asp:Parameter ConvertEmptyStringToNull="False" Name="sale_id" Type="String" />
                         </SelectParameters>
                     </asp:ObjectDataSource>
                     <asp:HiddenField ID="hdfMode" runat="server" />
@@ -307,6 +308,7 @@
                     <asp:HiddenField ID="hdfTradeLogIdForGrid" runat="server" />
                     <asp:HiddenField ID="hdfConfirm" runat="server" />
                     <asp:HiddenField ID="hdfTradeLogId" runat="server" />
+                    <asp:HiddenField ID="hdfSale_id" runat="server" />
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>

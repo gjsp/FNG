@@ -20,6 +20,11 @@ Partial Class cust_trans_search
                 If Request.QueryString("m") IsNot Nothing Then
                     hdfMode.Value = clsManage.tradeMode.tran.ToString
                     ViewState(clsManage.iSession.cust_id.ToString) = Session(clsManage.iSession.cust_id.ToString).ToString
+                    If Request.QueryString("s") IsNot Nothing Then
+                        hdfSale_id.Value = Session(clsManage.iSession.user_id.ToString).ToString
+                    Else
+                        hdfSale_id.Value = ""
+                    End If
 
                     gvTrade.EmptyDataText = clsManage.EmptyDataText
                     hdfIsRealtime.Value = "y"
@@ -185,6 +190,7 @@ Partial Class cust_trans_search
             objSrcTrade.SelectParameters("period").DefaultValue = period
             objSrcTrade.SelectParameters("pDate1").DefaultValue = pDate1
             objSrcTrade.SelectParameters("pDate2").DefaultValue = pDate2
+            objSrcTrade.SelectParameters("sale_id").DefaultValue = hdfSale_id.Value
 
             gvTrade.DataBind()
 
@@ -218,7 +224,4 @@ Partial Class cust_trans_search
         End Try
     End Sub
 
-  
-
-    
 End Class

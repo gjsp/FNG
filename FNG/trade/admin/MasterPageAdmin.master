@@ -24,7 +24,7 @@
             </tr>
             <tr>
                 <td background="../image_cust/top_menu_bg.jpg" height="31">
-                    <table width="900" cellspacing="0" cellpadding="0" border="0" height="19">
+                    <table width="1000" cellspacing="0" cellpadding="0" border="0" height="19">
                         <tbody>
                             <tr>
                                 <td>
@@ -35,7 +35,8 @@
                                                 <li><a href="tran_auto_accept.aspx">Auto Accept</a></li>
                                                 <li><a href="manage_spotprice.aspx">Manage Price</a></li>
                                                 <li><a href="manage_admin.aspx">Manage Admin</a></li>
-                                                <li><a href="manage_users.aspx">Manage User</a></li>
+                                                <li><a href="manage_users.aspx">Manage Users</a></li>
+                                                <li><a href="manage_sales.aspx">Manage Sales</a></li>
                                                 <li><a href="config_trade.aspx">Config</a></li>
                                                 <li><a href="price_log.aspx">Price Log</a></li>
                                                 <li><a href="logout.aspx" onclick="return confirm('Do you want to Log out?');">Log out</a></li>

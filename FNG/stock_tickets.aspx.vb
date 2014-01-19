@@ -326,7 +326,7 @@ Partial Class stock_tickets
                 End If
             Next
             If strRefno <> "" Then
-                Dim msgReceipt As String = clsFng.checkReceiptNoAndSplitBill(strRefno)
+                Dim msgReceipt As String = clsFng.checkReceiptNoAndSplitBill1(strRefno, billing)
                 If msgReceipt <> "" Then
                     clsManage.alert(Page, msgReceipt)
                     btnSearchAdv_Click(Nothing, Nothing)

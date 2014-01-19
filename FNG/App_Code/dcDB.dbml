@@ -816,6 +816,7 @@
       <Column Name="time_trade" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
       <Column Name="cust_halt" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
       <Column Name="admin_halt" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
+      <Column Name="discount" Type="System.Double" DbType="Float" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

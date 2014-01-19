@@ -122,6 +122,34 @@ Public Class gtc
         Return list.ToArray()
 
     End Function
+
+    'For Search Online
+    <WebMethod()> _
+    Public Function getCust_nameOnlineList(ByVal count As Integer, ByVal contextKey As String, ByVal prefixText As String) As String()
+        Dim storedName As String = "[getCust_nameOnlineList] '" & prefixText & "'"
+        Dim dt As New Data.DataTable
+        Dim dr As Data.DataRow
+        Dim list As New List(Of String)
+
+        Dim con As New SqlConnection(clsDB.strcon)
+        Dim cmd As New SqlCommand(storedName, con)
+
+
+        Dim da As New SqlDataAdapter(cmd)
+        da.Fill(dt)
+
+        If dt.Rows.Count > 0 Then
+            For Each dr In dt.Rows
+                Dim item As String = AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(dr("firstname").ToString, dr("cust_id").ToString)
+                list.Add(item)
+            Next
+        End If
+
+
+        Return list.ToArray()
+
+    End Function
+
     <WebMethod()> _
     Public Function EncodeMD5(ByVal x_string As String) As String
         Dim md5 As New System.Security.Cryptography.MD5CryptoServiceProvider()

@@ -252,7 +252,7 @@ Partial Class ticket_deal_g
             If cbGoldDep.Checked And rdoType.SelectedValue = "buy" Then
                 gold_dep = True
             End If
-            Dim result As String = clsDB.updatetTicket(lblRefNo.Text, "", "", txtCustRef.Text, rdoType.SelectedValue, clsFng.p96g, _
+            Dim result As String = clsDB.updatetTicket(lblRefNo.Text, txtCustRef.Text, rdoType.SelectedValue, clsFng.p96g, _
                                     txtDateDelivery.Text, DateTime.ParseExact(txtDateNow.Text, clsManage.formatDateTime, Nothing), _
                                     rdoBilling.SelectedValue, ddlPayment.SelectedValue, _
                                     bank, duedate, cheq_no, txtRemark.Text, rdoDelivery.SelectedValue, Session(clsManage.iSession.user_id_center.ToString).ToString, _

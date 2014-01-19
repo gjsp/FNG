@@ -238,7 +238,14 @@ Partial Class ticket_deal
 
     Protected Sub btnUpdate_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnUpdate.Click
         Try
+            'check การ update ถ้าจะเปลี่ยนเป็นแบบมีบิล ต้องมี recieve ใบเดียว
+            Dim msgHasReceipt As String = clsFng.checkTicketReceipt(lblRefNo.Text)
+            If msgHasReceipt <> "" Then
+                clsManage.alert(Page, msgHasReceipt) : Exit Sub
+            End If
+
             If Not validatetion() Then Exit Sub
+
             Dim bank As String = ""
             Dim duedate As String = ""
             Dim cheq_no As String = ""
@@ -254,7 +261,7 @@ Partial Class ticket_deal
             If cbGoldDep.Checked And rdoType.SelectedValue = "buy" Then
                 gold_dep = True
             End If
-            Dim result As String = clsDB.updatetTicket(lblRefNo.Text, "", "", txtCustRef.Text, rdoType.SelectedValue, rdoGoldType.SelectedValue, _
+            Dim result As String = clsDB.updatetTicket(lblRefNo.Text, txtCustRef.Text, rdoType.SelectedValue, rdoGoldType.SelectedValue, _
                                     txtDateDelivery.Text, DateTime.ParseExact(txtDateNow.Text, clsManage.formatDateTime, Nothing), _
                                     rdoBilling.SelectedValue, ddlPayment.SelectedValue, _
                                     bank, duedate, cheq_no, txtRemark.Text, rdoDelivery.SelectedValue, Session(clsManage.iSession.user_id_center.ToString).ToString, _

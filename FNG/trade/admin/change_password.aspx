@@ -39,7 +39,7 @@
         </div>
             </ContentTemplate>
         </asp:UpdatePanel>
-       
+       <asp:HiddenField ID="hdfType" runat="server" />
         <div style="text-align: center; margin-top: 25px;">
             <asp:Button ID="Savebt" runat="server" CssClass="buttonPro small grey" Text="Save" />
             &nbsp;<asp:Button ID="Cancelbt" runat="server" CssClass="buttonPro small grey" Text="Cancel" />

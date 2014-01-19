@@ -34,6 +34,7 @@ Public Class clsSpot
         Public maxKg As Double
         Public maxMn As Double
         Public rangeLeave As Double
+        Public discount As Double
 
     End Structure
 
@@ -155,6 +156,12 @@ Public Class clsSpot
         ''Price 96.50 Mini
         sp.ask96Mn = sp.ask96Bg + 10
         sp.bid96Mn = sp.bid96Bg - 10
+
+        If st.discount Is Nothing Then
+            sp.discount = 0
+        Else
+            sp.discount = st.discount
+        End If
 
         Return sp
 

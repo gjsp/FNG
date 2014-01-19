@@ -6,6 +6,7 @@ Partial Class admin_change_password
         If Not Page.IsPostBack Then
             If Request.QueryString("id") IsNot Nothing Then
                 Dim id As String = Request.QueryString("id")
+                hdfType.Value = Request.QueryString("type").ToString
                 Dim data As Data.DataTable
                 data = clsMain.getUsernamesValue(id)
                 OldpassTxt.Text = data.Rows(0)("password").ToString
@@ -42,8 +43,13 @@ Partial Class admin_change_password
 
     Protected Sub Savebt_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Savebt.Click
         Try
+
             If saveData() Then
-                clsManage.alert(Page, "Update Complete", , "manage_admin.aspx")
+                If hdfType.Value = "admin" Then
+                    clsManage.alert(Page, "Update Complete", , "manage_admin.aspx")
+                ElseIf hdfType.Value = "sale" Then
+                    clsManage.alert(Page, "Update Complete", , "manage_sales.aspx")
+                End If
             End If
         Catch ex As Exception
             clsManage.alert(Page, ex.Message)
@@ -53,7 +59,10 @@ Partial Class admin_change_password
 
     Protected Sub Cancelbt_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Cancelbt.Click
 
-        Response.Redirect("manage_admin.aspx")
-
+        If hdfType.Value = "admin" Then
+            Response.Redirect("manage_admin.aspx")
+        ElseIf hdfType.Value = "sale" Then
+            Response.Redirect("manage_sales.aspx")
+        End If
     End Sub
 End Class

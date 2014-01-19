@@ -12423,6 +12423,8 @@ Partial Public Class getStockOnlineForPriceResult
 	
 	Private _admin_halt As System.Nullable(Of Char)
 	
+	Private _discount As System.Nullable(Of Double)
+	
 	Public Sub New()
 		MyBase.New
 	End Sub
@@ -13265,6 +13267,18 @@ Partial Public Class getStockOnlineForPriceResult
 		Set
 			If (Me._admin_halt.Equals(value) = false) Then
 				Me._admin_halt = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_discount", DbType:="Float")>  _
+	Public Property discount() As System.Nullable(Of Double)
+		Get
+			Return Me._discount
+		End Get
+		Set
+			If (Me._discount.Equals(value) = false) Then
+				Me._discount = value
 			End If
 		End Set
 	End Property

@@ -32,6 +32,12 @@ Partial Class cust_trans
                         hdfMode.Value = Request.QueryString("m").ToString
                     End If
 
+                    If Request.QueryString("s") IsNot Nothing Then
+                        hdfSale_id.Value = Session(clsManage.iSession.user_id.ToString).ToString
+                    Else
+                        hdfSale_id.Value = ""
+                    End If
+
                     hdfTradeLogId.Value = clsMain.getTradeLogId(hdfMode.Value)
                     hdfTradeLogIdForGrid.Value = hdfTradeLogId.Value
 
@@ -188,6 +194,7 @@ Partial Class cust_trans
             objSrcTrade.SelectParameters("pDate2").DefaultValue = pDate2
             objSrcTrade.SelectParameters("onlyLeave").DefaultValue = onlyLeave
             objSrcTrade.SelectParameters("sortPrice").DefaultValue = "n"
+            objSrcTrade.SelectParameters("sale_id").DefaultValue = hdfSale_id.Value
 
             gvTrade.DataBind()
 

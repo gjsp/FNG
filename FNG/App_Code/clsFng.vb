@@ -579,17 +579,21 @@ Public Class clsFng
         End Try
     End Function
 
-    Public Shared Function checkReceiptNoAndSplitBill(ByVal refno As String) As String
+    Public Shared Function checkReceiptNoAndSplitBill1(ByVal refno As String, billing As String) As String
         Try
             Dim msg As String = ""
             refno = refno.Replace(",", "','")
-            Dim sql As String = String.Format("select run_no,sp_quan from v_ticket_sum_split where ref_no in ('{0}') ", refno)
+            Dim sql As String = String.Format("select billing,run_no,sp_quan from v_ticket_sum_split where ref_no in ('{0}') ", refno)
             Using con As New SqlConnection(strcon)
                 Using da As New SqlDataAdapter(sql, con)
                     Using dt As New DataTable
                         da.Fill(dt)
                         If dt.Rows.Count > 0 Then
                             For Each dr As DataRow In dt.Rows
+                                'check ว่าbilling ตรงกับ ฐานข้อมูลหรือป่าว
+                                If dr("billing").ToString <> billing Then
+                                    Return "ข้อมูลมีการเปลี่ยนแปลง โปรดทำรายการใหม่อีกครั้ง"
+                                End If
                                 If dr("run_no").ToString <> "" Then
                                     msg = "โปรดเลือก Ticket ที่ยังไม่มี Receipt"
                                 End If
@@ -632,6 +636,28 @@ Public Class clsFng
         End Try
     End Function
 
+    'ถ้ามีการออก reciept แล้ว ห้าม update
+    Public Shared Function checkTicketReceipt(ByVal ref_no As String) As String
+        Try
+            Dim msg As String = ""
+            Dim sql As String = String.Format("select run_no from tickets where ref_no = '{0}'  ", ref_no)
+            Using con As New SqlConnection(strcon)
+                Using da As New SqlDataAdapter(sql, con)
+                    Using dt As New DataTable
+                        da.Fill(dt)
+                        If dt.Rows.Count > 0 Then
+                            If dt.Rows(0)(0).ToString <> "" Then
+                                msg = "ไม่สามารถแก้ไขได้เนื่องจากมีการออก Receipt เรียบร้อยแล้ว"
+                            End If
+                        End If
+                    End Using
+                End Using
+            End Using
+            Return msg
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
 #End Region
 
 End Class

@@ -2180,7 +2180,7 @@ Public Class clsMain
         End Try
     End Function
 
-    Public Shared Function getTradeByMode(ByVal mode As String, ByVal type As String, ByVal purity As String, ByVal cust_id As String, ByVal max_trade_id As String, ByVal sortPrice As String, ByVal period As String, Optional ByVal pDate1 As DateTime = Nothing, Optional ByVal pDate2 As DateTime = Nothing, Optional ByVal onlyLeave As String = "n") As DataTable
+    Public Shared Function getTradeByMode(ByVal mode As String, ByVal type As String, ByVal purity As String, ByVal cust_id As String, ByVal max_trade_id As String, ByVal sortPrice As String, ByVal period As String, Optional ByVal pDate1 As DateTime = Nothing, Optional ByVal pDate2 As DateTime = Nothing, Optional ByVal onlyLeave As String = "n", Optional sale_id As String = "") As DataTable
         If mode = "" Then Return Nothing
         Dim dt As New DataTable
         Dim con As New SqlConnection()
@@ -2191,15 +2191,19 @@ Public Class clsMain
             Dim period1 As String = ""
             Dim period2 As String = ""
             If period = "" Then
-                'sql_period = " AND convert(varchar,tc.modifier_date,111)=convert(varchar,getdate(),111) "
                 sql_period = " AND (convert(datetime,tc.modifier_date,111) between convert(datetime,@period1,111) and getdate()) "
             Else
                 sql_period = " AND (tc.modifier_date between @period1 and @period2) "
             End If
 
             Dim sql_cust As String = ""
-            If cust_id <> "" Then
-                sql_cust = "AND (cu.cust_id = '" & cust_id & "')"
+            Dim sql_sale As String = ""
+            If sale_id <> "" Then
+                sql_sale = "AND (tc.created_by = '" & sale_id & "')"
+            Else
+                If cust_id <> "" Then
+                    sql_cust = "AND (cu.cust_id = '" & cust_id & "')"
+                End If
             End If
 
             Dim sql_purity As String = ""
@@ -2263,6 +2267,7 @@ Public Class clsMain
                                 " " + sql_mode + " " & _
                                 " " + sql_cust + " " & _
                                 " " + sql_purity + " " & _
+                                " " + sql_sale + " " & _
                                 " " + sql_orderby + ""
 
 
@@ -2352,7 +2357,7 @@ Public Class clsMain
         End Try
     End Function
 
-    Public Shared Function getTradeBlotter(ByVal mode As String, ByVal order As String, ByVal type As String, ByVal purity As String, ByVal cust_id As String, ByVal period As String, Optional ByVal pDate1 As DateTime = Nothing, Optional ByVal pDate2 As DateTime = Nothing) As DataTable
+    Public Shared Function getTradeBlotter(ByVal mode As String, ByVal order As String, ByVal type As String, ByVal purity As String, ByVal cust_id As String, ByVal period As String, Optional ByVal pDate1 As DateTime = Nothing, Optional ByVal pDate2 As DateTime = Nothing, Optional sale_id As String = "") As DataTable
         Try
             If cust_id Is Nothing Then Return Nothing
             Dim sql_period As String = ""
@@ -2365,8 +2370,13 @@ Public Class clsMain
             End If
 
             Dim sql_cust As String = ""
-            If cust_id <> "" Then
-                sql_cust = "AND (cu.cust_id = '" & cust_id & "')"
+            Dim sql_sale As String = ""
+            If sale_id <> "" Then
+                sql_sale = "AND (tc.created_by = '" & sale_id & "')"
+            Else
+                If cust_id <> "" Then
+                    sql_cust = "AND (cu.cust_id = '" & cust_id & "')"
+                End If
             End If
 
             Dim sql_purity As String = ""
@@ -2387,6 +2397,7 @@ Public Class clsMain
                                 " AND (type =  @type or @type = '' ) " & _
                                 " AND (leave_order =  @leave_order or @leave_order = '' ) " & _
                                 " " + sql_cust + " " & _
+                                " " + sql_sale + " " & _
                                 " " + sql_purity + " " & _
                                 " " + sql_mode + " " & _
                                 " " + sql_period + " " & _
@@ -2778,6 +2789,55 @@ Public Class clsMain
         End Try
     End Function
 
+    Public Shared Function getUsernameSaleSearch(ByVal word As String) As DataTable
+
+        Dim sql As String = "select user_id,un.cust_id,username,password,firstname,role,cust_level,active,halt from usernames un, customer cm where un.cust_id = cm.cust_id and role='sale' " & _
+                            " and ( (un.username like '%' + @username + '%' or @username='') or (cm.firstname like '%' + @firstname + '%' or @firstname='')   )"
+
+
+        Dim con As New SqlConnection(strcon)
+        Dim cmd As New SqlCommand(sql, con)
+        Try
+
+            Dim parameter As New SqlParameter("@username", SqlDbType.VarChar, 50)
+            parameter.Value = word
+            cmd.Parameters.Add(parameter)
+
+            parameter = New SqlParameter("@firstname", SqlDbType.VarChar, 50)
+            parameter.Value = word
+            cmd.Parameters.Add(parameter)
+
+            Dim da As New SqlDataAdapter(cmd)
+            Dim dt As New DataTable
+
+            da.Fill(dt)
+            Return dt
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
+    Public Shared Function getUserSales() As DataTable
+
+        Dim sql As String = "select user_id,username,password from usernames where role='sale'"
+
+
+        Dim con As New SqlConnection(strcon)
+        Dim cmd As New SqlCommand(sql, con)
+        Try
+
+            Dim da As New SqlDataAdapter(cmd)
+            Dim dt As New DataTable
+
+            da.Fill(dt)
+            Return dt
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
     Public Shared Function getUserAdmin() As DataTable
 
         Dim sql As String = "select user_id,username,password from usernames where role='admin'"
@@ -2953,7 +3013,7 @@ Public Class clsMain
             cmd.Parameters.Add(parameter)
 
             parameter = New SqlParameter("@customerlevel", SqlDbType.Int)
-            parameter.Value = IIf(type = "admin", DBNull.Value, customerlevel)
+            parameter.Value = IIf(type = "admin" Or type = "sale", DBNull.Value, customerlevel)
             cmd.Parameters.Add(parameter)
 
             parameter = New SqlParameter("@reg_code", SqlDbType.NVarChar, 50)
@@ -3652,11 +3712,27 @@ Public Class clsMain
         End Try
     End Function
 
+
+    Public Shared Function updateLoginStatusSale(user_id As String, online_status As String, online_id As String) As Integer
+        Try
+            Dim sql As String = String.Format("update usernames set online = '{1}',online_time = getdate(),online_id ='{2}'  where user_id = {0}", user_id, online_status, online_id)
+            Using con As New SqlConnection(strcon)
+                Using cmd As New SqlCommand(sql, con)
+                    cmd.CommandText = sql
+                    con.Open()
+                    Return cmd.ExecuteNonQuery()
+                End Using
+            End Using
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
     Public Shared Function updateTimeOnline(cust_id As String, online_id As String) As String
         Dim dt As New DataTable
         Try
             Dim sql As String = String.Format("select online,online_time,online_id,case when DATEADD(Minute, 20, online_time) >  getdate() then 'y' else 'n' end as timeout " & _
-                                              " from usernames where cust_id = {0}  ", cust_id)
+                                              " from usernames where cust_id = '{0}'  ", cust_id)
             Using con As New SqlConnection(strcon)
                 Using cmd As New SqlCommand(sql, con)
                     Using da As New SqlDataAdapter(cmd)
