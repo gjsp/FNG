@@ -295,10 +295,11 @@ Partial Class ticket_daily
             e.Row.Cells(5 + 4).Text = clsManage.convert2Quantity(e.Row.DataItem("sell_quantity"))
             e.Row.Cells(5 + 5).Text = clsManage.convert2Currency(e.Row.DataItem("sell_amount"))
 
-            If e.Row.DataItem("ticket_id").ToString().Substring(0, 1) = clsFng.strOnline Then
-                CType(e.Row.FindControl("imgDel"), ImageButton).Enabled = False
-                CType(e.Row.FindControl("imgDel"), ImageButton).ImageUrl = "~/images/i_del2.png"
-            End If
+            'Change Requirment 23/01/2014 From tradeonline delete able
+            'If e.Row.DataItem("ticket_id").ToString().Substring(0, 1) = clsFng.strOnline Then
+            '    CType(e.Row.FindControl("imgDel"), ImageButton).Enabled = False
+            '    CType(e.Row.FindControl("imgDel"), ImageButton).ImageUrl = "~/images/i_del2.png"
+            'End If
 
             If ViewState(clsDB.roles.delete) IsNot Nothing AndAlso ViewState(clsDB.roles.delete) = False Then
                 CType(e.Row.FindControl("imgDel"), ImageButton).Enabled = False

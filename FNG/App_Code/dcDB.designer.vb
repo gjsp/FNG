@@ -365,7 +365,7 @@ Partial Public Class dcDBDataContext
 	End Function
 	
 	<Global.System.Data.Linq.Mapping.FunctionAttribute(Name:="dbo.getStockOnlineForPrice")>  _
-	Public Function getStockOnlineForPrice(<Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="VarChar(5)")> ByVal cust_id As String) As ISingleResult(Of getStockOnlineForPriceResult)
+	Public Function getStockOnlineForPrice(<Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="VarChar(6)")> ByVal cust_id As String) As ISingleResult(Of getStockOnlineForPriceResult)
 		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), cust_id)
 		Return CType(result.ReturnValue,ISingleResult(Of getStockOnlineForPriceResult))
 	End Function
@@ -12379,51 +12379,19 @@ Partial Public Class getStockOnlineForPriceResult
 	
 	Private _melting_cost As System.Nullable(Of Decimal)
 	
-	Private _user_id As Integer
-	
-	Private _cust_id As String
-	
-	Private _username As String
-	
-	Private _password As String
-	
-	Private _role As String
-	
-	Private _cust_level As System.Nullable(Of Integer)
-	
-	Private _active As System.Nullable(Of Char)
-	
-	Private _halt1 As System.Nullable(Of Char)
-	
-	Private _reg_code As String
-	
-	Private _first_trade As System.Nullable(Of Char)
-	
-	Private _lock_time As System.Nullable(Of Date)
-	
-	Private _online As System.Nullable(Of Char)
-	
-	Private _online_time As System.Nullable(Of Date)
-	
-	Private _online_id As String
-	
-	Private _created_date As System.Nullable(Of Date)
-	
-	Private _created_by As String
-	
-	Private _modifier_date As System.Nullable(Of Date)
-	
-	Private _modifier_by1 As String
-	
 	Private _time_end As System.Nullable(Of Date)
 	
 	Private _time_trade As String
 	
-	Private _cust_halt As System.Nullable(Of Char)
-	
 	Private _admin_halt As System.Nullable(Of Char)
 	
-	Private _discount As System.Nullable(Of Double)
+	Private _discount_buy As System.Nullable(Of Double)
+	
+	Private _discount_sell As System.Nullable(Of Double)
+	
+	Private _cust_halt As String
+	
+	Private _cust_level As Integer
 	
 	Public Sub New()
 		MyBase.New
@@ -13006,223 +12974,6 @@ Partial Public Class getStockOnlineForPriceResult
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_user_id", DbType:="Int NOT NULL")>  _
-	Public Property user_id() As Integer
-		Get
-			Return Me._user_id
-		End Get
-		Set
-			If ((Me._user_id = value)  _
-						= false) Then
-				Me._user_id = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cust_id", DbType:="VarChar(5)")>  _
-	Public Property cust_id() As String
-		Get
-			Return Me._cust_id
-		End Get
-		Set
-			If (String.Equals(Me._cust_id, value) = false) Then
-				Me._cust_id = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_username", DbType:="VarChar(50)")>  _
-	Public Property username() As String
-		Get
-			Return Me._username
-		End Get
-		Set
-			If (String.Equals(Me._username, value) = false) Then
-				Me._username = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_password", DbType:="VarChar(50)")>  _
-	Public Property password() As String
-		Get
-			Return Me._password
-		End Get
-		Set
-			If (String.Equals(Me._password, value) = false) Then
-				Me._password = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_role", DbType:="VarChar(50)")>  _
-	Public Property role() As String
-		Get
-			Return Me._role
-		End Get
-		Set
-			If (String.Equals(Me._role, value) = false) Then
-				Me._role = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cust_level", DbType:="Int")>  _
-	Public Property cust_level() As System.Nullable(Of Integer)
-		Get
-			Return Me._cust_level
-		End Get
-		Set
-			If (Me._cust_level.Equals(value) = false) Then
-				Me._cust_level = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_active", DbType:="Char(1)")>  _
-	Public Property active() As System.Nullable(Of Char)
-		Get
-			Return Me._active
-		End Get
-		Set
-			If (Me._active.Equals(value) = false) Then
-				Me._active = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_halt1", DbType:="Char(1)")>  _
-	Public Property halt1() As System.Nullable(Of Char)
-		Get
-			Return Me._halt1
-		End Get
-		Set
-			If (Me._halt1.Equals(value) = false) Then
-				Me._halt1 = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_reg_code", DbType:="NVarChar(50)")>  _
-	Public Property reg_code() As String
-		Get
-			Return Me._reg_code
-		End Get
-		Set
-			If (String.Equals(Me._reg_code, value) = false) Then
-				Me._reg_code = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_first_trade", DbType:="Char(1)")>  _
-	Public Property first_trade() As System.Nullable(Of Char)
-		Get
-			Return Me._first_trade
-		End Get
-		Set
-			If (Me._first_trade.Equals(value) = false) Then
-				Me._first_trade = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_lock_time", DbType:="DateTime")>  _
-	Public Property lock_time() As System.Nullable(Of Date)
-		Get
-			Return Me._lock_time
-		End Get
-		Set
-			If (Me._lock_time.Equals(value) = false) Then
-				Me._lock_time = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_online", DbType:="Char(1)")>  _
-	Public Property online() As System.Nullable(Of Char)
-		Get
-			Return Me._online
-		End Get
-		Set
-			If (Me._online.Equals(value) = false) Then
-				Me._online = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_online_time", DbType:="DateTime")>  _
-	Public Property online_time() As System.Nullable(Of Date)
-		Get
-			Return Me._online_time
-		End Get
-		Set
-			If (Me._online_time.Equals(value) = false) Then
-				Me._online_time = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_online_id", DbType:="VarChar(50)")>  _
-	Public Property online_id() As String
-		Get
-			Return Me._online_id
-		End Get
-		Set
-			If (String.Equals(Me._online_id, value) = false) Then
-				Me._online_id = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_created_date", DbType:="DateTime")>  _
-	Public Property created_date() As System.Nullable(Of Date)
-		Get
-			Return Me._created_date
-		End Get
-		Set
-			If (Me._created_date.Equals(value) = false) Then
-				Me._created_date = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_created_by", DbType:="VarChar(10)")>  _
-	Public Property created_by() As String
-		Get
-			Return Me._created_by
-		End Get
-		Set
-			If (String.Equals(Me._created_by, value) = false) Then
-				Me._created_by = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_modifier_date", DbType:="DateTime")>  _
-	Public Property modifier_date() As System.Nullable(Of Date)
-		Get
-			Return Me._modifier_date
-		End Get
-		Set
-			If (Me._modifier_date.Equals(value) = false) Then
-				Me._modifier_date = value
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_modifier_by1", DbType:="VarChar(10)")>  _
-	Public Property modifier_by1() As String
-		Get
-			Return Me._modifier_by1
-		End Get
-		Set
-			If (String.Equals(Me._modifier_by1, value) = false) Then
-				Me._modifier_by1 = value
-			End If
-		End Set
-	End Property
-	
 	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_time_end", DbType:="DateTime")>  _
 	Public Property time_end() As System.Nullable(Of Date)
 		Get
@@ -13247,18 +12998,6 @@ Partial Public Class getStockOnlineForPriceResult
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cust_halt", DbType:="Char(1)")>  _
-	Public Property cust_halt() As System.Nullable(Of Char)
-		Get
-			Return Me._cust_halt
-		End Get
-		Set
-			If (Me._cust_halt.Equals(value) = false) Then
-				Me._cust_halt = value
-			End If
-		End Set
-	End Property
-	
 	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_admin_halt", DbType:="NChar(1)")>  _
 	Public Property admin_halt() As System.Nullable(Of Char)
 		Get
@@ -13271,14 +13010,51 @@ Partial Public Class getStockOnlineForPriceResult
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_discount", DbType:="Float")>  _
-	Public Property discount() As System.Nullable(Of Double)
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_discount_buy", DbType:="Float")>  _
+	Public Property discount_buy() As System.Nullable(Of Double)
 		Get
-			Return Me._discount
+			Return Me._discount_buy
 		End Get
 		Set
-			If (Me._discount.Equals(value) = false) Then
-				Me._discount = value
+			If (Me._discount_buy.Equals(value) = false) Then
+				Me._discount_buy = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_discount_sell", DbType:="Float")>  _
+	Public Property discount_sell() As System.Nullable(Of Double)
+		Get
+			Return Me._discount_sell
+		End Get
+		Set
+			If (Me._discount_sell.Equals(value) = false) Then
+				Me._discount_sell = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cust_halt", DbType:="VarChar(1) NOT NULL", CanBeNull:=false)>  _
+	Public Property cust_halt() As String
+		Get
+			Return Me._cust_halt
+		End Get
+		Set
+			If (String.Equals(Me._cust_halt, value) = false) Then
+				Me._cust_halt = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cust_level", DbType:="Int NOT NULL")>  _
+	Public Property cust_level() As Integer
+		Get
+			Return Me._cust_level
+		End Get
+		Set
+			If ((Me._cust_level = value)  _
+						= false) Then
+				Me._cust_level = value
 			End If
 		End Set
 	End Property

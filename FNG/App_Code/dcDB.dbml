@@ -744,7 +744,7 @@
     </ElementType>
   </Function>
   <Function Name="dbo.getStockOnlineForPrice" Method="getStockOnlineForPrice">
-    <Parameter Name="cust_id" Type="System.String" DbType="VarChar(5)" />
+    <Parameter Name="cust_id" Type="System.String" DbType="VarChar(6)" />
     <ElementType Name="getStockOnlineForPriceResult">
       <Column Name="stock_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
@@ -794,29 +794,13 @@
       <Column Name="fx_bid" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="fx_ask" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="melting_cost" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="cust_id" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
-      <Column Name="username" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="role" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="cust_level" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="active" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
-      <Column Name="halt1" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
-      <Column Name="reg_code" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="first_trade" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
-      <Column Name="lock_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="online" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
-      <Column Name="online_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="online_id" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="created_by" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
-      <Column Name="modifier_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="modifier_by1" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Column Name="time_end" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="time_trade" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
-      <Column Name="cust_halt" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
       <Column Name="admin_halt" Type="System.Char" DbType="NChar(1)" CanBeNull="true" />
-      <Column Name="discount" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="discount_buy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="discount_sell" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="cust_halt" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_level" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
 </Database>

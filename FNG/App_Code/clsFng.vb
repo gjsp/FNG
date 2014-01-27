@@ -3,13 +3,15 @@ Imports System.Data.SqlClient
 Imports System.Data
 
 Public Class clsFng
-    Private Shared strcon As String = ConfigurationManager.ConnectionStrings("GTCConnectionString").ConnectionString
+    Private Shared strcon As String = ConfigurationManager.ConnectionStrings("FNGConnectionString").ConnectionString
 
     Public Shared msgPriceSelect As String = "--โปรดเลือก--"
     Public Shared p96 As String = "96"
     Public Shared p96g As String = "96G"
     Public Shared p96m As String = "96M"
     Public Shared p99 As String = "99"
+    Public Shared buy As String = "buy"
+    Public Shared sell As String = "sell"
     Public Shared dps As String = "Deposit"
     Public Shared wd As String = "Withdraw"
     Public Const strOnline As String = "L"

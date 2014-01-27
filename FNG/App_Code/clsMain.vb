@@ -1232,7 +1232,7 @@ Public Class clsMain
             Dim con As New SqlConnection(strcon)
             Dim cmd As New SqlCommand(sql, con)
 
-            Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 5)
+            Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 10)
             parameter.Value = str
             cmd.Parameters.Add(parameter)
 
@@ -1295,7 +1295,7 @@ Public Class clsMain
             Dim con As New SqlConnection(strcon)
             Dim cmd As New SqlCommand(sql, con)
 
-            Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 5)
+            Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 10)
             parameter.Value = str
             cmd.Parameters.Add(parameter)
 
@@ -1346,7 +1346,7 @@ Public Class clsMain
             Dim con As New SqlConnection(strcon)
             Dim cmd As New SqlCommand(sql, con)
 
-            Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 5)
+            Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 10)
             parameter.Value = str
             cmd.Parameters.Add(parameter)
 
@@ -1391,7 +1391,7 @@ Public Class clsMain
             Dim con As New SqlConnection(strcon)
             Dim cmd As New SqlCommand(sql, con)
 
-            Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 5)
+            Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 10)
             parameter.Value = cust_id
             cmd.Parameters.Add(parameter)
 
@@ -1590,7 +1590,7 @@ Public Class clsMain
 
                 cmd = New SqlCommand(sql + sql_dep + sql_act, con)
 
-                Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 5)
+                Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 10)
                 parameter.Value = cust_id
                 cmd.Parameters.Add(parameter)
 
@@ -2256,11 +2256,11 @@ Public Class clsMain
             End If
 
             Dim sql As String = " select trade_id,ref_no,case leave_order when 'n' then 'order' when 'y' then 'leave order' else '' end as leave_order, " & _
-                                " tc.modifier_date,tc.created_date,type,firstname,ip,gold_type_id,price,quantity,amount,mode,reject_type,cust_level, " & _
+                                " tc.modifier_date,tc.created_date,type,firstname,ip,gold_type_id,price,quantity,amount,mode,reject_type, " & _
                                 " " + sql_max_trade_id + " " & _
                                 " ,case when gold_type_id= '96' then price/.965 else price end as price_compare " & _
-                                " from trade tc,customer cu,usernames un " & _
-                                " where tc.cust_id = cu.cust_id and cu.cust_id = un.cust_id " & _
+                                " from trade tc,customer cu " & _
+                                " where tc.cust_id = cu.cust_id " & _
                                 " AND (type =  @type or @type = '' ) " & _
                                 " " + sql_leave + " " & _
                                 " " + sql_period + " " & _

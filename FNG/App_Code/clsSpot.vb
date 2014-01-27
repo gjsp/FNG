@@ -34,7 +34,8 @@ Public Class clsSpot
         Public maxKg As Double
         Public maxMn As Double
         Public rangeLeave As Double
-        Public discount As Double
+        Public discountBuy As Double
+        Public discountSell As Double
 
     End Structure
 
@@ -100,7 +101,7 @@ Public Class clsSpot
 
     End Function
 
-    Public Shared Function getSpotPriceForCust(cust_id As String) As SpotPrice
+    Public Shared Function getSpotPriceForCust(cust_id As String, Optional sale_id As String = "") As SpotPrice
 
         'Calculate Solution Finest Gold
         Dim sp As SpotPrice
@@ -157,10 +158,15 @@ Public Class clsSpot
         sp.ask96Mn = sp.ask96Bg + 10
         sp.bid96Mn = sp.bid96Bg - 10
 
-        If st.discount Is Nothing Then
-            sp.discount = 0
+        If st.discount_buy Is Nothing Then
+            sp.discountBuy = 0
         Else
-            sp.discount = st.discount
+            sp.discountBuy = st.discount_buy
+        End If
+        If st.discount_sell Is Nothing Then
+            sp.discountSell = 0
+        Else
+            sp.discountSell = st.discount_sell
         End If
 
         Return sp

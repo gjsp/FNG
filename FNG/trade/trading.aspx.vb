@@ -194,6 +194,7 @@ Partial Class trading
                 dr(dt.leave_orderColumn) = "n"
                 dr(dt.ipColumn) = Request.UserHostAddress
                 dr(dt.created_byColumn) = Session(clsManage.iSession.user_id.ToString).ToString
+                dr(dt.modifier_byColumn) = Session(clsManage.iSession.user_id.ToString).ToString
                 dr(dt.created_dateColumn) = DateTime.Now
                 dr(dt.modifier_dateColumn) = DateTime.Now
 

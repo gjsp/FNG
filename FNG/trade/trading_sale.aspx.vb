@@ -115,7 +115,7 @@ Partial Class trading_sale
                 clsManage.alert(Page, "หมดเวลาในการซื้อขาย โปรดทำรายการใหม่อีกครั้ง") : Exit Sub
             End If
 
-            If ucPortFolio.CustID = "" Then
+            If ucCustomer.CustID = "" Then
                 clsManage.alert(Page, "โปรดเลือกรายชื่อลูกค้า") : Exit Sub
             End If
 
@@ -138,20 +138,24 @@ Partial Class trading_sale
                 dr(dt.gold_type_idColumn) = gold_type
                 dr(dt.priceColumn) = price
                 Dim amount As Double = 0
-                Dim discount As Double = spo.discount
+                Dim discount As Double = 0
+                ' customer Sell ต้องบวกราคาให้,Customer Buy ต้องลดราคาให้                '
+                If type = clsFng.buy Then
+                    discount = -spo.discountBuy
+                Else
+                    discount = spo.discountSell
+                End If
 
                 If mini = True Then 'mini = true  then type is 96
-                    'dr(dt.priceColumn) = IIf(type = "sell", hdfBid96Mini.Value, hdfAsk96Mini.Value)
                     dr(dt.purity96Column) = "M"
                     dr(dt.quantityColumn) = ddl96MiniQuan.SelectedValue
                     amount = (dr(dt.quantityColumn) * dr(dt.priceColumn))
                 Else
-                    'dr(dt.priceColumn) = price
                     dr(dt.quantityColumn) = IIf(gold_type = "96", ddl96Quan.SelectedValue, ddl99Quan.SelectedValue)
                     If gold_type = "96" Then
-                        amount = dr(dt.quantityColumn) * (dr(dt.priceColumn) - discount)
+                        amount = dr(dt.quantityColumn) * (dr(dt.priceColumn) + discount)
                     Else
-                        amount = dr(dt.quantityColumn) * (((dr(dt.priceColumn) - discount) * 656) / 10)
+                        amount = dr(dt.quantityColumn) * (((dr(dt.priceColumn) + discount) * 656) / 10)
                     End If
                 End If
 
@@ -159,8 +163,11 @@ Partial Class trading_sale
                 dr(dt.leave_orderColumn) = "n"
                 dr(dt.ipColumn) = Request.UserHostAddress
                 dr(dt.created_byColumn) = Session(clsManage.iSession.user_id.ToString).ToString
+                dr(dt.modifier_byColumn) = Session(clsManage.iSession.user_id.ToString).ToString
                 dr(dt.created_dateColumn) = DateTime.Now
                 dr(dt.modifier_dateColumn) = DateTime.Now
+                'For Insert in tbl Tickets
+                dr(dt.sale_idColumn) = Session(clsManage.iSession.cust_id.ToString).ToString
 
                 If clsMain.checkTranBeforeAccept(CInt(price).ToString, type, IIf(gold_type = clsFng.p96, gold_type, clsFng.p99), dr(dt.quantityColumn).ToString) Then
                     dr(dt.accept_typeColumn) = "A"
@@ -326,10 +333,31 @@ Partial Class trading_sale
 
     Protected Sub imgSearchCust_Click(sender As Object, e As ImageClickEventArgs) Handles imgSearchCust.Click
         Try
-            If hdfCust_id.Value = "" Then Exit Sub
-            ucPortFolio.CustID = hdfCust_id.Value
-            ucPortFolio.LoadPortFolio()
-          
+            Dim cust_id As String = txtCustName.Text
+            If Not hdfCust_id.Value = "" And cust_id.Contains(hdfCust_id.Value) Then
+                ucCustomer.CustID = hdfCust_id.Value
+                ucCustomer.LoadPortFolio()
+            Else
+                ucCustomer.CustID = cust_id
+                ucCustomer.LoadPortFolio()
+                clsManage.Script(Page, " document.getElementById('ctl00_MainContent_hdfCust_id').value = '" + ucCustomer.CustID + "';", "cust")
+            End If
+            'no set hdfcustid.value in code behide
+
+            'If IsNumeric(cust_id) And cust_id.Length = 5 Then
+            '    ucCustomer.CustID = cust_id
+            '    ucCustomer.LoadPortFolio()
+
+            '    'hdfCust_id.Value = cust_id
+            '    clsManage.Script(Page, " document.getElementById('ctl00_MainContent_hdfCust_id').value = '" + cust_id + "';", "cust")
+            'Else
+            '    If hdfCust_id.Value = "" Then
+            '        ucCustomer.CustID = ""
+            '    Else
+            '        ucCustomer.CustID = hdfCust_id.Value
+            '    End If
+            '    ucCustomer.LoadPortFolio()
+            'End If
         Catch ex As Exception
             clsManage.alert(Page, ex.Message)
         End Try

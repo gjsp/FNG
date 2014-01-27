@@ -29,7 +29,8 @@ Partial Class customer_detail
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
-            txtDiscount.Attributes.Add("style", "text-align:right;")
+            txtDisBuy.Attributes.Add("style", "text-align:right;")
+            txtDisSell.Attributes.Add("style", "text-align:right;")
             txtCredit_cash.Attributes.Add("style", "text-align:right;")
             txtQuan96.Attributes.Add("style", "text-align:right;")
             txtQuan99N.Attributes.Add("style", "text-align:right;")
@@ -40,7 +41,8 @@ Partial Class customer_detail
             txtMobilePhone.Attributes.Add("onkeypress", "numberOnly();")
             txtIDCard.Attributes.Add("onkeypress", "numberOnly();")
             txtFreeMargin.Attributes.Add("onkeypress", "numberOnly();")
-            txtDiscount.Attributes.Add("onkeypress", "numberOnly();")
+            txtDisBuy.Attributes.Add("onkeypress", "numberOnly();")
+            txtDisSell.Attributes.Add("onkeypress", "numberOnly();")
             hdfPwd.Value = clsDB.getStockField("pwd_auth")
 
             txtCredit_cash.Text = "0"
@@ -120,15 +122,16 @@ Partial Class customer_detail
                     txtQuan96.Text = clsManage.convert2StringNormal(dr("quan_96").ToString)
                     txtQuan99N.Text = clsManage.convert2StringNormal(dr("quan_99N").ToString)
                     txtFreeMargin.Text = clsManage.convert2StringNormal(dr("free_margin").ToString)
-                    If dr("VIP") IsNot DBNull.Value Then
-                        cbVIP.Checked = dr("VIP")
-                        If Not dr("VIP") Then
-                            txtDiscount.Enabled = False
-                        End If
-                    Else
-                        txtDiscount.Enabled = False
-                    End If
-                    txtDiscount.Text = dr("discount").ToString
+                    'If dr("VIP") IsNot DBNull.Value Then
+                    '    cbVIP.Checked = dr("VIP")
+                    '    If Not dr("VIP") Then
+                    '        txtDiscount.Enabled = False
+                    '    End If
+                    'Else
+                    '    txtDiscount.Enabled = False
+                    'End If
+                    txtDisBuy.Text = dr("discount_buy").ToString
+                    txtDisSell.Text = dr("discount_sell").ToString
 
                     If Not IsDBNull(dr("margin_unlimit")) Then
                         cbUnlimitedMargin.Checked = dr("margin_unlimit")
@@ -182,7 +185,7 @@ Partial Class customer_detail
                 txtBankName2.Text, txtBankAccNo2.Text, txtBankAccName2.Text, txtBankAccType2.Text, txtBankAccBranch2.Text, _
                 txtBankName3.Text, txtBankAccNo3.Text, txtBankAccName3.Text, txtBankAccType3.Text, txtBankAccBranch3.Text, _
                 txtMobilePhone.Text, txtTel.Text, txtFax.Text, cash_credit, txtRemark.Text, 0, 0, quan96, quan99, Session(clsManage.iSession.user_id_center.ToString).ToString, "", _
-                0, freeMargin, cbUnlimitedMargin.Checked, cbVIP.Checked, IIf(txtDiscount.Text.Trim = "", 0, txtDiscount.Text))
+                0, freeMargin, cbUnlimitedMargin.Checked, cbVIP.Checked, IIf(txtDisBuy.Text.Trim = "", 0, txtDisBuy.Text), IIf(txtDisSell.Text.Trim = "", 0, txtDisSell.Text))
                 If result <> "" Then
                     Dim type As String = ""
                     Dim pure As String = ""
@@ -270,35 +273,27 @@ Partial Class customer_detail
             If Request.QueryString("id") IsNot Nothing Then
                 If Not validatetion() Then Exit Sub
                 Dim cust_id = Request.QueryString("id").ToString
-                Dim cash_credit As Double = 0
-                Dim quan96 As Double = 0
-                Dim quan99 As Double = 0
+                Dim cash_credit As Double = 0 : If txtCredit_cash.Text.Trim <> "" Then cash_credit = txtCredit_cash.Text
+                Dim quan96 As Double = 0 : If txtQuan96.Text.Trim <> "" Then quan96 = txtQuan96.Text
+                Dim quan99 As Double = 0 : If txtQuan99N.Text.Trim <> "" Then quan99 = txtQuan99N.Text
                 'Dim quan99L As Double = 0
                 Dim tradeLimit As Double = 0
-                Dim freeMargin As Double = IIf(txtFreeMargin.Text.Trim = "", 0, txtFreeMargin.Text)
-
-                If txtQuan96.Text.Trim <> "" Then quan96 = txtQuan96.Text
-                If txtQuan99N.Text.Trim <> "" Then quan99 = txtQuan99N.Text
-
-                If txtCredit_cash.Text.Trim <> "" Then cash_credit = txtCredit_cash.Text
+                Dim freeMargin As Double = 0 : If txtFreeMargin.Text.Trim <> "" Then freeMargin = txtFreeMargin.Text ': IIf(txtFreeMargin.Text.Trim = "", 0, txtFreeMargin.Text)
 
                 Dim da As New dsTableAdapters.customerTableAdapter
                 Dim birthday As Date = DateTime.ParseExact(ddlday.SelectedValue + "/" + ddlMonth.SelectedValue + "/" + ddlYear.SelectedValue, clsManage.formatDateTime, Nothing) ' ddlday.SelectedValue + ddlMonth.SelectedValue + ddlYear.SelectedValue
 
-                'Dim fNameEng As String = txtFnameEngz1.Text + txtFnameEngz2.Text + txtFnameEngz3.Text + txtFnameEngz4.Text + txtFnameEngz5.Text + txtFnameEngz6.Text + txtFnameEngz7.Text + txtFnameEngz8.Text + txtFnameEngz9.Text + txtFnameEngz10.Text + txtFnameEngz11.Text + txtFnameEngz12.Text + txtFnameEngz13.Text + txtFnameEngz14.Text + txtFnameEngz15.Text + txtFnameEngz16.Text
-                'Dim lNameEng As String = txtLnameEngz1.Text + txtLnameEngz2.Text + txtLnameEngz3.Text + txtLnameEngz4.Text + txtLnameEngz5.Text + txtLnameEngz6.Text + txtLnameEngz7.Text + txtLnameEngz8.Text + txtLnameEngz9.Text + txtLnameEngz10.Text + txtLnameEngz11.Text + txtLnameEngz12.Text + txtLnameEngz13.Text + txtLnameEngz14.Text + txtLnameEngz15.Text + txtLnameEngz16.Text
                 Dim idCard As String = txtIDCard.Text
-                Dim discount As Double = 0
-                If txtDiscount.Text.Trim <> "" Then
-                    discount = txtDiscount.Text
-                End If
+                Dim disBuy As Double = 0 : If txtDisBuy.Text.Trim <> "" Then disBuy = txtDisBuy.Text
+                Dim disSell As Double = 0 : If txtDisSell.Text.Trim <> "" Then disSell = txtDisSell.Text
+
                 Dim result As Integer = da.UpdateQuery(cust_id, "", rdoType.SelectedValue, ddlTitle.SelectedValue, txtFname.Text, txtLname.Text, txtPerson.Text, txtAddress.Text, _
                 txtBankName1.Text, txtBankAccNo1.Text, txtBankAccName1.Text, txtBankAccType1.Text, txtBankAccBranch1.Text, _
                 txtBankName2.Text, txtBankAccNo2.Text, txtBankAccName2.Text, txtBankAccType2.Text, txtBankAccBranch2.Text, _
                 txtBankName3.Text, txtBankAccNo3.Text, txtBankAccName3.Text, txtBankAccType3.Text, txtBankAccBranch3.Text, _
                 txtMobilePhone.Text, txtTel.Text, txtFax.Text, txtRemark.Text, cash_credit, 0, 0, _
-                quan96, quan99, "", txtEmail.Text, txtFnameEng.Text, txtLnameEng.Text, idCard, birthday, freeMargin, tradeLimit, cbUnlimitedMargin.Checked, cbVIP.Checked, discount)
-                'Dim result As Integer = 0
+                quan96, quan99, "", txtEmail.Text, txtFnameEng.Text, txtLnameEng.Text, idCard, birthday, freeMargin, tradeLimit, cbUnlimitedMargin.Checked, cbVIP.Checked, disBuy, disSell)
+
                 If result > 0 Then
 
                     If cbCreateTradeOnline.Checked = True Then
@@ -376,11 +371,11 @@ Partial Class customer_detail
         System.Threading.Thread.Sleep(udPgs.DisplayAfter + 300)
     End Sub
 
-    Protected Sub cbVIP_CheckedChanged(sender As Object, e As EventArgs) Handles cbVIP.CheckedChanged
-        txtDiscount.Enabled = cbVIP.Checked
-        txtDiscount.Text = ""
-        If cbVIP.Checked Then
-            txtDiscount.Focus()
-        End If
-    End Sub
+    'Protected Sub cbVIP_CheckedChanged(sender As Object, e As EventArgs) Handles cbVIP.CheckedChanged
+    '    txtDiscount.Enabled = cbVIP.Checked
+    '    txtDiscount.Text = ""
+    '    If cbVIP.Checked Then
+    '        txtDiscount.Focus()
+    '    End If
+    'End Sub
 End Class

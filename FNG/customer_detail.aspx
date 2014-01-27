@@ -91,7 +91,7 @@
         <asp:UpdatePanel ID="udpMain" runat="server">
             <ContentTemplate>
                 <asp:Panel ID="pnMain" runat="server">
-                    <table border="0" cellpadding="2">
+                    ell<table border="0" cellpadding="2">
                          <tr id="trFolio" style="display: block">
                             <td valign="top">
                                 Link to :
@@ -507,11 +507,14 @@
                             <td>
                                 <%--  <asp:LinkButton ID="linkReset" runat="server" OnClientClick="showConfirmReset(this); return false;"
                                 Text="Reset Username and Password"></asp:LinkButton>--%>
-                                <asp:CheckBox ID="cbVIP" runat="server" AutoPostBack="True" Text="VIP" />
-                                <div>
-                                    Discount
-                                    <asp:TextBox ID="txtDiscount" runat="server" Width="100px"></asp:TextBox>
-                                </div>
+                                <asp:CheckBox ID="cbVIP" runat="server" AutoPostBack="False" Text="VIP" />
+                                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                                    Buy
+                                    <asp:TextBox ID="txtDisBuy" runat="server" Width="80px"></asp:TextBox>
+                                &nbsp;&nbsp;&nbsp;
+                                    Sell&nbsp;
+                                    <asp:TextBox ID="txtDisSell" runat="server" Width="80px"></asp:TextBox>
+                               
                             </td>
                         </tr>
                          <tr>

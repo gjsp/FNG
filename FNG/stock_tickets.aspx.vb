@@ -401,7 +401,7 @@ Partial Class stock_tickets
             End If
 
             'check Payment
-            If gvTicket.Rows(i).Cells(6).Text = "" Then
+            If gvTicket.Rows(i).Cells(6).Text = "" Or gvTicket.Rows(i).Cells(6).Text = "&nbsp;" Then
                 clsManage.alert(Page, "Please Update Payment in Ticket.")
                 Exit Sub
             End If

@@ -223,7 +223,7 @@ Public Class clsStore
             Dim gcapPrice As String = ws.getPrice("LSH")
 
             Dim cma = "," : Dim l As String = "|" : Dim shp As String = "#"
-            Dim level As Integer = s.cust_level - 1
+            Dim level As Integer = 1
 
             c.bid99 = gcapPrice.Split(shp)(0).Split(l)(0).Split(cma)(level)
             c.ask99 = gcapPrice.Split(shp)(0).Split(l)(1).Split(cma)(level)

@@ -7,7 +7,7 @@ Imports System.Configuration.ConfigurationManager
 Imports System.Configuration
 
 Public Class clsDB
-    Public Shared strcon As String = ConfigurationManager.ConnectionStrings("GTCConnectionString").ConnectionString
+    Public Shared strcon As String = ConfigurationManager.ConnectionStrings("FNGConnectionString").ConnectionString
     Public Shared ReadOnly urlHome As String = "Default.aspx"
 
     Public Shared Function getTime(ByVal tDate As DateTime) As DateTime
@@ -322,7 +322,7 @@ Public Class clsDB
             Dim con As New SqlConnection(strcon)
             Dim cmd As New SqlCommand(sql, con)
 
-            Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 5)
+            Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 10)
             parameter.Value = cust_id
             cmd.Parameters.Add(parameter)
 
@@ -434,7 +434,7 @@ Public Class clsDB
         End Try
     End Function
 
-    Public Shared Function insertCustomer(ByVal cust_refno As String, ByVal cust_type_id As String, ByVal titlename As String, ByVal firstname As String, ByVal lastname As String, ByVal firstnameEng As String, ByVal lastnameEng As String, ByVal idCard As String, ByVal birthday As Date, ByVal email As String, ByVal person_contact As String, ByVal bill_address As String, ByVal bank1 As String, ByVal account_no1 As String, ByVal account_name1 As String, ByVal account_type1 As String, ByVal account_branch1 As String, ByVal bank2 As String, ByVal account_no2 As String, ByVal account_name2 As String, ByVal account_type2 As String, ByVal account_branch2 As String, ByVal bank3 As String, ByVal account_no3 As String, ByVal account_name3 As String, ByVal account_type3 As String, ByVal account_branch3 As String, ByVal mobilePhone As String, ByVal tel As String, ByVal fax As String, ByVal cash_credit As String, ByVal remark As String, ByVal margin As String, ByVal margin_call As String, ByVal quan_96 As String, ByVal quan_99 As String, ByVal created_by As String, ByVal team_id As String, ByVal trade_limit As String, ByVal free_margin As String, margin_unlimit As Boolean, VIP As Boolean, discount As Double) As String
+    Public Shared Function insertCustomer(ByVal cust_refno As String, ByVal cust_type_id As String, ByVal titlename As String, ByVal firstname As String, ByVal lastname As String, ByVal firstnameEng As String, ByVal lastnameEng As String, ByVal idCard As String, ByVal birthday As Date, ByVal email As String, ByVal person_contact As String, ByVal bill_address As String, ByVal bank1 As String, ByVal account_no1 As String, ByVal account_name1 As String, ByVal account_type1 As String, ByVal account_branch1 As String, ByVal bank2 As String, ByVal account_no2 As String, ByVal account_name2 As String, ByVal account_type2 As String, ByVal account_branch2 As String, ByVal bank3 As String, ByVal account_no3 As String, ByVal account_name3 As String, ByVal account_type3 As String, ByVal account_branch3 As String, ByVal mobilePhone As String, ByVal tel As String, ByVal fax As String, ByVal cash_credit As String, ByVal remark As String, ByVal margin As String, ByVal margin_call As String, ByVal quan_96 As String, ByVal quan_99 As String, ByVal created_by As String, ByVal team_id As String, ByVal trade_limit As String, ByVal free_margin As String, margin_unlimit As Boolean, VIP As Boolean, discount_buy As Double, discount_sell As Double) As String
         Try
             Dim con As New SqlConnection(strcon)
             con.Open()
@@ -490,8 +490,8 @@ Public Class clsDB
                                                     "", "0", "", "Gold", created_by, gold_type, quan_99, "0", "999", "", "ฝากทอง", "D/W", price, G96, G99, cust_id, "000", "ฝากทองในการลงทะเบียนครั้งแรก", "", cash_stock, trans_stock, cheq_stock)
                 End If
 
-                sql = "INSERT INTO [customer] ([cust_id], [cust_refno], [cust_type_id], [titlename], [firstname], [lastname], [firstname_eng], [lastname_eng], [email], [id_card], [birthday], [person_contact], [bill_address], [bank1], [account_no1], [account_name1], [account_type1], [account_branch1], [bank2], [account_no2], [account_name2], [account_type2], [account_branch2], [bank3], [account_no3], [account_name3], [account_type3], [account_branch3], [mobile], [tel], [fax], [remark], [cash_credit], [margin], [margin_call], [quan_96], [quan_99N], [created_by], [created_date], [team_id], [trade_limit], [free_margin],[margin_unlimit],[VIP],[discount]) VALUES " & _
-                      "(@cust_id, @cust_refno, @cust_type_id, @titlename, @firstname, @lastname, @firstname_eng, @lastname_eng, @email, @id_card, @birthday, @person_contact, @bill_address, @bank1, @account_no1, @account_name1, @account_type1, @account_branch1, @bank2, @account_no2, @account_name2, @account_type2, @account_branch2, @bank3, @account_no3, @account_name3, @account_type3, @account_branch3, @mobile, @tel, @fax, @remark, @cash_credit, @margin, @margin_call, @quan_96, @quan_99N,@created_by,getdate(),@team_id,@trade_limit,@free_margin,@margin_unlimit,@VIP,@discount)"
+                sql = "INSERT INTO [customer] ([cust_id], [cust_refno], [cust_type_id], [titlename], [firstname], [lastname], [firstname_eng], [lastname_eng], [email], [id_card], [birthday], [person_contact], [bill_address], [bank1], [account_no1], [account_name1], [account_type1], [account_branch1], [bank2], [account_no2], [account_name2], [account_type2], [account_branch2], [bank3], [account_no3], [account_name3], [account_type3], [account_branch3], [mobile], [tel], [fax], [remark], [cash_credit], [margin], [margin_call], [quan_96], [quan_99N], [created_by], [created_date], [team_id], [trade_limit], [free_margin],[margin_unlimit],[VIP],[discount_buy],[discount_sell]) VALUES " & _
+                      "(@cust_id, @cust_refno, @cust_type_id, @titlename, @firstname, @lastname, @firstname_eng, @lastname_eng, @email, @id_card, @birthday, @person_contact, @bill_address, @bank1, @account_no1, @account_name1, @account_type1, @account_branch1, @bank2, @account_no2, @account_name2, @account_type2, @account_branch2, @bank3, @account_no3, @account_name3, @account_type3, @account_branch3, @mobile, @tel, @fax, @remark, @cash_credit, @margin, @margin_call, @quan_96, @quan_99N,@created_by,getdate(),@team_id,@trade_limit,@free_margin,@margin_unlimit,@VIP,@discount_buy,@discount_sell)"
 
                 cmd = New SqlCommand(sql + sql_dep + sql_act, con)
 
@@ -671,10 +671,13 @@ Public Class clsDB
                 parameter.Value = VIP
                 cmd.Parameters.Add(parameter)
 
-                parameter = New SqlParameter("@discount", SqlDbType.Float)
-                parameter.Value = discount
+                parameter = New SqlParameter("@discount_buy", SqlDbType.Float)
+                parameter.Value = discount_buy
                 cmd.Parameters.Add(parameter)
 
+                parameter = New SqlParameter("@discount_sell", SqlDbType.Float)
+                parameter.Value = discount_sell
+                cmd.Parameters.Add(parameter)
                 cmd.Transaction = tr
                 Dim result2 As Integer = cmd.ExecuteNonQuery()
                 If result2 > 0 Then

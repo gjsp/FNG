@@ -3,7 +3,8 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
-<%@ Register Src="~/user_control/ucPortFolio.ascx" TagPrefix="uc1" TagName="ucPortFolio" %>
+<%@ Register Src="~/trade/usercontrol/ucCustomer.ascx" TagPrefix="uc1" TagName="ucCustomer" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script src="../Scripts/jquery-1.4.1.js" type="text/javascript"></script>
@@ -344,20 +345,22 @@
             </div>
         </asp:Panel>
         &nbsp;
-         <div>
-             <asp:TextBox ID="txtCustName" Width="250px" runat="server" />
-                    <ajaxToolkit:AutoCompleteExtender ID="txtCustName_AutoCompleteExtender" runat="server"
-                        DelimiterCharacters="" CompletionInterval="300" Enabled="True" ServicePath="~/gtc.asmx"
-                        UseContextKey="True" CompletionSetCount="20" OnClientItemSelected="onCustAutoCompleteClick"
-                        TargetControlID="txtCustName" ServiceMethod="getCust_nameOnlineList">
-                    </ajaxToolkit:AutoCompleteExtender>
-                    <span style="display:none">
-                    <asp:ImageButton ID="imgSearchCust" runat="server" ImageUrl="~/images/search.bmp"
-                        Style="width: 12px" />
-                    </span>
-             <uc1:ucPortFolio runat="server" ID="ucPortFolio" />
-         </div>
-              &nbsp;
+        <asp:Panel ID="pnCust" runat="server" DefaultButton="imgSearchCust">
+                     <div>
+                         <asp:TextBox ID="txtCustName" Width="250px" runat="server" />
+                         <ajaxToolkit:AutoCompleteExtender ID="txtCustName_AutoCompleteExtender" runat="server"
+                             DelimiterCharacters="" CompletionInterval="300" Enabled="True" ServicePath="~/gtc.asmx"
+                             UseContextKey="True" CompletionSetCount="20" OnClientItemSelected="onCustAutoCompleteClick"
+                             TargetControlID="txtCustName" ServiceMethod="getCust_nameOnlineList">
+                         </ajaxToolkit:AutoCompleteExtender>
+                         <span style="display: none">
+                             <asp:ImageButton ID="imgSearchCust" runat="server" ImageUrl="~/images/search.bmp"
+                                 Style="width: 12px" />
+                         </span>
+                         <uc1:ucCustomer runat="server" ID="ucCustomer" />
+                     </div>
+                 </asp:Panel>
+        &nbsp;
         <fieldset class="k-fieldset">
             <legend class="topic">
                 <img alt="" id="imgSlideOrder" src="admin/image/collapse.jpg" class="slideOrder"
@@ -455,8 +458,6 @@
             </div>
         </fieldset>
         &nbsp;
-        
-        
         <ajaxToolkit:ModalPopupExtender ID="mppAccept" BehaviorID="mppAccept" runat="server"
             TargetControlID="Panel1" PopupControlID="Panel1" OkControlID="btnOk" OnOkScript="okClick();"
             CancelControlID="btnNo" OnCancelScript="cancelClick();" BackgroundCssClass="modalBackground">

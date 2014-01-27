@@ -11,7 +11,7 @@ Imports System.Data.SqlClient
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Public Class gtc
     Inherits System.Web.Services.WebService
-    Public Shared strcon As String = ConfigurationManager.ConnectionStrings("gtcConnectionString").ConnectionString
+    Public Shared strcon As String = ConfigurationManager.ConnectionStrings("FNGConnectionString").ConnectionString
 
     <WebMethod()> _
     Public Function getStockOnline() As String
@@ -140,7 +140,7 @@ Public Class gtc
 
         If dt.Rows.Count > 0 Then
             For Each dr In dt.Rows
-                Dim item As String = AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(dr("firstname").ToString, dr("cust_id").ToString)
+                Dim item As String = AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(dr("cust_id").ToString + " " + dr("firstname").ToString, dr("cust_id").ToString)
                 list.Add(item)
             Next
         End If
