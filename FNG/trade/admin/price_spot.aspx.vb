@@ -47,6 +47,38 @@ Partial Class trade_admin_price_spot
         End Try
     End Sub
 
+    <System.Web.Services.WebMethod()> _
+    Public Shared Function getSpotPriceConfirm(premium As String, fxbid As String, fxask As String, space99kg As String, space99bg As String, space96bg As String, melting As String) As String
+        Dim msg As New StringBuilder
+        Try
+            Dim sp As New clsSpot.SpotPrice
+            Dim spa As New clsSpot.SpotPriceAdmin
+            Dim priceFormatKg As String = "#,##0.00"
+            Dim priceFormat As String = "#,##0"
+
+            spa.premium = premium
+            spa.space99Kg = space99kg
+            spa.space99Bg = space99bg
+            spa.space96Bg = space96bg
+            spa.fxAsk = fxask
+            spa.fxBid = fxbid
+            spa.meltingCost = melting
+
+            sp = clsSpot.getSpotPriceAdmin(spa)
+            'msg.Append("Gold Spot(ดอลลาร์/ออนซ์) <br>&nbsp;&nbsp;&nbsp;ลูกค้าขาย <strong>{0}</strong> &nbsp;&nbsp;&nbsp;ลูกค้าซื้อ <strong>{1}</strong>")
+            'msg.Append("<p>อัตราแลกเปลี่ยน(บาท) <br>&nbsp;&nbsp;&nbsp;ลูกค้าขาย <strong>{2}</strong> &nbsp;&nbsp;&nbsp;ลูกค้าซื้อ <strong>{3}</strong>")
+            msg.Append("<p>ราคาทอง 99.99%(บาท) <br>&nbsp;&nbsp;&nbsp;ลูกค้าขาย <strong>{4}</strong>  &nbsp;&nbsp;&nbsp;ลูกค้าซื้อ <strong>{5}</strong>")
+            msg.Append("<p>ราคาทอง 96.50%(บาท) <br>&nbsp;&nbsp;&nbsp;ลูกค้าขาย <strong>{6}</strong>  &nbsp;&nbsp;&nbsp;ลูกค้าซื้อ <strong>{7}</strong>")
+
+            Return String.Format(msg.ToString, sp.bidSpot.ToString(priceFormatKg), sp.askSpot.ToString(priceFormatKg), _
+                                 sp.bidTHB.ToString(priceFormatKg), sp.askTHB.ToString(priceFormatKg), _
+                                 sp.bid99Bg.ToString(priceFormat), sp.ask99Bg.ToString(priceFormat), sp.bid96Bg.ToString(priceFormat), sp.ask96Bg.ToString(priceFormat))
+        Catch ex As Exception
+            Return ""
+        End Try
+    End Function
+
+
 
     Function validateSave() As Boolean
         Try

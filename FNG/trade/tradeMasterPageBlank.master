@@ -18,6 +18,7 @@
     <form id="form1" runat="server">
     <asp:ScriptManager ID="SM" runat="server" EnablePageMethods="true">
     </asp:ScriptManager>
+         <div align="center">
     <table width="80%" align="center" cellspacing="0" cellpadding="0" border="0" style="margin: 5px 5px 5px 5px">
         <tbody>
             <tr>
@@ -55,7 +56,7 @@
                 </td>
             </tr>
         </tbody>
-    </table>
+    </table></div>
     </form>
 </body>
 </html>

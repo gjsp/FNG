@@ -692,15 +692,15 @@
             CancelControlID="btnNo" OnCancelScript="cancelClick();" BackgroundCssClass="modalBackground">
         </ajaxToolkit:ModalPopupExtender>
         <asp:Panel ID="Panel1" runat="server" Style="display: none" CssClass="modalPopup" DefaultButton="btnOk">
-            <asp:Panel ID="Panel2" runat="server" Style="cursor: move; background-color: #DDDDDD;
-                border: solid 1px Gray; color: Black">
+            <asp:Panel ID="Panel2" runat="server" Style="cursor: move; background-color: #fff;
+                border: solid 0px Gray; color: Black">
                 <div style="text-align: center;">
-                    <p id="pContent" style="text-align: justify; margin: 10px 10px 10px 10px; font-size: small;">
+                    <p id="pContent" style="text-align: center; margin: 50px 20px 20px 20px; font-size:x-large;">
                     </p>
                     <div style="height: 60px">
                         <div id="div_ifmTime" style="display: none">
                             <iframe id="ifmTime" width="100%" height="60px" frameborder="0" scrolling="no" marginheight="0"
-                                marginwidth="0" src="price.aspx"></iframe>
+                                marginwidth="0" src="#"></iframe>
                         </div>
                     </div>
                 </div>
@@ -708,15 +708,15 @@
             <div>
                 <p style="text-align: center;">
                     <asp:Button ID="btnOk" CssClass="buttonPro small black" runat="server" Text="Yes"
-                        Width="50px" />
+                        Width="90px" />&nbsp;&nbsp;
                     <asp:Button ID="btnNo" CssClass="buttonPro small black" runat="server" Text="No"
-                        Width="50px" />
+                        Width="90px" />
                 </p>
             </div>
         </asp:Panel>
         <div>
             <ajaxToolkit:ModalPopupExtender ID="mppDelay" runat="server" TargetControlID="pnDelay"
-                PopupControlID="pnDelay" BackgroundCssClass="modalBackground">
+                PopupControlID="pnDelay" BackgroundCssClass="modalBackgroundProgress">
             </ajaxToolkit:ModalPopupExtender>
         </div>
         <div style="display: none">

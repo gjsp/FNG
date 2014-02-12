@@ -33,7 +33,7 @@
      
         function OnFailed(error, userContext, methodName) { }
     </script>
-    <style>
+    <style type="text/css">
     .bidtxt
 {
     text-align: right;

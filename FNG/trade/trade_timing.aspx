@@ -17,10 +17,10 @@
     <div>
         <asp:ScriptManager ID="SMTime" EnablePageMethods="true" runat="server">
         </asp:ScriptManager>
-        <div id="dialog" align="center" style="width:400;height:200px">
+        <div id="dialog" align="center" style="height:200px">
             <asp:UpdatePanel ID="upTimer" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <asp:Label ID="lblCount" runat="server" Font-Bold="true" ForeColor="Red" Font-Size="XX-Large"></asp:Label>
+                    <asp:Label ID="lblCount" runat="server" Font-Bold="True" ForeColor="Red"  Font-Size="50px"></asp:Label>
                 </ContentTemplate>
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="tmTime" EventName="Tick" />

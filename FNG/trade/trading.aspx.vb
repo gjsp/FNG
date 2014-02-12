@@ -118,7 +118,7 @@ Partial Class trading
                 Return False
             End If
 
-            Dim msgTradeLimit As String = clsFng.checkGuarantee(hdfCust_id.Value, type, purity, quantity)
+            Dim msgTradeLimit As String = clsFng.checkGuarantee(hdfCust_id.Value, type, purity, quantity, False, True)
             If msgTradeLimit <> "" Then
                 clsManage.alert(Page, msgTradeLimit)
                 Return False
@@ -253,7 +253,7 @@ Partial Class trading
                 If Not checkMaxTrade(IIf(gold_type = clsFng.p96, ddl96QuanLeave.SelectedValue, ddl99QuanLeave.SelectedValue), gold_type, spo) Then clsManage.alert(Page, "ซื้อขายเกินกว่าปริมาณที่กำหนด", IIf(gold_type = "96", ddl96QuanLeave.ClientID, ddl99QuanLeave.ClientID)) : Exit Sub
             End If
 
-            Dim msgTradeLimit As String = clsFng.checkGuarantee(hdfCust_id.Value, type, gold_type, IIf(gold_type = clsFng.p96, ddl96QuanLeave.SelectedValue, ddl99QuanLeave.SelectedValue), True)
+            Dim msgTradeLimit As String = clsFng.checkGuarantee(hdfCust_id.Value, type, gold_type, IIf(gold_type = clsFng.p96, ddl96QuanLeave.SelectedValue, ddl99QuanLeave.SelectedValue), True, True)
             If msgTradeLimit <> "" Then clsManage.alert(Page, msgTradeLimit) : Exit Sub
             Threading.Thread.Sleep(2000)
 

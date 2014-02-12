@@ -90,7 +90,7 @@ Partial Class trading_sale
                 Return False
             End If
 
-            Dim msgTradeLimit As String = clsFng.checkGuarantee(hdfCust_id.Value, type, purity, quantity)
+            Dim msgTradeLimit As String = clsFng.checkGuarantee(hdfCust_id.Value, type, purity, quantity, False, True)
             If msgTradeLimit <> "" Then
                 clsManage.alert(Page, msgTradeLimit)
                 Return False

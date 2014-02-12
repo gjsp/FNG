@@ -333,7 +333,7 @@ Public Class clsFng
 
     End Function
 
-    Public Shared Function checkGuarantee(cust_id As String, type As String, purity As String, quan As Double, Optional leave As Boolean = False) As String
+    Public Shared Function checkGuarantee(cust_id As String, type As String, purity As String, quan As Double, leave As Boolean, trade As Boolean) As String
         Dim dc As New dcDBDataContext
         Dim ctm = (From c In dc.customers Where c.cust_id = cust_id).FirstOrDefault
 
@@ -387,7 +387,10 @@ Public Class clsFng
             credit99 += Math.Floor(clsManage.convert2zero(ctm.quan_99N) * rate99)
         End If
 
-        Dim type_ticket As String = IIf(type = "sell", "buy", "sell") 'สลับ buy sell
+        Dim type_ticket As String = type 'สลับ buy sell เฉพาะ trade online
+        If trade = True Then
+            type_ticket = IIf(type = "sell", "buy", "sell")
+        End If
 
         Dim quanPendingTicket As Double = 0
         Dim tk = (From t In dc.v_ticket_sum_splits Where t.cust_id = cust_id And t.type = type_ticket And t.gold_type_id = purity And t.status_id = "101" Select t.quantity)

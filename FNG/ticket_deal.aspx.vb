@@ -365,7 +365,7 @@ Partial Class ticket_deal
             '    trade_able()
             'End If
 
-            If clsFng.checkGuarantee(ucPortFolio1.CustID, rdoType.SelectedValue, rdoGoldType.SelectedValue, txtQuan.Text) <> "" Then
+            If clsFng.checkGuarantee(ucPortFolio1.CustID, rdoType.SelectedValue, rdoGoldType.SelectedValue, txtQuan.Text, False, False) <> "" Then
                 trade_disable()
             Else
                 trade_able()

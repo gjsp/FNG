@@ -26,7 +26,8 @@ Partial Class trade_trade_timing
 
     Protected Sub btnOk_Click(sender As Object, e As System.EventArgs) Handles btnOk.Click
         tmTime.Enabled = True
-        ViewState(clsManage.iSession.timetrade.ToString) = DateTime.Now.AddSeconds(7)
+
+        ViewState(clsManage.iSession.timetrade.ToString) = DateTime.Now.AddSeconds(ConfigurationManager.AppSettings("TRADE_COUNT") + 1)
         Me.Session(clsManage.iSession.timetrade.ToString) = True
         clsManage.Script(Page, "top.window.document.getElementById('div_ifmTime').style.display='block'")
     End Sub

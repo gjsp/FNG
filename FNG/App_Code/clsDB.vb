@@ -2018,8 +2018,6 @@ Public Class clsDB
                             " FROM tickets ticket left outer join customer on ticket.cust_id = customer.cust_id left outer join users ON ticket.user_id = users.user_id" & _
                             " Where (ref_no = @ref_no or @ref_no = '') " & _
                             " " + sql_name + " " & _
-                            " AND (book_no =  @book_no or @book_no = '') " & _
-                            " AND (run_no =  @run_no or @run_no = '') " & _
                             " AND (ticket.user_id =  @user_id or @user_id = '') " & _
                             " AND (active =  @active ) " & _
                             " AND (type =  @type or @type = '' ) " & _
@@ -2031,7 +2029,10 @@ Public Class clsDB
                             " " + sqlCenter + " " & _
                             " AND ( convert(datetime, ticket_date,111) BETWEEN  @ticket_date AND @ticket_date2)" & _
                             " " + sql_del_date + " " & _
-                            " ORDER BY gold_type_id desc,type,ticket.price "
+                            " ORDER BY ticket_date desc "
+
+        'change Requirment order by New
+        '" ORDER BY gold_type_id desc,type,ticket.price "
 
         Dim con As New SqlConnection(strcon)
         Dim cmd As New SqlCommand(sql, con)
@@ -2040,13 +2041,13 @@ Public Class clsDB
             parameter.Value = ticket_id
             cmd.Parameters.Add(parameter)
 
-            parameter = New SqlParameter("@book_no", SqlDbType.VarChar, 20)
-            parameter.Value = book_no
-            cmd.Parameters.Add(parameter)
+            'parameter = New SqlParameter("@book_no", SqlDbType.VarChar, 20)
+            'parameter.Value = book_no
+            'cmd.Parameters.Add(parameter)
 
-            parameter = New SqlParameter("@run_no", SqlDbType.VarChar, 20)
-            parameter.Value = run_no
-            cmd.Parameters.Add(parameter)
+            'parameter = New SqlParameter("@run_no", SqlDbType.VarChar, 20)
+            'parameter.Value = run_no
+            'cmd.Parameters.Add(parameter)
 
             'parameter = New SqlParameter("@firstname", SqlDbType.VarChar, 5)
             'parameter.Value = cust_name

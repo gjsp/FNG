@@ -1,5 +1,7 @@
 ﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="price_spot.aspx.vb" Inherits="trade_admin_price_spot" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -9,6 +11,57 @@
     <link href="../../button/css/buttonPro.css" rel="stylesheet" type="text/css" />
     <script src="../../Scripts/jquery-1.4.1.js" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
+        var _source;
+        var _popup;
+
+        function showConfirm(source) {
+            try {
+                var premium = $get('<%=txtPremium.ClientID%>').value;
+                var fxbid = $get('<%=txtFxBid.ClientID%>').value;
+                var fxask = $get('<%=txtFxAsk.ClientID%>').value;
+                var space99kg = $get('<%=txtSpace99kg.ClientID%>').value;
+                var space99bg = $get('<%=txtSpace99Bg.ClientID%>').value;
+                var space96bg = $get('<%=txtSpace96Bg.ClientID%>').value;
+                var melting = $get('<%=txtMeltingCost.ClientID%>').value;
+
+                $.ajax({
+                    type: "POST",
+                    url: "price_spot.aspx/getSpotPriceConfirm",
+                    data: '{"premium":' + premium + ',"fxbid":' + fxbid + ',"fxask":' + fxask + ',"space99kg":' + space99kg + ',"space99bg":' + space99bg + ',"space96bg":' + space96bg + ',"melting":' + melting + '}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        $get('pContent').innerHTML = result.d;
+                    },
+                    error: function () {
+                        alert('Error Code JSON 103');
+                    }
+                });
+                                
+                this._source = source;
+                this._popup = $find('mppAccept');
+                this._popup.show();
+                $get('<%=btnOk.ClientId %>').focus();               
+            } catch (e) {
+                alert(e.message);
+            }
+        }
+        function okClick() {
+            try {
+                this._popup.hide();
+                __doPostBack(this._source.name, '');
+                
+            } catch (e) {
+                alert('Error Code 102.');
+            }
+        }
+
+        function cancelClick() {
+            this._popup.hide();
+            this._source = null;
+            this._popup = null;
+        }
+
 
         function checkPremium() {
             e_k = event.keyCode;
@@ -31,7 +84,52 @@
             }
         }
   
+       
+        function OnSucceeded(result, userContext, methodName) {
+            
+            $get('pContent').innerHTML = 'Summary Spot';
+            this._source = source;
+            this._popup = $find('mppAccept');
+            this._popup.show();
+
+        }
+        function OnFailed(error, userContext, methodName) { }
+
+        //function x1 {
+        //$(document).ready(function () {
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "WebForm1.aspx/ServerSideMethod",
+        //        data: "{}",
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        async: true,
+        //        cache: false,
+        //        success: function (msg) {
+        //            $('#myDiv').text(msg.d); 
+        //        }
+        //    })
+        //    return false;
+        //});
+        //}
+        
     </script>
+    <style type="text/css">
+        /*Modal Popup*/
+        .modalAdminBG
+        {
+            background-color: Black;
+            filter: alpha(opacity=70);
+            opacity: 0.7;
+        }
+        .modalAdminPopup {
+            vertical-align:top;
+            background-color: white;
+            border-style: none;
+            width: 700px;
+            height: 350px;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -140,7 +238,7 @@
                                 
                                 &nbsp;<asp:Button ID="btnReset" runat="server" CssClass="buttonPro small black" 
                                     Text="Reset" Width="60px" />
-                                &nbsp;<asp:Button ID="btnSave" runat="server" CssClass="buttonPro small black" 
+                                &nbsp;<asp:Button ID="btnSave" runat="server" OnClientClick="showConfirm(this); return false;" CssClass="buttonPro small black" 
                                     Text="Save" Width="60px" /></td>
                             <td>
                                 &nbsp;</td>
@@ -161,6 +259,27 @@
             </ContentTemplate>
         </asp:UpdatePanel>
         <asp:HiddenField ID="hdfLv" runat="server" />
+        <ajaxToolkit:ModalPopupExtender ID="mppAccept" BehaviorID="mppAccept" runat="server"
+            TargetControlID="Panel1" PopupControlID="Panel1" OkControlID="btnOk" OnOkScript="okClick();"
+            CancelControlID="btnNo" OnCancelScript="cancelClick();" BackgroundCssClass="modalAdminBG">
+        </ajaxToolkit:ModalPopupExtender>
+        <asp:Panel ID="Panel1" runat="server" Style="display: block" CssClass="modalAdminPopup" DefaultButton="btnOk">
+           <asp:Panel ID="Panel2" runat="server" Style="border:none;color: black">
+                <div style="text-align:center">
+                    <p id="pContent" style="text-align:center; margin: 50px 20px 20px 20px; font-size:large;">
+                    </p>
+                </div>
+            </asp:Panel>
+            <div>
+                <p style="text-align: center;margin-top:2cm">
+                    <asp:Button ID="btnOk" CssClass="buttonPro small black" runat="server" Text="Yes"
+                        Width="90px" />&nbsp;&nbsp;
+                    <asp:Button ID="btnNo" CssClass="buttonPro small black" runat="server" Text="No"
+                        Width="90px" />
+                </p>
+            </div>
+        </asp:Panel>
+
     </div>
     </form>
 </body>

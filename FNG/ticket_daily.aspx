@@ -6,7 +6,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script type="text/javascript" language="javascript">
         function pageLoad() {
-            setTimeout("autoRefresh();", 3000);
+            setTimeout("autoRefresh();", 5000);
         }
 
         function autoRefresh() {
