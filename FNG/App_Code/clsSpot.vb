@@ -20,7 +20,9 @@ Public Class clsSpot
 
         Public fxBid As Double
         Public fxAsk As Double
+        Public fxAskSelf As Double
         Public meltingCost As Double
+        Public selfPrice As String
 
         Public space99Kg As Double
         Public space99Bg As Double
@@ -43,17 +45,19 @@ Public Class clsSpot
         Public premium As Double
         Public fxBid As Double
         Public fxAsk As Double
+        Public fxAskSelf As Double
         Public meltingCost As Double
 
         Public space99Kg As Double
         Public space99Bg As Double
         Public space96Bg As Double
+        Public selfPrice As String
 
 
     End Structure
 
     Public Shared Function getSpotPriceAdmin(spa As SpotPriceAdmin) As SpotPrice
-        'Show Before Save for admin
+        'Show Before Save for admin (confirm)
         Try
             Dim sp As SpotPrice
             Dim sto = New dcDBDataContext().getStockOnline().Single()
@@ -71,6 +75,8 @@ Public Class clsSpot
             sp.space96Bg = spa.space96Bg
             sp.fxAsk = spa.fxAsk
             sp.fxBid = spa.fxBid
+            sp.fxAskSelf = spa.fxAskSelf
+            sp.selfPrice = spa.selfPrice
             sp.meltingCost = spa.meltingCost
 
             'sp.bidSpot = spot.bid
@@ -80,14 +86,25 @@ Public Class clsSpot
             'sp.askTHB = spot.ask_thb
 
             '' Gold Sport
-            sp.bidSpot = spot.bid - 1
-            sp.bidTHB = spot.bid_thb - sp.fxBid
+            'sp.bidSpot = spot.bid - 1
+            'sp.bidTHB = spot.bid_thb - sp.fxBid
 
-            sp.askSpot = spot.ask + 1
-            sp.askTHB = spot.ask_thb + sp.fxAsk
+            'sp.askSpot = spot.ask + 1
+            'sp.askTHB = spot.ask_thb + sp.fxAsk
+            sp.bidSpot = spot.bid
+            sp.bidTHB = spot.bid_thb
+
+            sp.askSpot = spot.ask
+            If sp.selfPrice = "y" Then
+                sp.askTHB = sp.fxAskSelf
+            Else
+                sp.askTHB = spot.ask_thb
+            End If
+
+
 
             ''ราคา 99.99/kg
-            sp.ask99Kg = (spot.ask + sp.premium) * 32.148 * spot.ask_thb
+            sp.ask99Kg = (spot.ask + sp.premium) * 32.148 * sp.askTHB
             sp.ask99Kg = Math.Round(sp.ask99Kg, 2)
             sp.bid99Kg = sp.ask99Kg - sp.space99Kg
 
@@ -142,16 +159,23 @@ Public Class clsSpot
             sp.space96Bg = sto.space_bg96
             sp.fxAsk = sto.fx_ask
             sp.fxBid = sto.fx_bid
+            sp.fxAskSelf = sto.fx_ask_thb
+            sp.selfPrice = sto.self_price
             sp.meltingCost = sto.melting_cost
           
             sp.bidSpot = spot.bid
             sp.bidTHB = spot.bid_thb
 
             sp.askSpot = spot.ask
-            sp.askTHB = spot.ask_thb
+            If sto.self_price = "y" Then
+                sp.askTHB = sto.fx_ask_thb
+            Else
+                sp.askTHB = spot.ask_thb
+            End If
+
 
             ''ราคา 99.99/kg
-            sp.ask99Kg = (spot.ask + sp.premium) * 32.148 * spot.ask_thb
+            sp.ask99Kg = (spot.ask + sp.premium) * 32.148 * sp.askTHB
             sp.ask99Kg = Math.Round(sp.ask99Kg, 2)
             sp.bid99Kg = sp.ask99Kg - sp.space99Kg
 
@@ -190,7 +214,6 @@ Public Class clsSpot
 
         'Calculate Solution Finest Gold
         Dim sp As SpotPrice
-        'Dim sto = New dcDBDataContext().getStockOnline().Single()
         Dim st = New dcDBDataContext().getStockOnlineForPrice(cust_id).Single()
         Dim spot = New dcDBDataContext().getSpot().Single()
 
@@ -202,21 +225,37 @@ Public Class clsSpot
         sp.sysHalt = st.system_halt
         sp.custHalt = st.cust_halt
 
-        sp.maxKg = st.max_kg
+        'Cust_id For customer have 5 digit,sale have 4 digit
+        If cust_id.Length = 4 Or sale_id <> "" Then
+            sp.maxKg = 30
+        Else
+            sp.maxKg = st.max_kg
+        End If
+
         sp.maxBg = st.max_baht
         sp.maxMn = st.max_mini
 
         '' Gold Sport
         sp.bidSpot = spot.bid - 1
-        sp.bidTHB = spot.bid_thb - st.fx_bid
+        sp.bidTHB = spot.bid_thb - st.fx_bid 'customer page อัตราแลกเปลี่ยน ลูกค้าขาย 
 
-        sp.askSpot = spot.ask + 1
-        sp.askTHB = spot.ask_thb + st.fx_ask
+        'sp.askSpot = spot.ask + 1
+        'sp.askTHB = spot.ask_thb + st.fx_ask
+
+        If st.self_price = "y" Then
+            sp.askSpot = spot.ask + 1
+            sp.askTHB = st.fx_ask_thb
+        Else
+            sp.askSpot = spot.ask + 1
+            sp.askTHB = spot.ask_thb
+        End If
 
         ''ราคา 99.99/kg
-        sp.ask99Kg = (spot.ask + st.premium) * 32.148 * spot.ask_thb
+        sp.ask99Kg = (spot.ask + st.premium) * 32.148 * sp.askTHB
         sp.ask99Kg = Math.Round(sp.ask99Kg, 2)
         sp.bid99Kg = sp.ask99Kg - st.space_kg99
+
+        sp.askTHB = sp.askTHB + st.fx_ask 'บวก askส่วน่ต่าง ที่หลัง
 
         ''price 99.99/baht gold
         Dim ask99BgTemp As Double = sp.ask99Kg / 65.6
@@ -256,5 +295,10 @@ Public Class clsSpot
 
         Return sp
 
+    End Function
+
+    Public Shared Function getSystemHalt() As String
+        Dim sto = New dcDBDataContext().getStockOnline().Single()
+        Return sto.system_halt
     End Function
 End Class

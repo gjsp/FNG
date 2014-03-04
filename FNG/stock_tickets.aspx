@@ -216,6 +216,8 @@
                                     <asp:LinkButton ID="linkReviewDoc" runat="server">PreviewDoc</asp:LinkButton>
                                     &nbsp;&nbsp;
                                     <asp:LinkButton ID="linkRptSell" runat="server">Receipt</asp:LinkButton>
+                                    &nbsp;&nbsp;
+                                    <asp:LinkButton ID="linkPayment" runat="server">Payment</asp:LinkButton>
                                 </td>
                             </tr>
                         </table>
@@ -279,6 +281,12 @@
                                     DataFormatString="{0:#,##0.00}">
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
+                                <asp:TemplateField HeaderText="Payment_ID" SortExpression="payment_id" >
+                                    <ItemTemplate>
+                                        <asp:HyperLink ID="linkPayment" runat="server" Target="_blank"><%#Eval("payment_id")%></asp:HyperLink>
+                                    </ItemTemplate>
+                                    <ItemStyle HorizontalAlign="Center" />
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Receipt">
                                     <ItemTemplate>
                                         <asp:Label ID="lblReceipt" runat="server" Text='<%# Bind("run_no") %>'></asp:Label>

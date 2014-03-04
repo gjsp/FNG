@@ -6,21 +6,16 @@ Partial Class trade_cust_halt
         If Session(clsManage.iSession.cust_id.ToString) Is Nothing Then
             Response.Redirect("login.aspx")
         End If
+
         If Not Page.IsPostBack Then
-            hdfCust_id.Value = Session(clsManage.iSession.cust_id.ToString).ToString
+            hdfRole.Value = Session(clsManage.iSession.role.ToString).ToString
         End If
     End Sub
 
     <System.Web.Services.WebMethod()> _
-    Public Shared Function getHalt(ByVal cust_id As String) As String
-        Dim result As String = ""
+    Public Shared Function getHalt() As String
         Try
-           
-            Dim sto As New clsStore
-            sto = clsStore.getPriceStore(cust_id)
-            result =  sto.systemHalt
-
-            Return result
+            Return clsSpot.getSystemHalt
         Catch ex As Exception
             Throw ex
         End Try

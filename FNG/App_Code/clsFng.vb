@@ -36,7 +36,7 @@ Public Class clsFng
         End Try
     End Function
 
-    Public Shared Sub getQuantity96ToDDL(ddl As DropDownList, type As String)
+    Public Shared Sub getQuantity96ToDDL(ddl As DropDownList, type As String, Optional isSale As Boolean = False)
 
         Try
             Dim dc As New dcDBDataContext
@@ -68,6 +68,11 @@ Public Class clsFng
                             ddl.Items.Add(New ListItem(i.ToString, i.ToString))
                         End If
                     Next
+                    If isSale = True Then
+                        ddl.Items.Add(New ListItem("15", "15"))
+                        ddl.Items.Add(New ListItem("20", "20"))
+                        ddl.Items.Add(New ListItem("30", "30"))
+                    End If
                     ddl.Items.Insert(0, New ListItem(msgPriceSelect, ""))
                 Case "96Mini"
                     For i As Integer = 5 To 50 Step 5
@@ -665,4 +670,69 @@ Public Class clsFng
     End Function
 #End Region
 
+#Region "Payment"
+    Public Shared Function getPayment() As DataTable
+        Try
+            Dim sql As String = "select * from payment"
+            Using con As New SqlConnection(strcon)
+                Using da As New SqlDataAdapter(sql, con)
+                    Using dt As New DataTable
+                        da.Fill(dt)
+                        Return dt
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
+    Public Shared Function getPaymentById(pid As String) As DataTable
+        Try
+            Dim sql As String = "select * from payment where payment_id = " + pid
+            Using con As New SqlConnection(strcon)
+                Using da As New SqlDataAdapter(sql, con)
+                    Using dt As New DataTable
+                        da.Fill(dt)
+                        Return dt
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
+    Public Shared Function getPaymentDetail(payment_id As String) As DataTable
+        Try
+            Dim sql As String = "select * from tickets where payment_id =  " + payment_id
+            Using con As New SqlConnection(strcon)
+                Using da As New SqlDataAdapter(sql, con)
+                    Using dt As New DataTable
+                        da.Fill(dt)
+                        Return dt
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
+    Public Shared Function getPaymentDetailBlank(payment_id As String) As DataTable
+        Try
+            Dim sql As String = "select * from tickets where payment_id =  " + payment_id
+            Using con As New SqlConnection(strcon)
+                Using da As New SqlDataAdapter(sql, con)
+                    Using dt As New DataTable
+                        da.Fill(dt)
+                        Return dt
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+#End Region
 End Class

@@ -640,7 +640,10 @@
                                                     <asp:BoundField DataField="payment_duedate" HeaderText="Duedate_Cheque" DataFormatString="{0:d/M/yyyy}">
                                                         <ItemStyle HorizontalAlign="Center" />
                                                     </asp:BoundField>
-                                                    <asp:BoundField DataField="status_id" HeaderText="Status">
+                                                     <asp:BoundField DataField="status_id" HeaderText="Status">
+                                                        <ItemStyle HorizontalAlign="Center" />
+                                                    </asp:BoundField>
+                                                    <asp:BoundField DataField="created_by" HeaderText="Create by">
                                                         <ItemStyle HorizontalAlign="Center" />
                                                     </asp:BoundField>
                                                     <asp:TemplateField HeaderText="Status" SortExpression="status_id" Visible="False">

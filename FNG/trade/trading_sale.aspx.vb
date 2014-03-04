@@ -40,7 +40,7 @@ Partial Class trading_sale
                 clsManage.Script(Page, "getClientTime('" + milTime + "');", "getLocalTime")
 
                 clsFng.getQuantity96ToDDL(ddl96Quan, "96")
-                clsFng.getQuantity96ToDDL(ddl99Quan, "99")
+                clsFng.getQuantity96ToDDL(ddl99Quan, "99", True)
                 clsFng.getQuantity96ToDDL(ddl96MiniQuan, "96Mini")
 
             End If
@@ -121,7 +121,7 @@ Partial Class trading_sale
 
 
             Dim spo As New clsSpot.SpotPrice
-            spo = clsSpot.getSpotPriceForCust(hdfCust_id.Value)
+            spo = clsSpot.getSpotPriceForCust(hdfCust_id.Value, hdfSale_id.Value)
             If Not validateAccept(spo, gold_type, IIf(gold_type = clsFng.p96, ddl96Quan, ddl99Quan), type) Then Exit Sub
 
             Threading.Thread.Sleep(1000)

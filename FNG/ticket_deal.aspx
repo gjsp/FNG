@@ -722,7 +722,7 @@
                             Ticket_Date :
                         </td>
                         <td>
-                            <asp:Label ID="lblDate" runat="server" Font-Bold="true" ForeColor="Black"></asp:Label>
+                            <asp:Label ID="lblDate" runat="server" Font-Bold="True" ForeColor="Black" Width="120px"></asp:Label>
                             <div style="display:none">
                             <asp:TextBox ID="txtDateNow" runat="server" />
                             <ajaxToolkit:CalendarExtender ID="txtDateNow_CalendarExtender"  runat="server" Enabled="true"
@@ -870,25 +870,25 @@
                                         </asp:RadioButtonList>--%>
                                     </td>
                                     <td>
-                                        <table>
+                                        <table width="100%">
                                             <tr>
-                                                <td id="bank1" style="display: block">
+                                                <td id="bank1" style="display: ;">
                                                     Bank :
                                                 </td>
-                                                <td id="bank2" style="display: block">
+                                                <td id="bank2" style="display: ;">
                                                     <asp:DropDownList ID="ddlBank" runat="server">
                                                     </asp:DropDownList>
                                                 </td>
-                                                <td id="cheq1" style="display: block">
+                                                <td id="cheq1" style="display: ">
                                                     Cheque no :
                                                 </td>
-                                                <td id="cheq2" style="display: block">
+                                                <td id="cheq2" style="display: ;">
                                                     <asp:TextBox ID="txtCheq" runat="server" Width="80px"></asp:TextBox>
                                                 </td>
-                                                <td id="cheq3" style="display: block">
+                                                <td id="cheq3" style="display: ;">
                                                     Due date :
                                                 </td>
-                                                <td id="cheq4" style="display: block">
+                                                <td id="cheq4" style="display: ;">
                                                     <asp:TextBox ID="txtDuedate" runat="server" Width="70px"></asp:TextBox>
                                                     <ajaxToolkit:CalendarExtender ID="txtDuedate_CalendarExtender" runat="server" Enabled="True"
                                                         PopupButtonID="imgDuedate" PopupPosition="BottomRight" TargetControlID="txtDuedate">
@@ -944,7 +944,7 @@
             </div>
             <div style="clear:both;text-align:center">
                       <asp:Button ID="btnDealTicket" runat="server" Text="Deal Ticket" />
-                            &nbsp;<asp:Button ID="btnUpdate" OnClientClick="showConfirm(this); return false;" runat="server" Text="Update" />
+                            &nbsp;<asp:Button ID="btnUpdate" runat="server" Text="Update" />
                             &nbsp;<asp:Button ID="btnClear" runat="server" Text="Clear" />
                             &nbsp;<asp:Button ID="btnBack" Visible="false" runat="server" Text="Back" />
                             <ajaxToolkit:ModalPopupExtender ID="mppDelete" BehaviorID="mppDel" runat="server"

@@ -10,6 +10,7 @@ Partial Class trade_admin_price_spot
             txtPremium.Attributes.Add("onkeypress", "checkPremium();")
             txtFxAsk.Attributes.Add("onkeypress", "checkNumber();")
             txtFxBid.Attributes.Add("onkeypress", "checkNumber();")
+            txtFxSelf.Attributes.Add("onkeypress", "checkNumber();")
             txtSpace99kg.Attributes.Add("onkeypress", "numberOnly();")
             txtSpace99Bg.Attributes.Add("onkeypress", "numberOnly();")
             txtSpace96Bg.Attributes.Add("onkeypress", "numberOnly();")
@@ -35,7 +36,13 @@ Partial Class trade_admin_price_spot
 
             txtFxAsk.Text = sp.fxAsk
             txtFxBid.Text = sp.fxBid
+            txtFxSelf.Text = sp.fxAskSelf
             txtMeltingCost.Text = sp.meltingCost
+            If sp.selfPrice = "y" Then
+                cbFxSelf.Checked = True
+            Else
+                cbFxSelf.Checked = False
+            End If
 
             txtMaxBg.Text = sp.maxBg.ToString
             txtMaxKg.Text = sp.maxKg.ToString
@@ -48,7 +55,7 @@ Partial Class trade_admin_price_spot
     End Sub
 
     <System.Web.Services.WebMethod()> _
-    Public Shared Function getSpotPriceConfirm(premium As String, fxbid As String, fxask As String, space99kg As String, space99bg As String, space96bg As String, melting As String) As String
+    Public Shared Function getSpotPriceConfirm(premium As String, fxbid As String, fxask As String, space99kg As String, space99bg As String, space96bg As String, melting As String, fxSelf As String) As String
         Dim msg As New StringBuilder
         Try
             Dim sp As New clsSpot.SpotPrice
@@ -63,6 +70,13 @@ Partial Class trade_admin_price_spot
             spa.fxAsk = fxask
             spa.fxBid = fxbid
             spa.meltingCost = melting
+
+            If fxSelf = "0" Then
+                spa.selfPrice = "n"
+            Else
+                spa.fxAskSelf = fxSelf
+                spa.selfPrice = "y"
+            End If
 
             sp = clsSpot.getSpotPriceAdmin(spa)
             'msg.Append("Gold Spot(ดอลลาร์/ออนซ์) <br>&nbsp;&nbsp;&nbsp;ลูกค้าขาย <strong>{0}</strong> &nbsp;&nbsp;&nbsp;ลูกค้าซื้อ <strong>{1}</strong>")
@@ -118,6 +132,13 @@ Partial Class trade_admin_price_spot
             sto.max_kg = txtMaxKg.Text
             sto.max_mini = txtMaxMn.Text
             sto.range_leave_order = txtRangeLeave.Text
+
+            sto.fx_ask_thb = txtFxSelf.Text
+            If cbFxSelf.Checked = True Then
+                sto.self_price = "y"
+            Else
+                sto.self_price = "n"
+            End If
 
             sto.modifier_by = Session(clsManage.iSession.user_name.ToString).ToString
             dc.SubmitChanges()

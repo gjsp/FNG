@@ -33,7 +33,7 @@
         <div class="demoheading">
            Planning In/Out</div>
         <div>
-            <cc1:TabContainer ID="tapImport" runat="server" ActiveTabIndex="0" Width="100%">
+            <cc1:TabContainer ID="tapImport" runat="server" ActiveTabIndex="3" Width="100%">
                 <cc1:TabPanel runat="server" HeaderText="In/Out" ID="tpImport">
                     <HeaderTemplate>
                         In/Out

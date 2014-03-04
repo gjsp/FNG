@@ -10,7 +10,7 @@
         <asp:UpdatePanel ID="pnUser" runat="server">
             <ContentTemplate>
                 <table border="0">
-                    <tr id="trRef" style="display: block">
+                    <tr id="trRef" style="display:'';">
                         <td>
                             Reference No :
                         </td>
@@ -26,7 +26,7 @@
                             <asp:TextBox ID="txtUsername" runat="server" Width="150px" />
                         </td>
                     </tr>
-                    <tr id="trPwd" style="display: block">
+                    <tr id="trPwd" style="display:''; ">
                         <td>
                             Password* :
                         </td>

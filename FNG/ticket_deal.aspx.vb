@@ -117,6 +117,11 @@ Partial Class ticket_deal
                     End If
 
                     btnDealTicket.Visible = False : btnUpdate.Visible = True : btnClear.Visible = False
+                    'Only Position Account don't Message box comfirm
+                    If Not Session(clsManage.iSession.user_position_center.ToString) = "1" Then
+                        btnUpdate.OnClientClick = "showConfirm(this); return false;"
+                    End If
+
                     Dim dt As New Data.DataTable
                     dt = clsDB.getTicket(Request.QueryString("id").ToString)
                     If dt.Rows.Count > 0 Then

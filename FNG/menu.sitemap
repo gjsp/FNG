@@ -19,6 +19,7 @@
 			<siteMapNode url="~/stock_cheq.aspx" title="Stock Cheque" />
       <siteMapNode url="ticket_overclearing.aspx" title="Over Clearing" />
       <siteMapNode url="purity_convert.aspx" title="Convert Purity" />
+      <siteMapNode url="ticket_payment.aspx" title="Payment" />
 			
 		</siteMapNode>
     <siteMapNode title="Gold Ornament" >

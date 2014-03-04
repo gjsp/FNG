@@ -23,11 +23,17 @@
                 var space99bg = $get('<%=txtSpace99Bg.ClientID%>').value;
                 var space96bg = $get('<%=txtSpace96Bg.ClientID%>').value;
                 var melting = $get('<%=txtMeltingCost.ClientID%>').value;
+                var cbSelf = $get('<%=cbFxSelf.ClientID%>').checked;
+                var fxSelf = '0';
+
+                if (cbSelf) {
+                    fxSelf = $get('<%=txtFxSelf.ClientID%>').value;
+                }
 
                 $.ajax({
                     type: "POST",
                     url: "price_spot.aspx/getSpotPriceConfirm",
-                    data: '{"premium":' + premium + ',"fxbid":' + fxbid + ',"fxask":' + fxask + ',"space99kg":' + space99kg + ',"space99bg":' + space99bg + ',"space96bg":' + space96bg + ',"melting":' + melting + '}',
+                    data: '{"premium":' + premium + ',"fxbid":' + fxbid + ',"fxask":' + fxask + ',"space99kg":' + space99kg + ',"space99bg":' + space99bg + ',"space96bg":' + space96bg + ',"melting":' + melting + ',"fxSelf":' + fxSelf + '}',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (result) {
@@ -157,9 +163,11 @@
                                     Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                             <td style="font-weight: bold" width="150px">
-                                </td>
+                                Self Fx Ask<asp:CheckBox ID="cbFxSelf" runat="server" />
+                            </td>
                             <td width="200px">
-                                &nbsp;</td>
+                                <asp:TextBox ID="txtFxSelf" runat="server" Font-Size="X-Large" MaxLength="5" Style="text-align: right" Width="60px"></asp:TextBox>
+                            </td>
                         </tr>
                         <tr>
                             <td style="font-weight: bold">

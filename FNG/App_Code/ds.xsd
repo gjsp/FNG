@@ -3597,7 +3597,7 @@ FROM            customer INNER JOIN
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="rpt_trade_online" msprop:Generator_TableClassName="rpt_trade_onlineDataTable" msprop:Generator_TableVarName="tablerpt_trade_online" msprop:Generator_TablePropName="rpt_trade_online" msprop:Generator_RowDeletingName="rpt_trade_onlineRowDeleting" msprop:Generator_RowChangingName="rpt_trade_onlineRowChanging" msprop:Generator_RowEvHandlerName="rpt_trade_onlineRowChangeEventHandler" msprop:Generator_RowDeletedName="rpt_trade_onlineRowDeleted" msprop:Generator_UserTableName="rpt_trade_online" msprop:Generator_RowChangedName="rpt_trade_onlineRowChanged" msprop:Generator_RowEvArgName="rpt_trade_onlineRowChangeEvent" msprop:Generator_RowClassName="rpt_trade_onlineRow">
+        <xs:element name="rpt_trade_online" msprop:Generator_TableClassName="rpt_trade_onlineDataTable" msprop:Generator_TableVarName="tablerpt_trade_online" msprop:Generator_RowChangedName="rpt_trade_onlineRowChanged" msprop:Generator_TablePropName="rpt_trade_online" msprop:Generator_RowDeletingName="rpt_trade_onlineRowDeleting" msprop:Generator_RowChangingName="rpt_trade_onlineRowChanging" msprop:Generator_RowEvHandlerName="rpt_trade_onlineRowChangeEventHandler" msprop:Generator_RowDeletedName="rpt_trade_onlineRowDeleted" msprop:Generator_RowClassName="rpt_trade_onlineRow" msprop:Generator_UserTableName="rpt_trade_online" msprop:Generator_RowEvArgName="rpt_trade_onlineRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="firstname" msprop:Generator_ColumnVarNameInTable="columnfirstname" msprop:Generator_ColumnPropNameInRow="firstname" msprop:Generator_ColumnPropNameInTable="firstnameColumn" msprop:Generator_UserColumnName="firstname" minOccurs="0">
@@ -3660,7 +3660,7 @@ FROM            customer INNER JOIN
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="transfer" msprop:Generator_TableClassName="transferDataTable" msprop:Generator_TableVarName="tabletransfer" msprop:Generator_TablePropName="transfer" msprop:Generator_RowDeletingName="transferRowDeleting" msprop:Generator_RowChangingName="transferRowChanging" msprop:Generator_RowEvHandlerName="transferRowChangeEventHandler" msprop:Generator_RowDeletedName="transferRowDeleted" msprop:Generator_UserTableName="transfer" msprop:Generator_RowChangedName="transferRowChanged" msprop:Generator_RowEvArgName="transferRowChangeEvent" msprop:Generator_RowClassName="transferRow">
+        <xs:element name="transfer" msprop:Generator_TableClassName="transferDataTable" msprop:Generator_TableVarName="tabletransfer" msprop:Generator_RowChangedName="transferRowChanged" msprop:Generator_TablePropName="transfer" msprop:Generator_RowDeletingName="transferRowDeleting" msprop:Generator_RowChangingName="transferRowChanging" msprop:Generator_RowEvHandlerName="transferRowChangeEventHandler" msprop:Generator_RowDeletedName="transferRowDeleted" msprop:Generator_RowClassName="transferRow" msprop:Generator_UserTableName="transfer" msprop:Generator_RowEvArgName="transferRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="cust_id" msprop:Generator_ColumnVarNameInTable="columncust_id" msprop:Generator_ColumnPropNameInRow="cust_id" msprop:Generator_ColumnPropNameInTable="cust_idColumn" msprop:Generator_UserColumnName="cust_id">

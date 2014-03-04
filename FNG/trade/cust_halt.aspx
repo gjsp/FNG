@@ -9,18 +9,20 @@
         }
 
         function Check() {
-            var cust_id = $get('ctl00_MainContent_hdfCust_id').value
-            PageMethods.getHalt(cust_id, OnSucceeded, OnFailed);
+            PageMethods.getHalt( OnSucceeded, OnFailed);
         }
 
         function OnFailed(error, userContext, methodName) { }
 
         function OnSucceeded(result, userContext, methodName) {
 
-            var systemHalt = result;
-           
-            if (systemHalt == 'n') {
-                top.window.location = 'trading.aspx';
+            if (result == 'n') {
+                
+                if ($get('ctl00_MainContent_hdfRole').value == 'sale') {
+                    top.window.location = 'trading_sale.aspx';
+                } else {
+                    top.window.location = 'trading.aspx';
+                }
             }
             else {
                 setTimeout("Check()", 5000);
@@ -39,7 +41,7 @@
             <br />
             <p>
             </p>
-           <asp:HiddenField ID="hdfCust_id" runat="server" />
+           <asp:HiddenField ID="hdfRole" runat="server" />
         </div>
 
         <div style="height: 500px; background-color:#fff; font-size: medium; font-weight: bold;

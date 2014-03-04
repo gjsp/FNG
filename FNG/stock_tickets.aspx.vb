@@ -268,6 +268,9 @@ Partial Class stock_tickets
                 End If
             End If
 
+            'payment
+            CType(e.Row.FindControl("linkPayment"), HyperLink).NavigateUrl = "ticket_payment_detail.aspx?pid=" + e.Row.DataItem("payment_id").ToString
+
             'split bill แล้วลบไม่ได้ ให้ไปลบข้างใน
             If e.Row.DataItem("sp_quan") IsNot DBNull.Value Then
                 CType(e.Row.FindControl("imgDelReceipt"), ImageButton).Visible = False
@@ -669,4 +672,87 @@ Partial Class stock_tickets
         End Try
     End Sub
 
+    Protected Sub linkPayment_Click(sender As Object, e As EventArgs) Handles linkPayment.Click
+        Try
+            Dim strRefno As String = ""
+            Dim cust_id As String = ""
+            'Dim type As String = ""
+            Dim billing As String = ""
+            Dim trade As String = ""
+            For Each dr As GridViewRow In gvTicket.Rows
+                If CType(dr.Cells(gvTicket.Columns.Count - 1).FindControl("cbRow"), HtmlInputCheckBox).Checked = True Then
+                    If strRefno = "" Then
+                        strRefno = gvTicket.DataKeys(dr.RowIndex).Value
+                        cust_id = gvTicket.DataKeys(dr.RowIndex)(1).ToString 'gvTicket.Rows(dr.RowIndex).Cells(colCustId).Text
+                        'type = gvTicket.DataKeys(dr.RowIndex)(2).ToString
+                        billing = CType(gvTicket.Rows(dr.RowIndex).FindControl("hdfBill"), HiddenField).Value
+                        trade = gvTicket.DataKeys(dr.RowIndex)("trade").ToString
+                        If trade = clsManage.yes Then
+                            If billing = "" Then clsManage.alert(Page, "โปรดเลือกประเภทของบิล") : Exit Sub
+                        End If
+                    Else
+                        strRefno += "," + gvTicket.DataKeys(dr.RowIndex).Value
+                        If gvTicket.DataKeys(dr.RowIndex)(1).ToString <> cust_id Then
+                            'case เลือก cust_id ไม่เหมือนกัน
+                            clsManage.alert(Page, "Please Select Same Customer Ref No.") : Exit Sub
+                        End If
+
+                        If CType(gvTicket.Rows(dr.RowIndex).FindControl("hdfBill"), HiddenField).Value <> billing Then
+                            'case เลือก billing ไม่เหมือนกัน
+                            clsManage.alert(Page, "โปรดเลือกบิลประเภทเดียวกัน") : Exit Sub
+                        End If
+
+                    End If
+                End If
+            Next
+            If strRefno <> "" Then
+                Dim msgReceipt As String = clsFng.checkReceiptNoAndSplitBill1(strRefno, billing)
+                If msgReceipt <> "" Then
+                    clsManage.alert(Page, msgReceipt)
+                    btnSearchAdv_Click(Nothing, Nothing)
+                    Exit Sub
+                End If
+                Dim url As String = "ticket_payment_detail.aspx?pid="
+              
+                'Add Payment
+                Dim dc As New dcDBDataContext
+                Try
+                    dc.Connection.Open()
+                    dc.Transaction = dc.Connection.BeginTransaction
+
+                    Dim pm As New payment
+                    pm.active = True
+                    pm.status = "new"
+                    pm.created_by = Session(clsManage.iSession.user_id_center.ToString).ToString
+                    pm.created_date = DateTime.Now
+                    pm.modifier_by = Session(clsManage.iSession.user_id_center.ToString).ToString
+                    pm.modifier_date = DateTime.Now
+
+                    dc.payments.InsertOnSubmit(pm)
+                    dc.SubmitChanges()
+
+                    Dim refNoList As String() = strRefno.Split(",")
+                    Dim tks = From tk In dc.tickets Where refNoList.Contains(tk.ref_no)
+
+                    For Each tk In tks
+                        tk.payment_id = pm.payment_id
+                        tk.payment_by = Session(clsManage.iSession.user_id_center.ToString).ToString
+                    Next
+                    dc.SubmitChanges()
+                    dc.Transaction.Commit()
+
+                Catch ex As Exception
+                    dc.Transaction.Rollback()
+                    Throw ex
+                Finally
+                    dc.Connection.Close()
+                End Try
+            Else
+                clsManage.alert(Page, "Please select ticket for payment")
+            End If
+
+        Catch ex As Exception
+            clsManage.alert(Page, ex.Message)
+        End Try
+    End Sub
 End Class
