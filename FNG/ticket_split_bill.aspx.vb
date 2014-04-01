@@ -78,6 +78,17 @@ Partial Class ticket_split_bill
                 dt = clsDB.getTicket(Request.QueryString("id").ToString())
                 If dt.Rows.Count > 0 Then
                     Dim dr As Data.DataRow = dt.Rows(0)
+                    'validation 
+
+                    If dr("billing").ToString = "y" Then
+                        pageNone("Ticket แบบมีบิลไม่สามารถแยกบิลได้")
+                        Exit Sub
+                    End If
+                    'If dr("run_no").ToString <> "" Then
+                    '    pageNone("Ticket มีการออกบิลไปแล้ว")
+                    '    Exit Sub
+                    'End If
+
                     lblRefno.Text = dr("ticket_id").ToString
                     lblGoldType.Text = dr("gold_type_name").ToString
                     lblOrderType.Text = dr("type").ToString
@@ -114,6 +125,11 @@ Partial Class ticket_split_bill
                         btnAddBill.Enabled = False : btnSave.Enabled = False
                         btnAddCash.Enabled = False : btnSaveCash.Enabled = False
                         btnAddGold.Enabled = False : btnSaveGold.Enabled = False
+                    End If
+
+                    'check payment
+                    If dr("payment_id").ToString <> "" Then
+                        btnAddBill.Enabled = False
                     End If
 
                     'Split
@@ -162,9 +178,19 @@ Partial Class ticket_split_bill
                         ViewState(clsManage.splitMode.DepositGold.ToString) = dt.Clone
                         gvGold.DataBind()
                     End If
+                Else
+                    pageNone("")
                 End If
+            Else
+                pageNone("")
             End If
         End If
+    End Sub
+
+    Sub pageNone(msg As String)
+        pnMain.Visible = False
+        pnNone.Visible = True
+        lblMsg.Text = msg
     End Sub
 
     Protected Sub gvTicket_RowDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles gvTicket.RowDataBound

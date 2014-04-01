@@ -49,12 +49,6 @@ Partial Public Class dcDBDataContext
     End Sub
   Partial Private Sub Deletequantity_order(instance As quantity_order)
     End Sub
-  Partial Private Sub Insertstock(instance As stock)
-    End Sub
-  Partial Private Sub Updatestock(instance As stock)
-    End Sub
-  Partial Private Sub Deletestock(instance As stock)
-    End Sub
   Partial Private Sub Insertticket_split(instance As ticket_split)
     End Sub
   Partial Private Sub Updateticket_split(instance As ticket_split)
@@ -127,17 +121,29 @@ Partial Public Class dcDBDataContext
     End Sub
   Partial Private Sub Deletestock_online(instance As stock_online)
     End Sub
-  Partial Private Sub Insertpayment(instance As payment)
-    End Sub
-  Partial Private Sub Updatepayment(instance As payment)
-    End Sub
-  Partial Private Sub Deletepayment(instance As payment)
-    End Sub
   Partial Private Sub Insertticket(instance As ticket)
     End Sub
   Partial Private Sub Updateticket(instance As ticket)
     End Sub
   Partial Private Sub Deleteticket(instance As ticket)
+    End Sub
+  Partial Private Sub Insertstock(instance As stock)
+    End Sub
+  Partial Private Sub Updatestock(instance As stock)
+    End Sub
+  Partial Private Sub Deletestock(instance As stock)
+    End Sub
+  Partial Private Sub Insertticket_log(instance As ticket_log)
+    End Sub
+  Partial Private Sub Updateticket_log(instance As ticket_log)
+    End Sub
+  Partial Private Sub Deleteticket_log(instance As ticket_log)
+    End Sub
+  Partial Private Sub Insertpayment(instance As payment)
+    End Sub
+  Partial Private Sub Updatepayment(instance As payment)
+    End Sub
+  Partial Private Sub Deletepayment(instance As payment)
     End Sub
   #End Region
 	
@@ -187,12 +193,6 @@ Partial Public Class dcDBDataContext
 	Public ReadOnly Property quantity_orders() As System.Data.Linq.Table(Of quantity_order)
 		Get
 			Return Me.GetTable(Of quantity_order)
-		End Get
-	End Property
-	
-	Public ReadOnly Property stocks() As System.Data.Linq.Table(Of stock)
-		Get
-			Return Me.GetTable(Of stock)
 		End Get
 	End Property
 	
@@ -292,12 +292,6 @@ Partial Public Class dcDBDataContext
 		End Get
 	End Property
 	
-	Public ReadOnly Property payments() As System.Data.Linq.Table(Of payment)
-		Get
-			Return Me.GetTable(Of payment)
-		End Get
-	End Property
-	
 	Public ReadOnly Property tickets() As System.Data.Linq.Table(Of ticket)
 		Get
 			Return Me.GetTable(Of ticket)
@@ -307,6 +301,30 @@ Partial Public Class dcDBDataContext
 	Public ReadOnly Property v_ticket_sum_splits() As System.Data.Linq.Table(Of v_ticket_sum_split)
 		Get
 			Return Me.GetTable(Of v_ticket_sum_split)
+		End Get
+	End Property
+	
+	Public ReadOnly Property v_payments() As System.Data.Linq.Table(Of v_payment)
+		Get
+			Return Me.GetTable(Of v_payment)
+		End Get
+	End Property
+	
+	Public ReadOnly Property stocks() As System.Data.Linq.Table(Of stock)
+		Get
+			Return Me.GetTable(Of stock)
+		End Get
+	End Property
+	
+	Public ReadOnly Property ticket_logs() As System.Data.Linq.Table(Of ticket_log)
+		Get
+			Return Me.GetTable(Of ticket_log)
+		End Get
+	End Property
+	
+	Public ReadOnly Property payments() As System.Data.Linq.Table(Of payment)
+		Get
+			Return Me.GetTable(Of payment)
 		End Get
 	End Property
 	
@@ -1149,750 +1167,6 @@ Partial Public Class quantity_order
 				Me._max = value
 				Me.SendPropertyChanged("max")
 				Me.OnmaxChanged
-			End If
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-End Class
-
-<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.stock")>  _
-Partial Public Class stock
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _stock_id As Integer
-	
-	Private _gold_base As System.Nullable(Of Decimal)
-	
-	Private _gold As System.Nullable(Of Decimal)
-	
-	Private _gold_wait As System.Nullable(Of Decimal)
-	
-	Private _cash As System.Nullable(Of Decimal)
-	
-	Private _trans As System.Nullable(Of Decimal)
-	
-	Private _cheq As System.Nullable(Of Decimal)
-	
-	Private _cash_wait As System.Nullable(Of Decimal)
-	
-	Private _trans_wait As System.Nullable(Of Decimal)
-	
-	Private _cheq_wait As System.Nullable(Of Decimal)
-	
-	Private _cash_nobill As System.Nullable(Of Decimal)
-	
-	Private _trans_nobill As System.Nullable(Of Decimal)
-	
-	Private _cheq_nobill As System.Nullable(Of Decimal)
-	
-	Private _cash_wait_nobill As System.Nullable(Of Decimal)
-	
-	Private _trans_wait_nobill As System.Nullable(Of Decimal)
-	
-	Private _cheq_wait_nobill As System.Nullable(Of Decimal)
-	
-	Private _margin As System.Nullable(Of Double)
-	
-	Private _margin_call As System.Nullable(Of Double)
-	
-	Private _price_now As System.Nullable(Of Decimal)
-	
-	Private _bid96 As System.Nullable(Of Decimal)
-	
-	Private _bid99 As System.Nullable(Of Decimal)
-	
-	Private _ask96 As System.Nullable(Of Decimal)
-	
-	Private _ask99 As System.Nullable(Of Decimal)
-	
-	Private _pwd_auth As String
-	
-	Private _price_base As System.Nullable(Of Decimal)
-	
-	Private _G96_base As System.Nullable(Of Decimal)
-	
-	Private _G99N_base As System.Nullable(Of Decimal)
-	
-	Private _G99L_base As System.Nullable(Of Decimal)
-	
-	Private _price_branch As System.Nullable(Of Decimal)
-	
-	Private _G96_branch As System.Nullable(Of Decimal)
-	
-	Private _G99N_branch As System.Nullable(Of Decimal)
-	
-	Private _G99L_branch As System.Nullable(Of Decimal)
-	
-    #Region "Extensibility Method Definitions"
-    Partial Private Sub OnLoaded()
-    End Sub
-    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
-    End Sub
-    Partial Private Sub OnCreated()
-    End Sub
-    Partial Private Sub Onstock_idChanging(value As Integer)
-    End Sub
-    Partial Private Sub Onstock_idChanged()
-    End Sub
-    Partial Private Sub Ongold_baseChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Ongold_baseChanged()
-    End Sub
-    Partial Private Sub OngoldChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub OngoldChanged()
-    End Sub
-    Partial Private Sub Ongold_waitChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Ongold_waitChanged()
-    End Sub
-    Partial Private Sub OncashChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub OncashChanged()
-    End Sub
-    Partial Private Sub OntransChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub OntransChanged()
-    End Sub
-    Partial Private Sub OncheqChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub OncheqChanged()
-    End Sub
-    Partial Private Sub Oncash_waitChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Oncash_waitChanged()
-    End Sub
-    Partial Private Sub Ontrans_waitChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Ontrans_waitChanged()
-    End Sub
-    Partial Private Sub Oncheq_waitChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Oncheq_waitChanged()
-    End Sub
-    Partial Private Sub Oncash_nobillChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Oncash_nobillChanged()
-    End Sub
-    Partial Private Sub Ontrans_nobillChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Ontrans_nobillChanged()
-    End Sub
-    Partial Private Sub Oncheq_nobillChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Oncheq_nobillChanged()
-    End Sub
-    Partial Private Sub Oncash_wait_nobillChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Oncash_wait_nobillChanged()
-    End Sub
-    Partial Private Sub Ontrans_wait_nobillChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Ontrans_wait_nobillChanged()
-    End Sub
-    Partial Private Sub Oncheq_wait_nobillChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Oncheq_wait_nobillChanged()
-    End Sub
-    Partial Private Sub OnmarginChanging(value As System.Nullable(Of Double))
-    End Sub
-    Partial Private Sub OnmarginChanged()
-    End Sub
-    Partial Private Sub Onmargin_callChanging(value As System.Nullable(Of Double))
-    End Sub
-    Partial Private Sub Onmargin_callChanged()
-    End Sub
-    Partial Private Sub Onprice_nowChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Onprice_nowChanged()
-    End Sub
-    Partial Private Sub Onbid96Changing(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Onbid96Changed()
-    End Sub
-    Partial Private Sub Onbid99Changing(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Onbid99Changed()
-    End Sub
-    Partial Private Sub Onask96Changing(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Onask96Changed()
-    End Sub
-    Partial Private Sub Onask99Changing(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Onask99Changed()
-    End Sub
-    Partial Private Sub Onpwd_authChanging(value As String)
-    End Sub
-    Partial Private Sub Onpwd_authChanged()
-    End Sub
-    Partial Private Sub Onprice_baseChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Onprice_baseChanged()
-    End Sub
-    Partial Private Sub OnG96_baseChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub OnG96_baseChanged()
-    End Sub
-    Partial Private Sub OnG99N_baseChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub OnG99N_baseChanged()
-    End Sub
-    Partial Private Sub OnG99L_baseChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub OnG99L_baseChanged()
-    End Sub
-    Partial Private Sub Onprice_branchChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub Onprice_branchChanged()
-    End Sub
-    Partial Private Sub OnG96_branchChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub OnG96_branchChanged()
-    End Sub
-    Partial Private Sub OnG99N_branchChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub OnG99N_branchChanged()
-    End Sub
-    Partial Private Sub OnG99L_branchChanging(value As System.Nullable(Of Decimal))
-    End Sub
-    Partial Private Sub OnG99L_branchChanged()
-    End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-	End Sub
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_stock_id", DbType:="Int NOT NULL", IsPrimaryKey:=true)>  _
-	Public Property stock_id() As Integer
-		Get
-			Return Me._stock_id
-		End Get
-		Set
-			If ((Me._stock_id = value)  _
-						= false) Then
-				Me.Onstock_idChanging(value)
-				Me.SendPropertyChanging
-				Me._stock_id = value
-				Me.SendPropertyChanged("stock_id")
-				Me.Onstock_idChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_gold_base", DbType:="Decimal(18,5)")>  _
-	Public Property gold_base() As System.Nullable(Of Decimal)
-		Get
-			Return Me._gold_base
-		End Get
-		Set
-			If (Me._gold_base.Equals(value) = false) Then
-				Me.Ongold_baseChanging(value)
-				Me.SendPropertyChanging
-				Me._gold_base = value
-				Me.SendPropertyChanged("gold_base")
-				Me.Ongold_baseChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_gold", DbType:="Decimal(18,5)")>  _
-	Public Property gold() As System.Nullable(Of Decimal)
-		Get
-			Return Me._gold
-		End Get
-		Set
-			If (Me._gold.Equals(value) = false) Then
-				Me.OngoldChanging(value)
-				Me.SendPropertyChanging
-				Me._gold = value
-				Me.SendPropertyChanged("gold")
-				Me.OngoldChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_gold_wait", DbType:="Decimal(18,5)")>  _
-	Public Property gold_wait() As System.Nullable(Of Decimal)
-		Get
-			Return Me._gold_wait
-		End Get
-		Set
-			If (Me._gold_wait.Equals(value) = false) Then
-				Me.Ongold_waitChanging(value)
-				Me.SendPropertyChanging
-				Me._gold_wait = value
-				Me.SendPropertyChanged("gold_wait")
-				Me.Ongold_waitChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cash", DbType:="Decimal(18,2)")>  _
-	Public Property cash() As System.Nullable(Of Decimal)
-		Get
-			Return Me._cash
-		End Get
-		Set
-			If (Me._cash.Equals(value) = false) Then
-				Me.OncashChanging(value)
-				Me.SendPropertyChanging
-				Me._cash = value
-				Me.SendPropertyChanged("cash")
-				Me.OncashChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_trans", DbType:="Decimal(18,2)")>  _
-	Public Property trans() As System.Nullable(Of Decimal)
-		Get
-			Return Me._trans
-		End Get
-		Set
-			If (Me._trans.Equals(value) = false) Then
-				Me.OntransChanging(value)
-				Me.SendPropertyChanging
-				Me._trans = value
-				Me.SendPropertyChanged("trans")
-				Me.OntransChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cheq", DbType:="Decimal(18,2)")>  _
-	Public Property cheq() As System.Nullable(Of Decimal)
-		Get
-			Return Me._cheq
-		End Get
-		Set
-			If (Me._cheq.Equals(value) = false) Then
-				Me.OncheqChanging(value)
-				Me.SendPropertyChanging
-				Me._cheq = value
-				Me.SendPropertyChanged("cheq")
-				Me.OncheqChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cash_wait", DbType:="Decimal(18,2)")>  _
-	Public Property cash_wait() As System.Nullable(Of Decimal)
-		Get
-			Return Me._cash_wait
-		End Get
-		Set
-			If (Me._cash_wait.Equals(value) = false) Then
-				Me.Oncash_waitChanging(value)
-				Me.SendPropertyChanging
-				Me._cash_wait = value
-				Me.SendPropertyChanged("cash_wait")
-				Me.Oncash_waitChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_trans_wait", DbType:="Decimal(18,2)")>  _
-	Public Property trans_wait() As System.Nullable(Of Decimal)
-		Get
-			Return Me._trans_wait
-		End Get
-		Set
-			If (Me._trans_wait.Equals(value) = false) Then
-				Me.Ontrans_waitChanging(value)
-				Me.SendPropertyChanging
-				Me._trans_wait = value
-				Me.SendPropertyChanged("trans_wait")
-				Me.Ontrans_waitChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cheq_wait", DbType:="Decimal(18,2)")>  _
-	Public Property cheq_wait() As System.Nullable(Of Decimal)
-		Get
-			Return Me._cheq_wait
-		End Get
-		Set
-			If (Me._cheq_wait.Equals(value) = false) Then
-				Me.Oncheq_waitChanging(value)
-				Me.SendPropertyChanging
-				Me._cheq_wait = value
-				Me.SendPropertyChanged("cheq_wait")
-				Me.Oncheq_waitChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cash_nobill", DbType:="Decimal(18,2)")>  _
-	Public Property cash_nobill() As System.Nullable(Of Decimal)
-		Get
-			Return Me._cash_nobill
-		End Get
-		Set
-			If (Me._cash_nobill.Equals(value) = false) Then
-				Me.Oncash_nobillChanging(value)
-				Me.SendPropertyChanging
-				Me._cash_nobill = value
-				Me.SendPropertyChanged("cash_nobill")
-				Me.Oncash_nobillChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_trans_nobill", DbType:="Decimal(18,2)")>  _
-	Public Property trans_nobill() As System.Nullable(Of Decimal)
-		Get
-			Return Me._trans_nobill
-		End Get
-		Set
-			If (Me._trans_nobill.Equals(value) = false) Then
-				Me.Ontrans_nobillChanging(value)
-				Me.SendPropertyChanging
-				Me._trans_nobill = value
-				Me.SendPropertyChanged("trans_nobill")
-				Me.Ontrans_nobillChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cheq_nobill", DbType:="Decimal(18,2)")>  _
-	Public Property cheq_nobill() As System.Nullable(Of Decimal)
-		Get
-			Return Me._cheq_nobill
-		End Get
-		Set
-			If (Me._cheq_nobill.Equals(value) = false) Then
-				Me.Oncheq_nobillChanging(value)
-				Me.SendPropertyChanging
-				Me._cheq_nobill = value
-				Me.SendPropertyChanged("cheq_nobill")
-				Me.Oncheq_nobillChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cash_wait_nobill", DbType:="Decimal(18,2)")>  _
-	Public Property cash_wait_nobill() As System.Nullable(Of Decimal)
-		Get
-			Return Me._cash_wait_nobill
-		End Get
-		Set
-			If (Me._cash_wait_nobill.Equals(value) = false) Then
-				Me.Oncash_wait_nobillChanging(value)
-				Me.SendPropertyChanging
-				Me._cash_wait_nobill = value
-				Me.SendPropertyChanged("cash_wait_nobill")
-				Me.Oncash_wait_nobillChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_trans_wait_nobill", DbType:="Decimal(18,2)")>  _
-	Public Property trans_wait_nobill() As System.Nullable(Of Decimal)
-		Get
-			Return Me._trans_wait_nobill
-		End Get
-		Set
-			If (Me._trans_wait_nobill.Equals(value) = false) Then
-				Me.Ontrans_wait_nobillChanging(value)
-				Me.SendPropertyChanging
-				Me._trans_wait_nobill = value
-				Me.SendPropertyChanged("trans_wait_nobill")
-				Me.Ontrans_wait_nobillChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cheq_wait_nobill", DbType:="Decimal(18,2)")>  _
-	Public Property cheq_wait_nobill() As System.Nullable(Of Decimal)
-		Get
-			Return Me._cheq_wait_nobill
-		End Get
-		Set
-			If (Me._cheq_wait_nobill.Equals(value) = false) Then
-				Me.Oncheq_wait_nobillChanging(value)
-				Me.SendPropertyChanging
-				Me._cheq_wait_nobill = value
-				Me.SendPropertyChanged("cheq_wait_nobill")
-				Me.Oncheq_wait_nobillChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_margin", DbType:="Float")>  _
-	Public Property margin() As System.Nullable(Of Double)
-		Get
-			Return Me._margin
-		End Get
-		Set
-			If (Me._margin.Equals(value) = false) Then
-				Me.OnmarginChanging(value)
-				Me.SendPropertyChanging
-				Me._margin = value
-				Me.SendPropertyChanged("margin")
-				Me.OnmarginChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_margin_call", DbType:="Float")>  _
-	Public Property margin_call() As System.Nullable(Of Double)
-		Get
-			Return Me._margin_call
-		End Get
-		Set
-			If (Me._margin_call.Equals(value) = false) Then
-				Me.Onmargin_callChanging(value)
-				Me.SendPropertyChanging
-				Me._margin_call = value
-				Me.SendPropertyChanged("margin_call")
-				Me.Onmargin_callChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_price_now", DbType:="Decimal(18,2)")>  _
-	Public Property price_now() As System.Nullable(Of Decimal)
-		Get
-			Return Me._price_now
-		End Get
-		Set
-			If (Me._price_now.Equals(value) = false) Then
-				Me.Onprice_nowChanging(value)
-				Me.SendPropertyChanging
-				Me._price_now = value
-				Me.SendPropertyChanged("price_now")
-				Me.Onprice_nowChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_bid96", DbType:="Decimal(18,2)")>  _
-	Public Property bid96() As System.Nullable(Of Decimal)
-		Get
-			Return Me._bid96
-		End Get
-		Set
-			If (Me._bid96.Equals(value) = false) Then
-				Me.Onbid96Changing(value)
-				Me.SendPropertyChanging
-				Me._bid96 = value
-				Me.SendPropertyChanged("bid96")
-				Me.Onbid96Changed
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_bid99", DbType:="Decimal(18,2)")>  _
-	Public Property bid99() As System.Nullable(Of Decimal)
-		Get
-			Return Me._bid99
-		End Get
-		Set
-			If (Me._bid99.Equals(value) = false) Then
-				Me.Onbid99Changing(value)
-				Me.SendPropertyChanging
-				Me._bid99 = value
-				Me.SendPropertyChanged("bid99")
-				Me.Onbid99Changed
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_ask96", DbType:="Decimal(18,2)")>  _
-	Public Property ask96() As System.Nullable(Of Decimal)
-		Get
-			Return Me._ask96
-		End Get
-		Set
-			If (Me._ask96.Equals(value) = false) Then
-				Me.Onask96Changing(value)
-				Me.SendPropertyChanging
-				Me._ask96 = value
-				Me.SendPropertyChanged("ask96")
-				Me.Onask96Changed
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_ask99", DbType:="Decimal(18,2)")>  _
-	Public Property ask99() As System.Nullable(Of Decimal)
-		Get
-			Return Me._ask99
-		End Get
-		Set
-			If (Me._ask99.Equals(value) = false) Then
-				Me.Onask99Changing(value)
-				Me.SendPropertyChanging
-				Me._ask99 = value
-				Me.SendPropertyChanged("ask99")
-				Me.Onask99Changed
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_pwd_auth", DbType:="VarChar(50)")>  _
-	Public Property pwd_auth() As String
-		Get
-			Return Me._pwd_auth
-		End Get
-		Set
-			If (String.Equals(Me._pwd_auth, value) = false) Then
-				Me.Onpwd_authChanging(value)
-				Me.SendPropertyChanging
-				Me._pwd_auth = value
-				Me.SendPropertyChanged("pwd_auth")
-				Me.Onpwd_authChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_price_base", DbType:="Decimal(18,2)")>  _
-	Public Property price_base() As System.Nullable(Of Decimal)
-		Get
-			Return Me._price_base
-		End Get
-		Set
-			If (Me._price_base.Equals(value) = false) Then
-				Me.Onprice_baseChanging(value)
-				Me.SendPropertyChanging
-				Me._price_base = value
-				Me.SendPropertyChanged("price_base")
-				Me.Onprice_baseChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_G96_base", DbType:="Decimal(18,5)")>  _
-	Public Property G96_base() As System.Nullable(Of Decimal)
-		Get
-			Return Me._G96_base
-		End Get
-		Set
-			If (Me._G96_base.Equals(value) = false) Then
-				Me.OnG96_baseChanging(value)
-				Me.SendPropertyChanging
-				Me._G96_base = value
-				Me.SendPropertyChanged("G96_base")
-				Me.OnG96_baseChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_G99N_base", DbType:="Decimal(18,5)")>  _
-	Public Property G99N_base() As System.Nullable(Of Decimal)
-		Get
-			Return Me._G99N_base
-		End Get
-		Set
-			If (Me._G99N_base.Equals(value) = false) Then
-				Me.OnG99N_baseChanging(value)
-				Me.SendPropertyChanging
-				Me._G99N_base = value
-				Me.SendPropertyChanged("G99N_base")
-				Me.OnG99N_baseChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_G99L_base", DbType:="Decimal(18,5)")>  _
-	Public Property G99L_base() As System.Nullable(Of Decimal)
-		Get
-			Return Me._G99L_base
-		End Get
-		Set
-			If (Me._G99L_base.Equals(value) = false) Then
-				Me.OnG99L_baseChanging(value)
-				Me.SendPropertyChanging
-				Me._G99L_base = value
-				Me.SendPropertyChanged("G99L_base")
-				Me.OnG99L_baseChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_price_branch", DbType:="Decimal(18,2)")>  _
-	Public Property price_branch() As System.Nullable(Of Decimal)
-		Get
-			Return Me._price_branch
-		End Get
-		Set
-			If (Me._price_branch.Equals(value) = false) Then
-				Me.Onprice_branchChanging(value)
-				Me.SendPropertyChanging
-				Me._price_branch = value
-				Me.SendPropertyChanged("price_branch")
-				Me.Onprice_branchChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_G96_branch", DbType:="Decimal(18,5)")>  _
-	Public Property G96_branch() As System.Nullable(Of Decimal)
-		Get
-			Return Me._G96_branch
-		End Get
-		Set
-			If (Me._G96_branch.Equals(value) = false) Then
-				Me.OnG96_branchChanging(value)
-				Me.SendPropertyChanging
-				Me._G96_branch = value
-				Me.SendPropertyChanged("G96_branch")
-				Me.OnG96_branchChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_G99N_branch", DbType:="Decimal(18,5)")>  _
-	Public Property G99N_branch() As System.Nullable(Of Decimal)
-		Get
-			Return Me._G99N_branch
-		End Get
-		Set
-			If (Me._G99N_branch.Equals(value) = false) Then
-				Me.OnG99N_branchChanging(value)
-				Me.SendPropertyChanging
-				Me._G99N_branch = value
-				Me.SendPropertyChanged("G99N_branch")
-				Me.OnG99N_branchChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_G99L_branch", DbType:="Decimal(18,5)")>  _
-	Public Property G99L_branch() As System.Nullable(Of Decimal)
-		Get
-			Return Me._G99L_branch
-		End Get
-		Set
-			If (Me._G99L_branch.Equals(value) = false) Then
-				Me.OnG99L_branchChanging(value)
-				Me.SendPropertyChanging
-				Me._G99L_branch = value
-				Me.SendPropertyChanged("G99L_branch")
-				Me.OnG99L_branchChanged
 			End If
 		End Set
 	End Property
@@ -7957,200 +7231,6 @@ Partial Public Class stock_online
 	End Sub
 End Class
 
-<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.payment")>  _
-Partial Public Class payment
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _payment_id As Integer
-	
-	Private _status As String
-	
-	Private _active As System.Nullable(Of Boolean)
-	
-	Private _modifier_by As String
-	
-	Private _modifier_date As System.Nullable(Of Date)
-	
-	Private _created_by As String
-	
-	Private _created_date As System.Nullable(Of Date)
-	
-    #Region "Extensibility Method Definitions"
-    Partial Private Sub OnLoaded()
-    End Sub
-    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
-    End Sub
-    Partial Private Sub OnCreated()
-    End Sub
-    Partial Private Sub Onpayment_idChanging(value As Integer)
-    End Sub
-    Partial Private Sub Onpayment_idChanged()
-    End Sub
-    Partial Private Sub OnstatusChanging(value As String)
-    End Sub
-    Partial Private Sub OnstatusChanged()
-    End Sub
-    Partial Private Sub OnactiveChanging(value As System.Nullable(Of Boolean))
-    End Sub
-    Partial Private Sub OnactiveChanged()
-    End Sub
-    Partial Private Sub Onmodifier_byChanging(value As String)
-    End Sub
-    Partial Private Sub Onmodifier_byChanged()
-    End Sub
-    Partial Private Sub Onmodifier_dateChanging(value As System.Nullable(Of Date))
-    End Sub
-    Partial Private Sub Onmodifier_dateChanged()
-    End Sub
-    Partial Private Sub Oncreated_byChanging(value As String)
-    End Sub
-    Partial Private Sub Oncreated_byChanged()
-    End Sub
-    Partial Private Sub Oncreated_dateChanging(value As System.Nullable(Of Date))
-    End Sub
-    Partial Private Sub Oncreated_dateChanged()
-    End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-	End Sub
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_payment_id", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
-	Public Property payment_id() As Integer
-		Get
-			Return Me._payment_id
-		End Get
-		Set
-			If ((Me._payment_id = value)  _
-						= false) Then
-				Me.Onpayment_idChanging(value)
-				Me.SendPropertyChanging
-				Me._payment_id = value
-				Me.SendPropertyChanged("payment_id")
-				Me.Onpayment_idChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_status", DbType:="VarChar(50)")>  _
-	Public Property status() As String
-		Get
-			Return Me._status
-		End Get
-		Set
-			If (String.Equals(Me._status, value) = false) Then
-				Me.OnstatusChanging(value)
-				Me.SendPropertyChanging
-				Me._status = value
-				Me.SendPropertyChanged("status")
-				Me.OnstatusChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_active", DbType:="Bit")>  _
-	Public Property active() As System.Nullable(Of Boolean)
-		Get
-			Return Me._active
-		End Get
-		Set
-			If (Me._active.Equals(value) = false) Then
-				Me.OnactiveChanging(value)
-				Me.SendPropertyChanging
-				Me._active = value
-				Me.SendPropertyChanged("active")
-				Me.OnactiveChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_modifier_by", DbType:="VarChar(50)")>  _
-	Public Property modifier_by() As String
-		Get
-			Return Me._modifier_by
-		End Get
-		Set
-			If (String.Equals(Me._modifier_by, value) = false) Then
-				Me.Onmodifier_byChanging(value)
-				Me.SendPropertyChanging
-				Me._modifier_by = value
-				Me.SendPropertyChanged("modifier_by")
-				Me.Onmodifier_byChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_modifier_date", DbType:="DateTime")>  _
-	Public Property modifier_date() As System.Nullable(Of Date)
-		Get
-			Return Me._modifier_date
-		End Get
-		Set
-			If (Me._modifier_date.Equals(value) = false) Then
-				Me.Onmodifier_dateChanging(value)
-				Me.SendPropertyChanging
-				Me._modifier_date = value
-				Me.SendPropertyChanged("modifier_date")
-				Me.Onmodifier_dateChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_created_by", DbType:="VarChar(50)")>  _
-	Public Property created_by() As String
-		Get
-			Return Me._created_by
-		End Get
-		Set
-			If (String.Equals(Me._created_by, value) = false) Then
-				Me.Oncreated_byChanging(value)
-				Me.SendPropertyChanging
-				Me._created_by = value
-				Me.SendPropertyChanged("created_by")
-				Me.Oncreated_byChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_created_date", DbType:="DateTime")>  _
-	Public Property created_date() As System.Nullable(Of Date)
-		Get
-			Return Me._created_date
-		End Get
-		Set
-			If (Me._created_date.Equals(value) = false) Then
-				Me.Oncreated_dateChanging(value)
-				Me.SendPropertyChanging
-				Me._created_date = value
-				Me.SendPropertyChanged("created_date")
-				Me.Oncreated_dateChanged
-			End If
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-End Class
-
 <Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.tickets")>  _
 Partial Public Class ticket
 	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
@@ -9646,6 +8726,1304 @@ Partial Public Class v_ticket_sum_split
 			End If
 		End Set
 	End Property
+End Class
+
+<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.v_payment")>  _
+Partial Public Class v_payment
+	
+	Private _payment_id As System.Nullable(Of Integer)
+	
+	Private _gold_type_id As String
+	
+	Private _cust_id As String
+	
+	Private _amount As System.Nullable(Of Decimal)
+	
+	Private _quantity As System.Nullable(Of Decimal)
+	
+	Public Sub New()
+		MyBase.New
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_payment_id", DbType:="Int")>  _
+	Public Property payment_id() As System.Nullable(Of Integer)
+		Get
+			Return Me._payment_id
+		End Get
+		Set
+			If (Me._payment_id.Equals(value) = false) Then
+				Me._payment_id = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_gold_type_id", DbType:="VarChar(4)")>  _
+	Public Property gold_type_id() As String
+		Get
+			Return Me._gold_type_id
+		End Get
+		Set
+			If (String.Equals(Me._gold_type_id, value) = false) Then
+				Me._gold_type_id = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cust_id", DbType:="VarChar(5)")>  _
+	Public Property cust_id() As String
+		Get
+			Return Me._cust_id
+		End Get
+		Set
+			If (String.Equals(Me._cust_id, value) = false) Then
+				Me._cust_id = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_amount", DbType:="Decimal(38,2)")>  _
+	Public Property amount() As System.Nullable(Of Decimal)
+		Get
+			Return Me._amount
+		End Get
+		Set
+			If (Me._amount.Equals(value) = false) Then
+				Me._amount = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_quantity", DbType:="Decimal(38,5)")>  _
+	Public Property quantity() As System.Nullable(Of Decimal)
+		Get
+			Return Me._quantity
+		End Get
+		Set
+			If (Me._quantity.Equals(value) = false) Then
+				Me._quantity = value
+			End If
+		End Set
+	End Property
+End Class
+
+<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.stock")>  _
+Partial Public Class stock
+	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	
+	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+	
+	Private _stock_id As Integer
+	
+	Private _gold_base As System.Nullable(Of Decimal)
+	
+	Private _gold As System.Nullable(Of Decimal)
+	
+	Private _gold_wait As System.Nullable(Of Decimal)
+	
+	Private _cash As System.Nullable(Of Decimal)
+	
+	Private _trans As System.Nullable(Of Decimal)
+	
+	Private _cheq As System.Nullable(Of Decimal)
+	
+	Private _cash_wait As System.Nullable(Of Decimal)
+	
+	Private _trans_wait As System.Nullable(Of Decimal)
+	
+	Private _cheq_wait As System.Nullable(Of Decimal)
+	
+	Private _cash_nobill As System.Nullable(Of Decimal)
+	
+	Private _trans_nobill As System.Nullable(Of Decimal)
+	
+	Private _cheq_nobill As System.Nullable(Of Decimal)
+	
+	Private _cash_wait_nobill As System.Nullable(Of Decimal)
+	
+	Private _trans_wait_nobill As System.Nullable(Of Decimal)
+	
+	Private _cheq_wait_nobill As System.Nullable(Of Decimal)
+	
+	Private _margin As System.Nullable(Of Double)
+	
+	Private _margin_call As System.Nullable(Of Double)
+	
+	Private _price_now As System.Nullable(Of Decimal)
+	
+	Private _bid96 As System.Nullable(Of Decimal)
+	
+	Private _bid99 As System.Nullable(Of Decimal)
+	
+	Private _ask96 As System.Nullable(Of Decimal)
+	
+	Private _ask99 As System.Nullable(Of Decimal)
+	
+	Private _pwd_auth As String
+	
+	Private _price_base As System.Nullable(Of Decimal)
+	
+	Private _G96_base As System.Nullable(Of Decimal)
+	
+	Private _G96G_base As System.Nullable(Of Decimal)
+	
+	Private _G99_base As System.Nullable(Of Decimal)
+	
+	Private _price_branch As System.Nullable(Of Decimal)
+	
+	Private _G96_branch As System.Nullable(Of Decimal)
+	
+	Private _G99N_branch As System.Nullable(Of Decimal)
+	
+	Private _G99L_branch As System.Nullable(Of Decimal)
+	
+    #Region "Extensibility Method Definitions"
+    Partial Private Sub OnLoaded()
+    End Sub
+    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
+    End Sub
+    Partial Private Sub OnCreated()
+    End Sub
+    Partial Private Sub Onstock_idChanging(value As Integer)
+    End Sub
+    Partial Private Sub Onstock_idChanged()
+    End Sub
+    Partial Private Sub Ongold_baseChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Ongold_baseChanged()
+    End Sub
+    Partial Private Sub OngoldChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub OngoldChanged()
+    End Sub
+    Partial Private Sub Ongold_waitChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Ongold_waitChanged()
+    End Sub
+    Partial Private Sub OncashChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub OncashChanged()
+    End Sub
+    Partial Private Sub OntransChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub OntransChanged()
+    End Sub
+    Partial Private Sub OncheqChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub OncheqChanged()
+    End Sub
+    Partial Private Sub Oncash_waitChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Oncash_waitChanged()
+    End Sub
+    Partial Private Sub Ontrans_waitChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Ontrans_waitChanged()
+    End Sub
+    Partial Private Sub Oncheq_waitChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Oncheq_waitChanged()
+    End Sub
+    Partial Private Sub Oncash_nobillChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Oncash_nobillChanged()
+    End Sub
+    Partial Private Sub Ontrans_nobillChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Ontrans_nobillChanged()
+    End Sub
+    Partial Private Sub Oncheq_nobillChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Oncheq_nobillChanged()
+    End Sub
+    Partial Private Sub Oncash_wait_nobillChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Oncash_wait_nobillChanged()
+    End Sub
+    Partial Private Sub Ontrans_wait_nobillChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Ontrans_wait_nobillChanged()
+    End Sub
+    Partial Private Sub Oncheq_wait_nobillChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Oncheq_wait_nobillChanged()
+    End Sub
+    Partial Private Sub OnmarginChanging(value As System.Nullable(Of Double))
+    End Sub
+    Partial Private Sub OnmarginChanged()
+    End Sub
+    Partial Private Sub Onmargin_callChanging(value As System.Nullable(Of Double))
+    End Sub
+    Partial Private Sub Onmargin_callChanged()
+    End Sub
+    Partial Private Sub Onprice_nowChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Onprice_nowChanged()
+    End Sub
+    Partial Private Sub Onbid96Changing(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Onbid96Changed()
+    End Sub
+    Partial Private Sub Onbid99Changing(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Onbid99Changed()
+    End Sub
+    Partial Private Sub Onask96Changing(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Onask96Changed()
+    End Sub
+    Partial Private Sub Onask99Changing(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Onask99Changed()
+    End Sub
+    Partial Private Sub Onpwd_authChanging(value As String)
+    End Sub
+    Partial Private Sub Onpwd_authChanged()
+    End Sub
+    Partial Private Sub Onprice_baseChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Onprice_baseChanged()
+    End Sub
+    Partial Private Sub OnG96_baseChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub OnG96_baseChanged()
+    End Sub
+    Partial Private Sub OnG96G_baseChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub OnG96G_baseChanged()
+    End Sub
+    Partial Private Sub OnG99_baseChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub OnG99_baseChanged()
+    End Sub
+    Partial Private Sub Onprice_branchChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Onprice_branchChanged()
+    End Sub
+    Partial Private Sub OnG96_branchChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub OnG96_branchChanged()
+    End Sub
+    Partial Private Sub OnG99N_branchChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub OnG99N_branchChanged()
+    End Sub
+    Partial Private Sub OnG99L_branchChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub OnG99L_branchChanged()
+    End Sub
+    #End Region
+	
+	Public Sub New()
+		MyBase.New
+		OnCreated
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_stock_id", DbType:="Int NOT NULL", IsPrimaryKey:=true)>  _
+	Public Property stock_id() As Integer
+		Get
+			Return Me._stock_id
+		End Get
+		Set
+			If ((Me._stock_id = value)  _
+						= false) Then
+				Me.Onstock_idChanging(value)
+				Me.SendPropertyChanging
+				Me._stock_id = value
+				Me.SendPropertyChanged("stock_id")
+				Me.Onstock_idChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_gold_base", DbType:="Decimal(18,2)")>  _
+	Public Property gold_base() As System.Nullable(Of Decimal)
+		Get
+			Return Me._gold_base
+		End Get
+		Set
+			If (Me._gold_base.Equals(value) = false) Then
+				Me.Ongold_baseChanging(value)
+				Me.SendPropertyChanging
+				Me._gold_base = value
+				Me.SendPropertyChanged("gold_base")
+				Me.Ongold_baseChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_gold", DbType:="Decimal(18,2)")>  _
+	Public Property gold() As System.Nullable(Of Decimal)
+		Get
+			Return Me._gold
+		End Get
+		Set
+			If (Me._gold.Equals(value) = false) Then
+				Me.OngoldChanging(value)
+				Me.SendPropertyChanging
+				Me._gold = value
+				Me.SendPropertyChanged("gold")
+				Me.OngoldChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_gold_wait", DbType:="Decimal(18,2)")>  _
+	Public Property gold_wait() As System.Nullable(Of Decimal)
+		Get
+			Return Me._gold_wait
+		End Get
+		Set
+			If (Me._gold_wait.Equals(value) = false) Then
+				Me.Ongold_waitChanging(value)
+				Me.SendPropertyChanging
+				Me._gold_wait = value
+				Me.SendPropertyChanged("gold_wait")
+				Me.Ongold_waitChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cash", DbType:="Decimal(18,2)")>  _
+	Public Property cash() As System.Nullable(Of Decimal)
+		Get
+			Return Me._cash
+		End Get
+		Set
+			If (Me._cash.Equals(value) = false) Then
+				Me.OncashChanging(value)
+				Me.SendPropertyChanging
+				Me._cash = value
+				Me.SendPropertyChanged("cash")
+				Me.OncashChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_trans", DbType:="Decimal(18,2)")>  _
+	Public Property trans() As System.Nullable(Of Decimal)
+		Get
+			Return Me._trans
+		End Get
+		Set
+			If (Me._trans.Equals(value) = false) Then
+				Me.OntransChanging(value)
+				Me.SendPropertyChanging
+				Me._trans = value
+				Me.SendPropertyChanged("trans")
+				Me.OntransChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cheq", DbType:="Decimal(18,2)")>  _
+	Public Property cheq() As System.Nullable(Of Decimal)
+		Get
+			Return Me._cheq
+		End Get
+		Set
+			If (Me._cheq.Equals(value) = false) Then
+				Me.OncheqChanging(value)
+				Me.SendPropertyChanging
+				Me._cheq = value
+				Me.SendPropertyChanged("cheq")
+				Me.OncheqChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cash_wait", DbType:="Decimal(18,2)")>  _
+	Public Property cash_wait() As System.Nullable(Of Decimal)
+		Get
+			Return Me._cash_wait
+		End Get
+		Set
+			If (Me._cash_wait.Equals(value) = false) Then
+				Me.Oncash_waitChanging(value)
+				Me.SendPropertyChanging
+				Me._cash_wait = value
+				Me.SendPropertyChanged("cash_wait")
+				Me.Oncash_waitChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_trans_wait", DbType:="Decimal(18,2)")>  _
+	Public Property trans_wait() As System.Nullable(Of Decimal)
+		Get
+			Return Me._trans_wait
+		End Get
+		Set
+			If (Me._trans_wait.Equals(value) = false) Then
+				Me.Ontrans_waitChanging(value)
+				Me.SendPropertyChanging
+				Me._trans_wait = value
+				Me.SendPropertyChanged("trans_wait")
+				Me.Ontrans_waitChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cheq_wait", DbType:="Decimal(18,2)")>  _
+	Public Property cheq_wait() As System.Nullable(Of Decimal)
+		Get
+			Return Me._cheq_wait
+		End Get
+		Set
+			If (Me._cheq_wait.Equals(value) = false) Then
+				Me.Oncheq_waitChanging(value)
+				Me.SendPropertyChanging
+				Me._cheq_wait = value
+				Me.SendPropertyChanged("cheq_wait")
+				Me.Oncheq_waitChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cash_nobill", DbType:="Decimal(18,2)")>  _
+	Public Property cash_nobill() As System.Nullable(Of Decimal)
+		Get
+			Return Me._cash_nobill
+		End Get
+		Set
+			If (Me._cash_nobill.Equals(value) = false) Then
+				Me.Oncash_nobillChanging(value)
+				Me.SendPropertyChanging
+				Me._cash_nobill = value
+				Me.SendPropertyChanged("cash_nobill")
+				Me.Oncash_nobillChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_trans_nobill", DbType:="Decimal(18,2)")>  _
+	Public Property trans_nobill() As System.Nullable(Of Decimal)
+		Get
+			Return Me._trans_nobill
+		End Get
+		Set
+			If (Me._trans_nobill.Equals(value) = false) Then
+				Me.Ontrans_nobillChanging(value)
+				Me.SendPropertyChanging
+				Me._trans_nobill = value
+				Me.SendPropertyChanged("trans_nobill")
+				Me.Ontrans_nobillChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cheq_nobill", DbType:="Decimal(18,2)")>  _
+	Public Property cheq_nobill() As System.Nullable(Of Decimal)
+		Get
+			Return Me._cheq_nobill
+		End Get
+		Set
+			If (Me._cheq_nobill.Equals(value) = false) Then
+				Me.Oncheq_nobillChanging(value)
+				Me.SendPropertyChanging
+				Me._cheq_nobill = value
+				Me.SendPropertyChanged("cheq_nobill")
+				Me.Oncheq_nobillChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cash_wait_nobill", DbType:="Decimal(18,2)")>  _
+	Public Property cash_wait_nobill() As System.Nullable(Of Decimal)
+		Get
+			Return Me._cash_wait_nobill
+		End Get
+		Set
+			If (Me._cash_wait_nobill.Equals(value) = false) Then
+				Me.Oncash_wait_nobillChanging(value)
+				Me.SendPropertyChanging
+				Me._cash_wait_nobill = value
+				Me.SendPropertyChanged("cash_wait_nobill")
+				Me.Oncash_wait_nobillChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_trans_wait_nobill", DbType:="Decimal(18,2)")>  _
+	Public Property trans_wait_nobill() As System.Nullable(Of Decimal)
+		Get
+			Return Me._trans_wait_nobill
+		End Get
+		Set
+			If (Me._trans_wait_nobill.Equals(value) = false) Then
+				Me.Ontrans_wait_nobillChanging(value)
+				Me.SendPropertyChanging
+				Me._trans_wait_nobill = value
+				Me.SendPropertyChanged("trans_wait_nobill")
+				Me.Ontrans_wait_nobillChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cheq_wait_nobill", DbType:="Decimal(18,2)")>  _
+	Public Property cheq_wait_nobill() As System.Nullable(Of Decimal)
+		Get
+			Return Me._cheq_wait_nobill
+		End Get
+		Set
+			If (Me._cheq_wait_nobill.Equals(value) = false) Then
+				Me.Oncheq_wait_nobillChanging(value)
+				Me.SendPropertyChanging
+				Me._cheq_wait_nobill = value
+				Me.SendPropertyChanged("cheq_wait_nobill")
+				Me.Oncheq_wait_nobillChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_margin", DbType:="Float")>  _
+	Public Property margin() As System.Nullable(Of Double)
+		Get
+			Return Me._margin
+		End Get
+		Set
+			If (Me._margin.Equals(value) = false) Then
+				Me.OnmarginChanging(value)
+				Me.SendPropertyChanging
+				Me._margin = value
+				Me.SendPropertyChanged("margin")
+				Me.OnmarginChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_margin_call", DbType:="Float")>  _
+	Public Property margin_call() As System.Nullable(Of Double)
+		Get
+			Return Me._margin_call
+		End Get
+		Set
+			If (Me._margin_call.Equals(value) = false) Then
+				Me.Onmargin_callChanging(value)
+				Me.SendPropertyChanging
+				Me._margin_call = value
+				Me.SendPropertyChanged("margin_call")
+				Me.Onmargin_callChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_price_now", DbType:="Decimal(18,2)")>  _
+	Public Property price_now() As System.Nullable(Of Decimal)
+		Get
+			Return Me._price_now
+		End Get
+		Set
+			If (Me._price_now.Equals(value) = false) Then
+				Me.Onprice_nowChanging(value)
+				Me.SendPropertyChanging
+				Me._price_now = value
+				Me.SendPropertyChanged("price_now")
+				Me.Onprice_nowChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_bid96", DbType:="Decimal(18,2)")>  _
+	Public Property bid96() As System.Nullable(Of Decimal)
+		Get
+			Return Me._bid96
+		End Get
+		Set
+			If (Me._bid96.Equals(value) = false) Then
+				Me.Onbid96Changing(value)
+				Me.SendPropertyChanging
+				Me._bid96 = value
+				Me.SendPropertyChanged("bid96")
+				Me.Onbid96Changed
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_bid99", DbType:="Decimal(18,2)")>  _
+	Public Property bid99() As System.Nullable(Of Decimal)
+		Get
+			Return Me._bid99
+		End Get
+		Set
+			If (Me._bid99.Equals(value) = false) Then
+				Me.Onbid99Changing(value)
+				Me.SendPropertyChanging
+				Me._bid99 = value
+				Me.SendPropertyChanged("bid99")
+				Me.Onbid99Changed
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_ask96", DbType:="Decimal(18,2)")>  _
+	Public Property ask96() As System.Nullable(Of Decimal)
+		Get
+			Return Me._ask96
+		End Get
+		Set
+			If (Me._ask96.Equals(value) = false) Then
+				Me.Onask96Changing(value)
+				Me.SendPropertyChanging
+				Me._ask96 = value
+				Me.SendPropertyChanged("ask96")
+				Me.Onask96Changed
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_ask99", DbType:="Decimal(18,2)")>  _
+	Public Property ask99() As System.Nullable(Of Decimal)
+		Get
+			Return Me._ask99
+		End Get
+		Set
+			If (Me._ask99.Equals(value) = false) Then
+				Me.Onask99Changing(value)
+				Me.SendPropertyChanging
+				Me._ask99 = value
+				Me.SendPropertyChanged("ask99")
+				Me.Onask99Changed
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_pwd_auth", DbType:="VarChar(50)")>  _
+	Public Property pwd_auth() As String
+		Get
+			Return Me._pwd_auth
+		End Get
+		Set
+			If (String.Equals(Me._pwd_auth, value) = false) Then
+				Me.Onpwd_authChanging(value)
+				Me.SendPropertyChanging
+				Me._pwd_auth = value
+				Me.SendPropertyChanged("pwd_auth")
+				Me.Onpwd_authChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_price_base", DbType:="Decimal(18,2)")>  _
+	Public Property price_base() As System.Nullable(Of Decimal)
+		Get
+			Return Me._price_base
+		End Get
+		Set
+			If (Me._price_base.Equals(value) = false) Then
+				Me.Onprice_baseChanging(value)
+				Me.SendPropertyChanging
+				Me._price_base = value
+				Me.SendPropertyChanged("price_base")
+				Me.Onprice_baseChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_G96_base", DbType:="Decimal(18,2)")>  _
+	Public Property G96_base() As System.Nullable(Of Decimal)
+		Get
+			Return Me._G96_base
+		End Get
+		Set
+			If (Me._G96_base.Equals(value) = false) Then
+				Me.OnG96_baseChanging(value)
+				Me.SendPropertyChanging
+				Me._G96_base = value
+				Me.SendPropertyChanged("G96_base")
+				Me.OnG96_baseChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_G96G_base", DbType:="Decimal(18,3)")>  _
+	Public Property G96G_base() As System.Nullable(Of Decimal)
+		Get
+			Return Me._G96G_base
+		End Get
+		Set
+			If (Me._G96G_base.Equals(value) = false) Then
+				Me.OnG96G_baseChanging(value)
+				Me.SendPropertyChanging
+				Me._G96G_base = value
+				Me.SendPropertyChanged("G96G_base")
+				Me.OnG96G_baseChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_G99_base", DbType:="Decimal(18,2)")>  _
+	Public Property G99_base() As System.Nullable(Of Decimal)
+		Get
+			Return Me._G99_base
+		End Get
+		Set
+			If (Me._G99_base.Equals(value) = false) Then
+				Me.OnG99_baseChanging(value)
+				Me.SendPropertyChanging
+				Me._G99_base = value
+				Me.SendPropertyChanged("G99_base")
+				Me.OnG99_baseChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_price_branch", DbType:="Decimal(18,2)")>  _
+	Public Property price_branch() As System.Nullable(Of Decimal)
+		Get
+			Return Me._price_branch
+		End Get
+		Set
+			If (Me._price_branch.Equals(value) = false) Then
+				Me.Onprice_branchChanging(value)
+				Me.SendPropertyChanging
+				Me._price_branch = value
+				Me.SendPropertyChanged("price_branch")
+				Me.Onprice_branchChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_G96_branch", DbType:="Decimal(18,2)")>  _
+	Public Property G96_branch() As System.Nullable(Of Decimal)
+		Get
+			Return Me._G96_branch
+		End Get
+		Set
+			If (Me._G96_branch.Equals(value) = false) Then
+				Me.OnG96_branchChanging(value)
+				Me.SendPropertyChanging
+				Me._G96_branch = value
+				Me.SendPropertyChanged("G96_branch")
+				Me.OnG96_branchChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_G99N_branch", DbType:="Decimal(18,2)")>  _
+	Public Property G99N_branch() As System.Nullable(Of Decimal)
+		Get
+			Return Me._G99N_branch
+		End Get
+		Set
+			If (Me._G99N_branch.Equals(value) = false) Then
+				Me.OnG99N_branchChanging(value)
+				Me.SendPropertyChanging
+				Me._G99N_branch = value
+				Me.SendPropertyChanged("G99N_branch")
+				Me.OnG99N_branchChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_G99L_branch", DbType:="Decimal(18,2)")>  _
+	Public Property G99L_branch() As System.Nullable(Of Decimal)
+		Get
+			Return Me._G99L_branch
+		End Get
+		Set
+			If (Me._G99L_branch.Equals(value) = false) Then
+				Me.OnG99L_branchChanging(value)
+				Me.SendPropertyChanging
+				Me._G99L_branch = value
+				Me.SendPropertyChanged("G99L_branch")
+				Me.OnG99L_branchChanged
+			End If
+		End Set
+	End Property
+	
+	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+	
+	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+	
+	Protected Overridable Sub SendPropertyChanging()
+		If ((Me.PropertyChangingEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+		End If
+	End Sub
+	
+	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+		If ((Me.PropertyChangedEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+		End If
+	End Sub
+End Class
+
+<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.ticket_log")>  _
+Partial Public Class ticket_log
+	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	
+	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+	
+	Private _log_id As Integer
+	
+	Private _datetime As System.Nullable(Of Date)
+	
+	Private _ref_no As String
+	
+	Private _update_by As String
+	
+    #Region "Extensibility Method Definitions"
+    Partial Private Sub OnLoaded()
+    End Sub
+    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
+    End Sub
+    Partial Private Sub OnCreated()
+    End Sub
+    Partial Private Sub Onlog_idChanging(value As Integer)
+    End Sub
+    Partial Private Sub Onlog_idChanged()
+    End Sub
+    Partial Private Sub OndatetimeChanging(value As System.Nullable(Of Date))
+    End Sub
+    Partial Private Sub OndatetimeChanged()
+    End Sub
+    Partial Private Sub Onref_noChanging(value As String)
+    End Sub
+    Partial Private Sub Onref_noChanged()
+    End Sub
+    Partial Private Sub Onupdate_byChanging(value As String)
+    End Sub
+    Partial Private Sub Onupdate_byChanged()
+    End Sub
+    #End Region
+	
+	Public Sub New()
+		MyBase.New
+		OnCreated
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_log_id", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
+	Public Property log_id() As Integer
+		Get
+			Return Me._log_id
+		End Get
+		Set
+			If ((Me._log_id = value)  _
+						= false) Then
+				Me.Onlog_idChanging(value)
+				Me.SendPropertyChanging
+				Me._log_id = value
+				Me.SendPropertyChanged("log_id")
+				Me.Onlog_idChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_datetime", DbType:="DateTime")>  _
+	Public Property datetime() As System.Nullable(Of Date)
+		Get
+			Return Me._datetime
+		End Get
+		Set
+			If (Me._datetime.Equals(value) = false) Then
+				Me.OndatetimeChanging(value)
+				Me.SendPropertyChanging
+				Me._datetime = value
+				Me.SendPropertyChanged("datetime")
+				Me.OndatetimeChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_ref_no", DbType:="VarChar(15)")>  _
+	Public Property ref_no() As String
+		Get
+			Return Me._ref_no
+		End Get
+		Set
+			If (String.Equals(Me._ref_no, value) = false) Then
+				Me.Onref_noChanging(value)
+				Me.SendPropertyChanging
+				Me._ref_no = value
+				Me.SendPropertyChanged("ref_no")
+				Me.Onref_noChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_update_by", DbType:="VarChar(50)")>  _
+	Public Property update_by() As String
+		Get
+			Return Me._update_by
+		End Get
+		Set
+			If (String.Equals(Me._update_by, value) = false) Then
+				Me.Onupdate_byChanging(value)
+				Me.SendPropertyChanging
+				Me._update_by = value
+				Me.SendPropertyChanged("update_by")
+				Me.Onupdate_byChanged
+			End If
+		End Set
+	End Property
+	
+	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+	
+	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+	
+	Protected Overridable Sub SendPropertyChanging()
+		If ((Me.PropertyChangingEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+		End If
+	End Sub
+	
+	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+		If ((Me.PropertyChangedEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+		End If
+	End Sub
+End Class
+
+<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.payment")>  _
+Partial Public Class payment
+	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	
+	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+	
+	Private _payment_id As Integer
+	
+	Private _cust_id As String
+	
+	Private _word As String
+	
+	Private _status As String
+	
+	Private _status_id As String
+	
+	Private _active As System.Nullable(Of Boolean)
+	
+	Private _billing As String
+	
+	Private _paid_cash As System.Nullable(Of Decimal)
+	
+	Private _paid_gold As System.Nullable(Of Decimal)
+	
+	Private _note As String
+	
+	Private _modifier_by As String
+	
+	Private _modifier_date As System.Nullable(Of Date)
+	
+	Private _created_by As String
+	
+	Private _created_date As System.Nullable(Of Date)
+	
+    #Region "Extensibility Method Definitions"
+    Partial Private Sub OnLoaded()
+    End Sub
+    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
+    End Sub
+    Partial Private Sub OnCreated()
+    End Sub
+    Partial Private Sub Onpayment_idChanging(value As Integer)
+    End Sub
+    Partial Private Sub Onpayment_idChanged()
+    End Sub
+    Partial Private Sub Oncust_idChanging(value As String)
+    End Sub
+    Partial Private Sub Oncust_idChanged()
+    End Sub
+    Partial Private Sub OnwordChanging(value As String)
+    End Sub
+    Partial Private Sub OnwordChanged()
+    End Sub
+    Partial Private Sub OnstatusChanging(value As String)
+    End Sub
+    Partial Private Sub OnstatusChanged()
+    End Sub
+    Partial Private Sub Onstatus_idChanging(value As String)
+    End Sub
+    Partial Private Sub Onstatus_idChanged()
+    End Sub
+    Partial Private Sub OnactiveChanging(value As System.Nullable(Of Boolean))
+    End Sub
+    Partial Private Sub OnactiveChanged()
+    End Sub
+    Partial Private Sub OnbillingChanging(value As String)
+    End Sub
+    Partial Private Sub OnbillingChanged()
+    End Sub
+    Partial Private Sub Onpaid_cashChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Onpaid_cashChanged()
+    End Sub
+    Partial Private Sub Onpaid_goldChanging(value As System.Nullable(Of Decimal))
+    End Sub
+    Partial Private Sub Onpaid_goldChanged()
+    End Sub
+    Partial Private Sub OnnoteChanging(value As String)
+    End Sub
+    Partial Private Sub OnnoteChanged()
+    End Sub
+    Partial Private Sub Onmodifier_byChanging(value As String)
+    End Sub
+    Partial Private Sub Onmodifier_byChanged()
+    End Sub
+    Partial Private Sub Onmodifier_dateChanging(value As System.Nullable(Of Date))
+    End Sub
+    Partial Private Sub Onmodifier_dateChanged()
+    End Sub
+    Partial Private Sub Oncreated_byChanging(value As String)
+    End Sub
+    Partial Private Sub Oncreated_byChanged()
+    End Sub
+    Partial Private Sub Oncreated_dateChanging(value As System.Nullable(Of Date))
+    End Sub
+    Partial Private Sub Oncreated_dateChanged()
+    End Sub
+    #End Region
+	
+	Public Sub New()
+		MyBase.New
+		OnCreated
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_payment_id", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
+	Public Property payment_id() As Integer
+		Get
+			Return Me._payment_id
+		End Get
+		Set
+			If ((Me._payment_id = value)  _
+						= false) Then
+				Me.Onpayment_idChanging(value)
+				Me.SendPropertyChanging
+				Me._payment_id = value
+				Me.SendPropertyChanged("payment_id")
+				Me.Onpayment_idChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_cust_id", DbType:="VarChar(10)")>  _
+	Public Property cust_id() As String
+		Get
+			Return Me._cust_id
+		End Get
+		Set
+			If (String.Equals(Me._cust_id, value) = false) Then
+				Me.Oncust_idChanging(value)
+				Me.SendPropertyChanging
+				Me._cust_id = value
+				Me.SendPropertyChanged("cust_id")
+				Me.Oncust_idChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_word", DbType:="VarChar(5)")>  _
+	Public Property word() As String
+		Get
+			Return Me._word
+		End Get
+		Set
+			If (String.Equals(Me._word, value) = false) Then
+				Me.OnwordChanging(value)
+				Me.SendPropertyChanging
+				Me._word = value
+				Me.SendPropertyChanged("word")
+				Me.OnwordChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_status", DbType:="VarChar(50)")>  _
+	Public Property status() As String
+		Get
+			Return Me._status
+		End Get
+		Set
+			If (String.Equals(Me._status, value) = false) Then
+				Me.OnstatusChanging(value)
+				Me.SendPropertyChanging
+				Me._status = value
+				Me.SendPropertyChanged("status")
+				Me.OnstatusChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_status_id", DbType:="VarChar(5)")>  _
+	Public Property status_id() As String
+		Get
+			Return Me._status_id
+		End Get
+		Set
+			If (String.Equals(Me._status_id, value) = false) Then
+				Me.Onstatus_idChanging(value)
+				Me.SendPropertyChanging
+				Me._status_id = value
+				Me.SendPropertyChanged("status_id")
+				Me.Onstatus_idChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_active", DbType:="Bit")>  _
+	Public Property active() As System.Nullable(Of Boolean)
+		Get
+			Return Me._active
+		End Get
+		Set
+			If (Me._active.Equals(value) = false) Then
+				Me.OnactiveChanging(value)
+				Me.SendPropertyChanging
+				Me._active = value
+				Me.SendPropertyChanged("active")
+				Me.OnactiveChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_billing", DbType:="VarChar(5)")>  _
+	Public Property billing() As String
+		Get
+			Return Me._billing
+		End Get
+		Set
+			If (String.Equals(Me._billing, value) = false) Then
+				Me.OnbillingChanging(value)
+				Me.SendPropertyChanging
+				Me._billing = value
+				Me.SendPropertyChanged("billing")
+				Me.OnbillingChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_paid_cash", DbType:="Decimal(18,2)")>  _
+	Public Property paid_cash() As System.Nullable(Of Decimal)
+		Get
+			Return Me._paid_cash
+		End Get
+		Set
+			If (Me._paid_cash.Equals(value) = false) Then
+				Me.Onpaid_cashChanging(value)
+				Me.SendPropertyChanging
+				Me._paid_cash = value
+				Me.SendPropertyChanged("paid_cash")
+				Me.Onpaid_cashChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_paid_gold", DbType:="Decimal(18,2)")>  _
+	Public Property paid_gold() As System.Nullable(Of Decimal)
+		Get
+			Return Me._paid_gold
+		End Get
+		Set
+			If (Me._paid_gold.Equals(value) = false) Then
+				Me.Onpaid_goldChanging(value)
+				Me.SendPropertyChanging
+				Me._paid_gold = value
+				Me.SendPropertyChanged("paid_gold")
+				Me.Onpaid_goldChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_note", DbType:="VarChar(MAX)")>  _
+	Public Property note() As String
+		Get
+			Return Me._note
+		End Get
+		Set
+			If (String.Equals(Me._note, value) = false) Then
+				Me.OnnoteChanging(value)
+				Me.SendPropertyChanging
+				Me._note = value
+				Me.SendPropertyChanged("note")
+				Me.OnnoteChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_modifier_by", DbType:="VarChar(50)")>  _
+	Public Property modifier_by() As String
+		Get
+			Return Me._modifier_by
+		End Get
+		Set
+			If (String.Equals(Me._modifier_by, value) = false) Then
+				Me.Onmodifier_byChanging(value)
+				Me.SendPropertyChanging
+				Me._modifier_by = value
+				Me.SendPropertyChanged("modifier_by")
+				Me.Onmodifier_byChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_modifier_date", DbType:="DateTime")>  _
+	Public Property modifier_date() As System.Nullable(Of Date)
+		Get
+			Return Me._modifier_date
+		End Get
+		Set
+			If (Me._modifier_date.Equals(value) = false) Then
+				Me.Onmodifier_dateChanging(value)
+				Me.SendPropertyChanging
+				Me._modifier_date = value
+				Me.SendPropertyChanged("modifier_date")
+				Me.Onmodifier_dateChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_created_by", DbType:="VarChar(50)")>  _
+	Public Property created_by() As String
+		Get
+			Return Me._created_by
+		End Get
+		Set
+			If (String.Equals(Me._created_by, value) = false) Then
+				Me.Oncreated_byChanging(value)
+				Me.SendPropertyChanging
+				Me._created_by = value
+				Me.SendPropertyChanged("created_by")
+				Me.Oncreated_byChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_created_date", DbType:="DateTime")>  _
+	Public Property created_date() As System.Nullable(Of Date)
+		Get
+			Return Me._created_date
+		End Get
+		Set
+			If (Me._created_date.Equals(value) = false) Then
+				Me.Oncreated_dateChanging(value)
+				Me.SendPropertyChanging
+				Me._created_date = value
+				Me.SendPropertyChanged("created_date")
+				Me.Oncreated_dateChanged
+			End If
+		End Set
+	End Property
+	
+	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+	
+	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+	
+	Protected Overridable Sub SendPropertyChanging()
+		If ((Me.PropertyChangingEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+		End If
+	End Sub
+	
+	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+		If ((Me.PropertyChangedEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+		End If
+	End Sub
 End Class
 
 Partial Public Class getQuantityAcceptAdapResult

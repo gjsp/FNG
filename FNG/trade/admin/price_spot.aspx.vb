@@ -121,7 +121,9 @@ Partial Class trade_admin_price_spot
             Dim sto = (From s In dc.stock_onlines Select s).FirstOrDefault
 
             sto.premium = txtPremium.Text
-            sto.space_kg99 = txtSpace99kg.Text
+            'chaange requirment by jack 10/032014
+            'sto.space_kg99 = txtSpace99kg.Text
+            sto.space_kg99 = Integer.Parse(txtSpace99Bg.Text) * 65.6
             sto.space_bg99 = txtSpace99Bg.Text
             sto.space_bg96 = txtSpace96Bg.Text
             sto.fx_ask = txtFxAsk.Text

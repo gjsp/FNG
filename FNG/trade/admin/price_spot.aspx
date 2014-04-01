@@ -160,13 +160,13 @@
                                 Premium</td>
                             <td width="200px">
                                 <asp:TextBox ID="txtPremium" runat="server" MaxLength="5" 
-                                    Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
+                                    Style="text-align: right" Width="80px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                             <td style="font-weight: bold" width="150px">
                                 Self Fx Ask<asp:CheckBox ID="cbFxSelf" runat="server" />
                             </td>
                             <td width="200px">
-                                <asp:TextBox ID="txtFxSelf" runat="server" Font-Size="X-Large" MaxLength="5" Style="text-align: right" Width="60px"></asp:TextBox>
+                                <asp:TextBox ID="txtFxSelf" runat="server" Font-Size="X-Large" MaxLength="5" Style="text-align: right" Width="80px"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -174,13 +174,13 @@
                                 FX Bid</td>
                             <td>
                                 <asp:TextBox ID="txtFxBid" runat="server" MaxLength="4" 
-                                    Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
+                                    Style="text-align: right" Width="80px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                             <td style="font-weight: bold">
                                 Melting Cost (Baht)</td>
                             <td>
                                 <asp:TextBox ID="txtMeltingCost" runat="server" MaxLength="5" 
-                                    Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
+                                    Style="text-align: right" Width="80px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -188,27 +188,27 @@
                                 FX Ask</td>
                             <td>
                                 <asp:TextBox ID="txtFxAsk" runat="server" MaxLength="4" 
-                                    Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
+                                    Style="text-align: right" Width="80px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                             <td style="font-weight: bold">
                                 Max Baht</td>
                             <td>
                                 <asp:TextBox ID="txtMaxBg" runat="server" MaxLength="4" 
-                                    Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
+                                    Style="text-align: right" Width="80px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td style="font-weight: bold">
                                 Space 99.99/KG</td>
                             <td>
-                                <asp:TextBox ID="txtSpace99kg" runat="server" MaxLength="3" 
-                                    Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
+                                <asp:TextBox ID="txtSpace99kg" runat="server" MaxLength="4" Enabled="false" ReadOnly="true"
+                                    Style="text-align: right" Width="80px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                             <td style="font-weight: bold">
                                 Max KG</td>
                             <td>
                                 <asp:TextBox ID="txtMaxKg" runat="server" MaxLength="3" 
-                                    Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
+                                    Style="text-align: right" Width="80px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -216,13 +216,13 @@
                                 Space 99.99/Baht</td>
                             <td>
                                 <asp:TextBox ID="txtSpace99Bg" runat="server" MaxLength="3" 
-                                    Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
+                                    Style="text-align: right" Width="80px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                             <td style="font-weight: bold">
                                 Max Mini</td>
                             <td>
                                 <asp:TextBox ID="txtMaxMn" runat="server" MaxLength="4" 
-                                    Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
+                                    Style="text-align: right" Width="80px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -230,13 +230,13 @@
                                 Space 96.50/Baht</td>
                             <td>
                                 <asp:TextBox ID="txtSpace96Bg" runat="server" MaxLength="3" 
-                                    Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
+                                    Style="text-align: right" Width="80px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                             <td style="font-weight: bold">
                                 %Range Leave Order</td>
                             <td>
                                 <asp:TextBox ID="txtRangeLeave" runat="server" MaxLength="4" 
-                                    Style="text-align: right" Width="60px" Font-Size="X-Large"></asp:TextBox>
+                                    Style="text-align: right" Width="80px" Font-Size="X-Large"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>

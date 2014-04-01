@@ -63,16 +63,22 @@ Public Class clsFng
                     Next
                     ddl.Items.Insert(0, New ListItem(msgPriceSelect, ""))
                 Case "99"
-                    For i As Integer = 1 To 10
-                        If i <= stock.max_kg Then
-                            ddl.Items.Add(New ListItem(i.ToString, i.ToString))
-                        End If
-                    Next
+
                     If isSale = True Then
+                        For i As Integer = 1 To 10
+                            ddl.Items.Add(New ListItem(i.ToString, i.ToString))
+                        Next
                         ddl.Items.Add(New ListItem("15", "15"))
                         ddl.Items.Add(New ListItem("20", "20"))
                         ddl.Items.Add(New ListItem("30", "30"))
+                    Else
+                        For i As Integer = 1 To 10
+                            If i <= stock.max_kg Then
+                                ddl.Items.Add(New ListItem(i.ToString, i.ToString))
+                            End If
+                        Next
                     End If
+
                     ddl.Items.Insert(0, New ListItem(msgPriceSelect, ""))
                 Case "96Mini"
                     For i As Integer = 5 To 50 Step 5
@@ -622,6 +628,42 @@ Public Class clsFng
         End Try
     End Function
 
+    Public Shared Function checkReceiptNoPayment(ByVal refno As String, billing As String) As String
+        Try
+            Dim msg As String = ""
+            refno = refno.Replace(",", "','")
+            Dim sql As String = String.Format("select billing,run_no,sp_quan,payment,payment_id from v_ticket_sum_split where ref_no in ('{0}') ", refno)
+            Using con As New SqlConnection(strcon)
+                Using da As New SqlDataAdapter(sql, con)
+                    Using dt As New DataTable
+                        da.Fill(dt)
+                        If dt.Rows.Count > 0 Then
+                            For Each dr As DataRow In dt.Rows
+                                'check ว่าbilling ตรงกับ ฐานข้อมูลหรือป่าว
+                                If dr("billing").ToString <> billing Then
+                                    Return "ข้อมูลมีการเปลี่ยนแปลง โปรดทำรายการใหม่อีกครั้ง"
+                                End If
+                                If dr("run_no").ToString <> "" Then
+                                    msg = "โปรดเลือก Ticket ที่ยังไม่มี Receipt"
+                                End If
+                                If dr("payment").ToString = "" Then
+                                    msg = "โปรดเลือกประเภทของการชำระเงิน"
+                                End If
+                                If dr("payment_id").ToString <> "" Then
+                                    msg = "โปรดเลือกรายการที่ยังไม่ออก Payment"
+                                End If
+                            Next
+                        End If
+                    End Using
+                End Using
+            End Using
+            Return msg
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
+
     Public Shared Function checkReceiptNoSplit(ByVal sid As String) As String
         Try
             Dim msg As String = ""
@@ -673,7 +715,7 @@ Public Class clsFng
 #Region "Payment"
     Public Shared Function getPayment() As DataTable
         Try
-            Dim sql As String = "select * from payment"
+            Dim sql As String = "select *,(select  user_name from users where user_id = created_by) as payment_by_name  from payment order by payment_id desc"
             Using con As New SqlConnection(strcon)
                 Using da As New SqlDataAdapter(sql, con)
                     Using dt As New DataTable
@@ -705,7 +747,7 @@ Public Class clsFng
 
     Public Shared Function getPaymentDetail(payment_id As String) As DataTable
         Try
-            Dim sql As String = "select * from tickets where payment_id =  " + payment_id
+            Dim sql As String = "select *,(select  user_name from users where user_id = payment_by) as payment_by_name  from v_ticket_sum_split where payment_id =  " + payment_id
             Using con As New SqlConnection(strcon)
                 Using da As New SqlDataAdapter(sql, con)
                     Using dt As New DataTable
@@ -719,9 +761,12 @@ Public Class clsFng
         End Try
     End Function
 
-    Public Shared Function getPaymentDetailBlank(payment_id As String) As DataTable
+    Public Shared Function getPaymentDetailPopUp(ticket_idList As String, cust_id As String, purity As String, billing As String) As DataTable
         Try
-            Dim sql As String = "select * from tickets where payment_id =  " + payment_id
+            Dim sql As String = "select *,(select  user_name from users where user_id = payment_by) as payment_by_name from v_ticket_sum_split " & _
+                                "Where status_id = 101 And payment_id Is NULL and (run_no = '' or run_no is NULL) and cust_id = " + cust_id + " " & _
+                                "and gold_type_id = '" + purity + "' and billing = '" + billing + "' " & _
+                                "and ref_no not in ('" + ticket_idList + "')  order by ticket_id desc"
             Using con As New SqlConnection(strcon)
                 Using da As New SqlDataAdapter(sql, con)
                     Using dt As New DataTable

@@ -182,17 +182,17 @@ Partial Class customer_trans
 
     Protected Sub gvTrans_RowDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles gvTrans.RowDataBound
         If e.Row.RowType = DataControlRowType.DataRow Then
-            CType(e.Row.Cells(gvTrans.Columns.Count - 1).FindControl("imgDel"), ImageButton).Attributes.Add("onclick", "return confirm('" + clsManage.msgDel + "');")
+            'CType(e.Row.Cells(gvTrans.Columns.Count - 1).FindControl("imgDel"), ImageButton).Attributes.Add("onclick", "return confirm('" + clsManage.msgDel + "');")
 
-            If Not IsDBNull(e.Row.DataItem("ref_no")) AndAlso e.Row.DataItem("ref_no").ToString <> "" Then
-                If e.Row.DataItem("ref_no").ToString.Length = 11 And e.Row.DataItem("ref_no").ToString.Substring(0, 1) = "T" Then
-                    CType(e.Row.FindControl("link"), HyperLink).NavigateUrl = "ticket_deal.aspx?page=dialy&id=" + e.Row.DataItem("ref_no").ToString
-                End If
-            End If
+            'If Not IsDBNull(e.Row.DataItem("ref_no")) AndAlso e.Row.DataItem("ref_no").ToString <> "" Then
+            '    If e.Row.DataItem("ref_no").ToString.Length = 11 And e.Row.DataItem("ref_no").ToString.Substring(0, 1) = "T" Then
+            '        CType(e.Row.FindControl("link"), HyperLink).NavigateUrl = "ticket_deal.aspx?page=dialy&id=" + e.Row.DataItem("ref_no").ToString
+            '    End If
+            'End If
 
-            If e.Row.DataItem("amount") = 0 Then
-                CType(e.Row.FindControl("linkReport"), ImageButton).Enabled = False
-            End If
+            'If e.Row.DataItem("amount") = 0 Then
+            '    CType(e.Row.FindControl("linkReport"), ImageButton).Enabled = False
+            'End If
 
             'cash = Amount
             CType(e.Row.FindControl("txtAmount"), TextBox).Attributes.Add("style", "text-align:right")
@@ -207,11 +207,21 @@ Partial Class customer_trans
 
     Protected Sub gvTrans2_RowDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles gvTrans2.RowDataBound
         If e.Row.RowType = DataControlRowType.DataRow Then
-            CType(e.Row.Cells(gvTrans.Columns.Count - 1).FindControl("imgDel2"), ImageButton).Attributes.Add("onclick", "return confirm('" + clsManage.msgDel + "');")
+            'CType(e.Row.Cells(gvTrans.Columns.Count - 1).FindControl("imgDel2"), ImageButton).Attributes.Add("onclick", "return confirm('" + clsManage.msgDel + "');")
             'CType(e.Row.FindControl("link"), HyperLink).NavigateUrl = "ticket_deal.aspx?page=dialy&id=" + e.Row.DataItem("ticket_refno").ToString
             'e.Row.Cells(0).Text = String.Format("<a href='{1}'>{0}</a>", e.Row.Cells(1).Text, "")
             'CType(e.Row.FindControl("lblTrans"), LinkButton).Text = CDate(e.Row.DataItem("datetime")).ToString("dd/MM/yyyy")
             'gold = Quantity
+            'L130513/0001
+            If Not IsDBNull(e.Row.DataItem("ticket_refno")) AndAlso e.Row.DataItem("ticket_refno").ToString <> "" Then
+                If e.Row.DataItem("ticket_refno").ToString.Length = 12 Then
+                    CType(e.Row.FindControl("link"), HyperLink).NavigateUrl = "ticket_deal.aspx?page=dialy&id=" + e.Row.DataItem("ticket_refno").ToString
+                ElseIf e.Row.DataItem("ticket_refno").ToString.Length = 5 Then
+                    CType(e.Row.FindControl("link"), HyperLink).NavigateUrl = "ticket_payment_detail.aspx?pid=" + e.Row.DataItem("ticket_refno").ToString
+
+                End If
+            End If
+
             CType(e.Row.FindControl("txtAmount"), TextBox).Attributes.Add("style", "text-align:right")
             CType(e.Row.FindControl("txtAmount"), TextBox).Text = CType(e.Row.DataItem("quantity").ToString, Double) '.ToString("###0.00000")
             CType(e.Row.FindControl("lblAmount"), Label).Text = clsManage.convert2StringNormal(e.Row.DataItem("quantity").ToString)
@@ -324,15 +334,15 @@ Partial Class customer_trans
     '    End Try
     'End Sub
 
-    Protected Sub imgDel2_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs)
-        Dim da As New dsTableAdapters.customer_transTableAdapter
-        Dim i As Integer = CType(CType(sender, ImageButton).Parent.Parent, GridViewRow).RowIndex
-        Dim result As Integer = da.DeleteQuery(gvTrans2.DataKeys(i).Value)
-        If result > 0 Then
-            btnSearch_Click(Nothing, Nothing)
-            gvTrans2.DataBind()
-        End If
-    End Sub
+    'Protected Sub imgDel2_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs)
+    '    Dim da As New dsTableAdapters.customer_transTableAdapter
+    '    Dim i As Integer = CType(CType(sender, ImageButton).Parent.Parent, GridViewRow).RowIndex
+    '    Dim result As Integer = da.DeleteQuery(gvTrans2.DataKeys(i).Value)
+    '    If result > 0 Then
+    '        btnSearch_Click(Nothing, Nothing)
+    '        gvTrans2.DataBind()
+    '    End If
+    'End Sub
 
     Protected Sub linkUpdate_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Update(sender, CType(CType(sender, LinkButton).Parent.Parent.Parent.Parent, GridView))
@@ -433,21 +443,70 @@ Partial Class customer_trans
         End Try
     End Sub
 
-    Protected Sub linkReport_Click(sender As Object, e As System.Web.UI.ImageClickEventArgs)
+    'Protected Sub linkReport_Click1(sender As Object, e As System.Web.UI.ImageClickEventArgs)
+    '    Try
+    '        Dim i As Integer = CType(CType(sender, ImageButton).Parent.Parent, GridViewRow).RowIndex
+    '        Dim gv As GridView = CType(CType(sender, ImageButton).Parent.Parent.Parent.Parent, GridView)
+    '        Dim id As String = gv.DataKeys(i).Value
+    '        Dim type As String = ""
+    '        Dim url As String = ""
+    '        If gv.ID = gvTrans.ID Then
+    '            url = "report/rpt_cash.aspx"
+    '        ElseIf gv.ID = gvTrans2.ID Then
+    '            url = "report/rpt_transfer.aspx"
+    '        End If
+    '        clsManage.Script(Page, "window.open('" + url + "?ref=" + id + "','_blank');")
+    '    Catch ex As Exception
+    '        clsManage.alert(Page, ex.Message)
+    '    End Try
+    'End Sub
+
+    Protected Sub linkReport_Click(sender As Object, e As EventArgs) Handles linkReportGold.Click
+        ReceiptTransfer(gvTrans2)
+    End Sub
+
+    Protected Sub linkReportCash_Click(sender As Object, e As System.EventArgs) Handles linkReportCash.Click
+        ReceiptTransfer(gvTrans)
+    End Sub
+
+    Private Sub ReceiptTransfer(gv As GridView)
         Try
-            Dim i As Integer = CType(CType(sender, ImageButton).Parent.Parent, GridViewRow).RowIndex
-            Dim gv As GridView = CType(CType(sender, ImageButton).Parent.Parent.Parent.Parent, GridView)
-            Dim id As String = gv.DataKeys(i).Value
-            Dim type As String = ""
+
+
+            Dim tranId As String = ""
+            Dim comma As String = ","
             Dim url As String = ""
-            If gv.ID = gvTrans.ID Then
-                url = "report/rpt_cash.aspx"
-            ElseIf gv.ID = gvTrans2.ID Then
-                url = "report/rpt_transfer.aspx"
+            Dim type As String = ""
+
+            For Each dr As GridViewRow In gv.Rows
+                If CType(dr.FindControl("cbRow"), HtmlInputCheckBox).Checked = True Then
+                    If CType(dr.FindControl("lblAmount"), Label).Text = "0" Or CType(dr.FindControl("lblAmount"), Label).Text = "" Then
+                        clsManage.alert(Page, "โปรดเลือกจำนวนที่มีค่ามากกว่า 0", , , "err") : Exit Sub
+                    End If
+                    If tranId = "" Then
+                        tranId = gv.DataKeys(dr.RowIndex).Value.ToString
+                        type = gv.Rows(dr.RowIndex).Cells(2).Text
+                    Else
+                        tranId += comma + gv.DataKeys(dr.RowIndex).Value.ToString
+                        If Not type = gv.Rows(dr.RowIndex).Cells(2).Text Then
+                            clsManage.alert(Page, "โปรดเลือกประเภทการฝากถอนแบบเดียวกัน", , , "err") : Exit Sub
+                        End If
+                    End If
+                End If
+            Next
+
+            If tranId <> "" Then
+                If gv.ID = gvTrans.ID Then
+                    url = "report/rpt_cash.aspx"
+                ElseIf gv.ID = gvTrans2.ID Then
+                    url = "report/rpt_transfer.aspx"
+                End If
+                clsManage.Script(Page, "window.open('" + url + "?ref=" + tranId + "','_blank');")
             End If
-            clsManage.Script(Page, "window.open('" + url + "?ref=" + id + "','_blank');")
+
         Catch ex As Exception
             clsManage.alert(Page, ex.Message)
         End Try
     End Sub
+
 End Class

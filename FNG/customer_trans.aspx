@@ -33,6 +33,29 @@
         function pageLoad() {
             $get('<%=txtCustName.ClientId %>').focus();
         }
+
+        function switchCheckbox(id,index,grid) {
+            var grid = document.getElementById("ctl00_SampleContent_tcTrans_" + grid);
+            var cell;
+
+            if (grid.rows.length > 0) {
+
+                for (i = 1; i < grid.rows.length; i++) {
+
+                    cell = grid.rows[i].cells[index];
+                    for (j = 0; j < cell.childNodes.length; j++) {
+                        if (cell.childNodes[j].type == "checkbox") {
+                            cell.childNodes[j].checked = id.checked;
+                        }
+                    }
+                }
+            }
+
+            
+
+        }
+
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="SampleContent" runat="Server">
@@ -189,19 +212,22 @@
                                         &nbsp;&nbsp;
                                     </td>
                                     <td valign="top">
+                                         <div style="text-align: right">
+                                            <asp:LinkButton ID="linkReportCash" runat="server" Text="Receipt"></asp:LinkButton>
+                                        </div>
                                         <asp:GridView ID="gvTrans" runat="server" AllowSorting="True" AutoGenerateColumns="False"
                                             BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px"
                                             CellPadding="3" DataKeyNames="cust_tran_id" DataSourceID="objSrcTrans" GridLines="Vertical"
                                             Width="100%">
                                             <RowStyle BackColor="#EEEEEE" ForeColor="Black" />
                                             <Columns>
-                                                <asp:TemplateField>
+                                                <%--<asp:TemplateField>
                                                     <ItemTemplate>
                                                         <asp:ImageButton ID="linkReport" ImageUrl="~/images/ticket.ico" runat="server" 
                                                             Width="20px" Height="20px" onclick="linkReport_Click" />
                                                     </ItemTemplate>
                                                     <ItemStyle HorizontalAlign="Center" Width="40px" />
-                                                </asp:TemplateField>
+                                                </asp:TemplateField>--%>
                                                 <asp:BoundField DataField="datetime" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Datetime"
                                                     SortExpression="datetime" >
                                                 <ItemStyle HorizontalAlign="Center" />
@@ -232,9 +258,15 @@
                                                         &nbsp;&nbsp;<asp:LinkButton ID="linkCancel" runat="server" OnClick="linkCancel_Click"
                                                             Visible="false">Cancel</asp:LinkButton></ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField Visible="False">
+                                                 <asp:TemplateField>
+                                                    <HeaderTemplate>
+                                                        <input id="cbHead" runat="server" onclick="switchCheckbox(this,8,'tpCash_gvTrans');" type="checkbox" />
+                                                    </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:ImageButton ID="imgDel" runat="server" ImageUrl="~/images/i_del.png" OnClick="imgDel_Click" /></ItemTemplate>
+                                                        <input id="cbRow" runat="server" type="checkbox" />
+                                                    </ItemTemplate>
+                                                    <HeaderStyle HorizontalAlign="Center" />
+                                                    <ItemStyle HorizontalAlign="Center" Width="20px" />
                                                 </asp:TemplateField>
                                             </Columns>
                                             <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />
@@ -341,19 +373,23 @@
                                         &nbsp;&nbsp;
                                     </td>
                                     <td valign="top">
+                                        <div style="text-align: right">
+                                            <asp:LinkButton ID="linkReportGold" runat="server" Text="Receipt"></asp:LinkButton>
+                                        </div>
+
                                         <asp:GridView ID="gvTrans2" runat="server" AllowSorting="True" AutoGenerateColumns="False"
                                             BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px"
                                             CellPadding="3" DataKeyNames="cust_tran_id" DataSourceID="objSrcTrans2" GridLines="Vertical"
                                             Width="100%">
                                             <RowStyle BackColor="#EEEEEE" ForeColor="Black" />
                                             <Columns>
-                                                <asp:TemplateField>
+                                                <%--<asp:TemplateField>
                                                     <ItemTemplate>
                                                         <asp:ImageButton ID="linkReport" ImageUrl="~/images/ticket.ico" runat="server" 
                                                             Width="20px" Height="20px" onclick="linkReport_Click" />
                                                     </ItemTemplate>
                                                     <ItemStyle HorizontalAlign="Center" Width="40px" />
-                                                </asp:TemplateField>
+                                                </asp:TemplateField>--%>
                                                 <asp:BoundField DataField="datetime" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Datetime"
                                                     SortExpression="datetime" >
                                                 <ItemStyle HorizontalAlign="Center" />
@@ -393,10 +429,20 @@
                                                         <asp:LinkButton ID="linkCancel" runat="server" OnClick="linkCancel_Click" Visible="false">Cancel</asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField Visible="False">
+                                                <%--<asp:TemplateField Visible="true">
                                                     <ItemTemplate>
                                                         <asp:ImageButton ID="imgDel2" runat="server" ImageUrl="~/images/i_del.png" OnClick="imgDel2_Click" />
                                                     </ItemTemplate>
+                                                </asp:TemplateField>--%>
+                                                <asp:TemplateField>
+                                                    <HeaderTemplate>
+                                                        <input id="cbHead" runat="server" onclick="switchCheckbox(this,9,'tpGold_gvTrans2');" type="checkbox" />
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <input id="cbRow" runat="server" type="checkbox" />
+                                                    </ItemTemplate>
+                                                    <HeaderStyle HorizontalAlign="Center" />
+                                                    <ItemStyle HorizontalAlign="Center" Width="20px" />
                                                 </asp:TemplateField>
                                             </Columns>
                                             <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />

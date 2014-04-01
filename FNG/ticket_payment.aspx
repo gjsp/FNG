@@ -18,7 +18,7 @@
                     <td>
                         <asp:UpdatePanel ID="upGv" runat="server">
                             <ContentTemplate>
-                             
+                             <div style="width: 700px">
                                 <asp:GridView ID="gv" runat="server" AllowSorting="True" AutoGenerateColumns="False"
                                     BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px"
                                     CellPadding="3" DataSourceID="objSrc" GridLines="Vertical" DataKeyNames="payment_id"
@@ -26,13 +26,19 @@
                                     <RowStyle BackColor="#EEEEEE" ForeColor="Black" />
                                     <AlternatingRowStyle BackColor="Gainsboro" />
                                     <Columns>
-                                        <asp:BoundField DataField="payment_id" HeaderText="Payment_ID" />
-                                        <asp:BoundField DataField="created_date" HeaderText="Create Date"  DataFormatString="{0:d/M/yyyy}" />
-                                        <asp:BoundField DataField="created_by" HeaderText="Created_By" />
+                                        <asp:BoundField DataField="payment_id" HeaderText="Payment_ID" >
+                                        <ItemStyle HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="created_date" HeaderText="Create Date"  
+                                            DataFormatString="{0:d/M/yyyy}" >
+                                        <ItemStyle HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="payment_by_name" HeaderText="Created_By" />
                                         <asp:TemplateField>
                                             <ItemTemplate>
                                                 <asp:HyperLink ID="linkDetail" runat="server">Detail</asp:HyperLink>
                                             </ItemTemplate>
+                                            <ItemStyle HorizontalAlign="Center" />
                                         </asp:TemplateField>
                                     </Columns>
                                     <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />
@@ -40,6 +46,7 @@
                                     <PagerStyle BackColor="#999999" ForeColor="Black" HorizontalAlign="Center" />
                                     <SelectedRowStyle BackColor="#008A8C" Font-Bold="True" ForeColor="White" />
                                 </asp:GridView>
+                                </div>
                                 <asp:ObjectDataSource ID="objSrc" runat="server" OldValuesParameterFormatString="original_{0}"
                                     SelectMethod="getPayment" TypeName="clsFng">
                                 </asp:ObjectDataSource>

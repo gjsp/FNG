@@ -119,7 +119,6 @@ Partial Class trading_sale
                 clsManage.alert(Page, "โปรดเลือกรายชื่อลูกค้า") : Exit Sub
             End If
 
-
             Dim spo As New clsSpot.SpotPrice
             spo = clsSpot.getSpotPriceForCust(hdfCust_id.Value, hdfSale_id.Value)
             If Not validateAccept(spo, gold_type, IIf(gold_type = clsFng.p96, ddl96Quan, ddl99Quan), type) Then Exit Sub

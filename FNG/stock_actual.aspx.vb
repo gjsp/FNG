@@ -29,7 +29,12 @@ Partial Class stock_actual
     Protected Sub gvAssetCash_RowDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles gvAssetCash.RowDataBound
        
         If e.Row.RowType = DataControlRowType.DataRow Then
-            CType(e.Row.FindControl("link"), HyperLink).NavigateUrl = "ticket_deal.aspx?page=dialy&id=" + e.Row.DataItem("ref_no").ToString
+            If e.Row.DataItem("ref_no").ToString.Length = 5 Then
+                CType(e.Row.FindControl("link"), HyperLink).NavigateUrl = "ticket_payment_detail.aspx?pid=" + e.Row.DataItem("ref_no").ToString
+            Else
+                CType(e.Row.FindControl("link"), HyperLink).NavigateUrl = "ticket_deal.aspx?page=dialy&id=" + e.Row.DataItem("ref_no").ToString
+            End If
+
             CType(e.Row.FindControl("linkCust"), HyperLink).NavigateUrl = "customer_detail.aspx?id=" + e.Row.DataItem("cust_id").ToString
             Dim summaryMoney As Double = clsManage.convert2zero(e.Row.DataItem("cash").ToString) + clsManage.convert2zero(e.Row.DataItem("trans").ToString) + clsManage.convert2zero(e.Row.DataItem("cheq").ToString)
             e.Row.Cells(e.Row.Cells.Count - 1).Text = clsManage.convert2Currency(summaryMoney.ToString)
@@ -39,7 +44,12 @@ Partial Class stock_actual
     Protected Sub gvAssetGold96_RowDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles gvAssetGold96.RowDataBound
     
         If e.Row.RowType = DataControlRowType.DataRow Then
-            CType(e.Row.FindControl("link"), HyperLink).NavigateUrl = "ticket_deal.aspx?page=dialy&id=" + e.Row.DataItem("ref_no").ToString
+            If e.Row.DataItem("ref_no").ToString.Length = 5 Then
+                CType(e.Row.FindControl("link"), HyperLink).NavigateUrl = "ticket_payment_detail.aspx?pid=" + e.Row.DataItem("ref_no").ToString
+            Else
+                CType(e.Row.FindControl("link"), HyperLink).NavigateUrl = "ticket_deal.aspx?page=dialy&id=" + e.Row.DataItem("ref_no").ToString
+            End If
+
             CType(e.Row.FindControl("linkCust"), HyperLink).NavigateUrl = "customer_detail.aspx?id=" + e.Row.DataItem("cust_id").ToString
         End If
     End Sub

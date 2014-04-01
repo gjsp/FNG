@@ -18,7 +18,7 @@
                 </DataSources>
             </Report>
         </CR:CrystalReportSource>
-        <asp:ObjectDataSource ID="ODS" runat="server" SelectMethod="getReportTrans"
+        <asp:ObjectDataSource ID="ODS" runat="server" SelectMethod="getReportTransList"
             TypeName="clsDB" OldValuesParameterFormatString="original_{0}">
             <SelectParameters>
                <asp:Parameter Name="refno" Type="String" ConvertEmptyStringToNull="False" />

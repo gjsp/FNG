@@ -1206,7 +1206,7 @@ Public Class clsDB
 
 
         Dim sql As String = "SELECT ref_no as ticket_id,book_no,run_no, cust_id, ticket.user_id,ticket.gold_type_id,gold_type_name, type, case when substring(cast(ticket.gold_type_id as varchar),1,3)='G99' then cast((ticket.quantity * 65.6) as varchar) else ticket.quantity end as quantity,  " & _
-                            " price, amount, delivery_date,delivery_date_null, ticket_date, billing, checker, authorize, remark, payment, payment_detail, delivery, ticket.status_id, users.user_name, bank.bank_name, payment_bank, payment_duedate, payment_cheq_no, created_by, active, gold_dep, ticket_status.status_name, invoice, sp_quan,trade,clearingday " & _
+                            " price, amount, delivery_date,delivery_date_null, ticket_date, billing, checker, authorize, remark, payment, payment_detail, delivery, ticket.status_id, users.user_name, bank.bank_name, payment_bank, payment_duedate, payment_cheq_no, created_by, active, gold_dep, ticket_status.status_name, invoice, sp_quan,trade,clearingday,payment_id " & _
                             " FROM   ticket LEFT OUTER JOIN  bank ON ticket.payment_bank = bank.bank_id LEFT OUTER JOIN  users ON ticket.user_id = users.user_id LEFT OUTER JOIN  gold_type ON ticket.gold_type_id = gold_type.gold_type_id LEFT OUTER JOIN ticket_status ON ticket.status_id = ticket_status.status_id" & _
                             " Where (ref_no = @ref_no or @ref_no = '') " & _
                             " AND (cust_id =  @cust_id or @cust_id = '') " & _
@@ -4698,6 +4698,37 @@ Public Class clsDB
 
 #Region "Report"
 
+    Public Shared Function getReportTransList(ByVal refno As String) As DataTable
+
+        Dim sql As String = "SELECT        customer.cust_id, customer.cust_refno, customer.firstname, customer_trans.datetime, customer_trans.cust_tran_id, customer_trans.cash_type, customer_trans.type, " & _
+                            "customer_trans.bill_no, customer_trans.gold_type_id, customer_trans.quantity, customer_trans.price, customer_trans.amount, '' AS gold96, '' AS gold96G,'' AS gold96M, '' AS gold99, 0 as cash " & _
+                            ",case when users.firstname is null then '' else users.firstname end AS modify_by " & _
+                            "FROM            customer INNER JOIN  customer_trans ON customer.cust_id = customer_trans.cust_id " & _
+                            " LEFT OUTER JOIN users ON customer_trans.created_by = users.user_id " & _
+                            "where cust_tran_id in( " & refno & " )"
+
+        Dim con As New SqlConnection(strcon)
+        Try
+            Dim da As New SqlDataAdapter(sql, con)
+            Dim dt As New DataTable
+            da.Fill(dt)
+            If dt.Rows.Count > 0 Then
+                Dim dc As New dcDBDataContext
+                Dim gd = dc.getSumPortfolioByCust_id(dt.Rows(0)("cust_id").ToString).SingleOrDefault
+                dt.Rows(0)("gold96") = clsManage.convert2StringNormal(gd.gold96)
+                dt.Rows(0)("gold96G") = clsManage.convert2StringNormal(gd.gold96G)
+                dt.Rows(0)("gold96M") = clsManage.convert2StringNormal(gd.gold96M)
+                dt.Rows(0)("gold99") = clsManage.convert2StringNormal(gd.gold99)
+                dt.Rows(0)("cash") = clsManage.convert2StringNormal(gd.cash)
+                Return dt
+            End If
+            Return Nothing
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
+
     Public Shared Function getReportTrans(ByVal refno As String) As DataTable
 
         Dim sql As String = "SELECT        customer.cust_id, customer.cust_refno, customer.firstname, customer_trans.datetime, customer_trans.cust_tran_id, customer_trans.cash_type, customer_trans.type, " & _
@@ -4985,43 +5016,22 @@ Public Class clsDB
     End Function
 
 #Region "Payment"
-    Public Shared Function getPaymentReport(ByVal refno As String, preview As Boolean, report_by As String, Optional view As Boolean = False) As DataTable
-        'parameter optional view for ค้นหาจาก runno อาจมีหลาย ticket
-        'Change Requirment from jack 07/0/12014 >> report by to modifer_by
-        If Not refno.Contains("','") Then
-            refno = refno.Replace(",", "','")
-        End If
+    Public Shared Function getPaymentReport(payment_id As String, report_by As String) As DataTable
 
-        Dim sqlreceiptDate As String = ""
-        If preview = False Then
-            sqlreceiptDate = "getdate() as receipt_date" 'update ที่หลังเลยต้องใส่วันที่ก่อน
-        Else
-            sqlreceiptDate = " receipt_date"
-        End If
 
-        Dim sqlCondition As String = ""
-        If view = True Then
-            sqlCondition = "where ticket.run_no in (select run_no from tickets where ref_no in ('" & refno & "'))"
-        Else
-            sqlCondition = "where ticket.ref_no in ('" & refno & "')"
-        End If
-        Dim sql As String = "SELECT " + sqlreceiptDate + "" & _
- ",case when type='sell' then cast(ticket.price as varchar) else '' end as sell " & _
+        Dim sql As String = "SELECT case when type='sell' then cast(ticket.price as varchar) else '' end as sell " & _
  ",case when type='buy' then cast(ticket.price as varchar) else '' end as buy " & _
  ",case when ticket.gold_type_id ='96' then ticket.quantity else 0 end as G96 " & _
  ",case when substring(cast(ticket.gold_type_id as varchar),1,2)='99' then ticket.quantity else 0 end as G99 " & _
- ",case when ticket.gold_type_id ='96G' then ticket.quantity else 0 end as G96G  " & _
- ",ticket.Amount,ticket.ref_no,ticket.cust_id, customer.firstname,'' as quantity_no_split,ticket.gold_type_id as purity,u.user_name as report_by  " & _
- ",case when run_no <> '' then run_no else (SELECT  stringWord + RIGHT('00' + cast( day(getdate()) as varchar),2) +RIGHT('00' + cast( month(getdate()) as varchar),2) + RIGHT('00'+ cast( year(getdate()) as varchar),2) + '-' + RIGHT('0000'+ CONVERT(VARCHAR,run_no),4) as bill_runno FROM ticket_runno  where type = 'NB') end as 'run_no' " & _
+ ",(select top 1  paid_cash from payment where payment_id = " + payment_id + " ) as paid" & _
+ ",ticket.Amount,ticket.ref_no,ticket.cust_id, customer.firstname,ticket.gold_type_id as purity,u.user_name as report_by,payment_id  " & _
  "FROM  (" & _
- "	select receipt_date,ticket.[type],ticket.price,gold_type_id,ticket.ref_no,ticket.cust_id,run_no," & _
- "	case when ticket.type ='sell' then -(ticket.quantity) else ticket.quantity end as quantity, " & _
- "	case when ticket.type ='sell' then -(ticket.amount) else ticket.amount end as amount,modifier_by " & _
- "	from ticket " & _
+ "	select t.[type],t.price,gold_type_id,t.ref_no,t.cust_id,payment_id," & _
+ "	case when t.type ='sell' then -(t.quantity) else t.quantity end as quantity, " & _
+ "	case when t.type ='sell' then -(t.amount) else t.amount end as amount,modifier_by " & _
+ "	from v_ticket_sum_split t " & _
  ")ticket INNER JOIN  customer ON ticket.cust_id = customer.cust_id left join users u on u.user_id = ticket.modifier_by " & _
- "" & sqlCondition & ""
-
-    
+ "Where payment_id = " + payment_id
 
         Dim con As New SqlConnection(strcon)
         Try

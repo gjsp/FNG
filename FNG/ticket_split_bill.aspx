@@ -55,7 +55,8 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="SampleContent" runat="Server">
-    <div id="div_splitbill" style="padding-left: 5px; display: block">
+    <asp:Panel ID="pnMain" runat="server">
+    <div id="div_splitbill" style="padding-left: 5px; display:">
         <asp:UpdatePanel ID="upMain" runat="server">
             <ContentTemplate>
                 <fieldset>
@@ -994,4 +995,11 @@
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>
+       
+    </asp:Panel>
+     <asp:Panel ID="pnNone" runat="server">
+         <div style="margin:10px 10px 10px 10px;text-align:center">
+         <asp:Label ID="lblMsg" runat="server" ForeColor="red"></asp:Label>
+         </div>
+     </asp:Panel>
 </asp:Content>

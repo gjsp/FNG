@@ -23,6 +23,7 @@ Partial Class stock_tickets
                         If dr(clsDB.roles.print) = False Then
                             linkReviewDoc.Enabled = False
                             linkRptSell.Enabled = False
+                            linkPayment.Enabled = False
                             ViewState(clsDB.roles.print) = False
                         End If
                         'Export
@@ -64,7 +65,9 @@ Partial Class stock_tickets
             rdoCenter.Attributes.Add("onclick", "$get('" & btnSearchAdv.ClientID & "').click();")
             ddlStatus.Attributes.Add("onchange", "$get('" & btnSearchAdv.ClientID & "').click();")
 
-            linkRptSell.Attributes.Add("onclick", "return isCheck();")
+            linkRptSell.Attributes.Add("onclick", "return isCheckedBox('Please checked Item to Receipt');")
+            linkReviewDoc.Attributes.Add("onclick", "return isCheckedBox('Please checked Item to ReviewDoc');")
+            linkPayment.Attributes.Add("onclick", "return isCheckedBox('Please checked Item to Payment');")
 
             txtDate1_CalendarExtender.Format = clsManage.formatDateTime
             txtDate2_CalendarExtender.Format = clsManage.formatDateTime
@@ -106,9 +109,13 @@ Partial Class stock_tickets
             If gvTicket.Rows.Count > 0 Then
                 linkRptSell.Visible = True
                 linkReviewDoc.Visible = True
+                linkPayment.Visible = True
+                linkExcel.Visible = True
             Else
                 linkRptSell.Visible = False
                 linkReviewDoc.Visible = False
+                linkPayment.Visible = False
+                linkExcel.Visible = False
             End If
         Catch ex As Exception
             clsManage.alert(Page, ex.Message)
@@ -269,7 +276,10 @@ Partial Class stock_tickets
             End If
 
             'payment
-            CType(e.Row.FindControl("linkPayment"), HyperLink).NavigateUrl = "ticket_payment_detail.aspx?pid=" + e.Row.DataItem("payment_id").ToString
+            If e.Row.DataItem("payment_id").ToString <> "" Then
+                CType(e.Row.FindControl("linkPayment"), HyperLink).NavigateUrl = "ticket_payment_detail.aspx?pid=" + e.Row.DataItem("payment_id").ToString
+                CType(e.Row.FindControl("linkUpdate"), LinkButton).Enabled = False
+            End If
 
             'split bill แล้วลบไม่ได้ ให้ไปลบข้างใน
             If e.Row.DataItem("sp_quan") IsNot DBNull.Value Then
@@ -356,6 +366,7 @@ Partial Class stock_tickets
             Dim id As String = gvTicket.DataKeys(i).Value
             Dim trade As String = gvTicket.DataKeys(i)("trade").ToString
             Dim billing As String = CType(gvTicket.Rows(i).FindControl("hdfBill"), HiddenField).Value
+            Dim payment As String = gvTicket.DataKeys(i)("payment_id").ToString
 
             'check ticket tradeonline must select bill
             If trade = clsManage.yes And billing = "" Then
@@ -371,6 +382,11 @@ Partial Class stock_tickets
             If CType(gvTicket.Rows(i).FindControl("imgDelReceipt"), ImageButton).Visible = True Then
                 clsManage.alert(Page, "Ticket มีการออกบิลไปแล้ว") : Exit Sub
             End If
+
+            ''มี payment แล้ว แยกบิลไม่ได้
+            'If payment <> "" Then
+            '    clsManage.alert(Page, "Ticket มีการออก payment ไปแล้ว ไม่สามารถแยกบิลได้") : Exit Sub
+            'End If
 
             clsManage.Script(Page, "window.open('ticket_split_bill.aspx?id=" + id + "','_blank');")
         Catch ex As Exception
@@ -676,22 +692,36 @@ Partial Class stock_tickets
         Try
             Dim strRefno As String = ""
             Dim cust_id As String = ""
-            'Dim type As String = ""
+            Dim purity As String = ""
             Dim billing As String = ""
             Dim trade As String = ""
+            Dim pid As String = ""
+            Dim status_id As String = ""
+
             For Each dr As GridViewRow In gvTicket.Rows
                 If CType(dr.Cells(gvTicket.Columns.Count - 1).FindControl("cbRow"), HtmlInputCheckBox).Checked = True Then
                     If strRefno = "" Then
                         strRefno = gvTicket.DataKeys(dr.RowIndex).Value
                         cust_id = gvTicket.DataKeys(dr.RowIndex)(1).ToString 'gvTicket.Rows(dr.RowIndex).Cells(colCustId).Text
-                        'type = gvTicket.DataKeys(dr.RowIndex)(2).ToString
+                        purity = gvTicket.DataKeys(dr.RowIndex)("gold_type_id").ToString
                         billing = CType(gvTicket.Rows(dr.RowIndex).FindControl("hdfBill"), HiddenField).Value
                         trade = gvTicket.DataKeys(dr.RowIndex)("trade").ToString
+                        pid = gvTicket.DataKeys(dr.RowIndex)("payment_id").ToString
+
                         If trade = clsManage.yes Then
                             If billing = "" Then clsManage.alert(Page, "โปรดเลือกประเภทของบิล") : Exit Sub
                         End If
                     Else
                         strRefno += "," + gvTicket.DataKeys(dr.RowIndex).Value
+                        If gvTicket.DataKeys(dr.RowIndex)("payment_id").ToString <> "" Then
+                            pid += "," + gvTicket.DataKeys(dr.RowIndex)("payment_id").ToString
+                        End If
+
+                        If gvTicket.DataKeys(dr.RowIndex)("gold_type_id").ToString <> purity Then
+                            'case เลือก purity ไม่เหมือนกัน
+                            clsManage.alert(Page, "โปรดเลือกทองประเภทเดียวกัน") : Exit Sub
+                        End If
+
                         If gvTicket.DataKeys(dr.RowIndex)(1).ToString <> cust_id Then
                             'case เลือก cust_id ไม่เหมือนกัน
                             clsManage.alert(Page, "Please Select Same Customer Ref No.") : Exit Sub
@@ -701,19 +731,35 @@ Partial Class stock_tickets
                             'case เลือก billing ไม่เหมือนกัน
                             clsManage.alert(Page, "โปรดเลือกบิลประเภทเดียวกัน") : Exit Sub
                         End If
-
                     End If
+
+                    If pid <> "" Then
+                        clsManage.alert(Page, "โปรดเลือกรายการที่ยังไม่ออก Payment") : Exit Sub
+                    End If
+
+                    If purity.Contains("96G") Then
+                        'case 96G can't payment
+                        clsManage.alert(Page, "ทองคำ 96.50(กรัม) ไม่สามรถออก Payment ได้") : Exit Sub
+                    End If
+
+                    If gvTicket.DataKeys(dr.RowIndex)("status_id").ToString <> "101" Then
+                        clsManage.alert(Page, "โปรดเลือกรายการที่มีสถานะเป็น pending") : Exit Sub
+                    End If
+
+                    If gvTicket.DataKeys(dr.RowIndex)("payment").ToString = "" Then
+                        clsManage.alert(Page, "โปรดเลือกประเภทของการชำระเงิน") : Exit Sub
+                    End If
+
                 End If
             Next
             If strRefno <> "" Then
-                Dim msgReceipt As String = clsFng.checkReceiptNoAndSplitBill1(strRefno, billing)
+                Dim msgReceipt As String = clsFng.checkReceiptNoPayment(strRefno, billing)
                 If msgReceipt <> "" Then
                     clsManage.alert(Page, msgReceipt)
                     btnSearchAdv_Click(Nothing, Nothing)
                     Exit Sub
                 End If
-                Dim url As String = "ticket_payment_detail.aspx?pid="
-              
+
                 'Add Payment
                 Dim dc As New dcDBDataContext
                 Try
@@ -722,11 +768,16 @@ Partial Class stock_tickets
 
                     Dim pm As New payment
                     pm.active = True
-                    pm.status = "new"
+                    pm.status = "pending"
+                    pm.billing = billing
+                    pm.paid_cash = 0
+                    pm.paid_gold = 0
+                    pm.cust_id = cust_id
                     pm.created_by = Session(clsManage.iSession.user_id_center.ToString).ToString
                     pm.created_date = DateTime.Now
                     pm.modifier_by = Session(clsManage.iSession.user_id_center.ToString).ToString
                     pm.modifier_date = DateTime.Now
+                    pm.note = ""
 
                     dc.payments.InsertOnSubmit(pm)
                     dc.SubmitChanges()
@@ -740,13 +791,16 @@ Partial Class stock_tickets
                     Next
                     dc.SubmitChanges()
                     dc.Transaction.Commit()
-
+                    'Response.Redirect("ticket_payment_detail.aspx?pid=" + pm.payment_id)
+                    clsManage.Script(Page, "window.open('ticket_payment_detail.aspx?pid=" + pm.payment_id.ToString + "','_blank');")
+                    btnSearchAdv_Click(Nothing, Nothing)
                 Catch ex As Exception
                     dc.Transaction.Rollback()
                     Throw ex
                 Finally
                     dc.Connection.Close()
                 End Try
+
             Else
                 clsManage.alert(Page, "Please select ticket for payment")
             End If

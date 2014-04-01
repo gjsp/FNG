@@ -30,6 +30,26 @@
             }
         }
 
+        function isCheckedBox(msg) {
+            var frm = document.getElementById('aspnetForm');
+            var IsCheck = "false";
+            for (i = 0; i < frm.elements.length; i++) {
+                if (frm.elements[i].type == "checkbox") {
+                    if (frm.elements[i].name.split('$')[4] == 'cbRow') {
+                        if (frm.elements[i].checked == true) {
+                            IsCheck = 'true'
+                        }
+                    }
+                }
+            }
+            if (IsCheck == 'false') {
+                alert(msg);
+                return false;
+            } else {
+                return true;
+            }
+        }
+
     </script>
     <style type="text/css">
         .style1
@@ -223,7 +243,7 @@
                         </table>
                         <asp:GridView ID="gvTicket" runat="server" AllowSorting="True" AutoGenerateColumns="False"
                             Width="100%" BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px"
-                            CellPadding="3" DataSourceID="objSrcTicket" GridLines="Vertical" DataKeyNames="ticket_id,cust_id,type,billing,gold_type_id,quantity,amount,gold_dep,price,payment,trade,run_no"
+                            CellPadding="3" DataSourceID="objSrcTicket" GridLines="Vertical" DataKeyNames="ticket_id,cust_id,type,billing,gold_type_id,quantity,amount,gold_dep,price,payment,trade,run_no,payment_id,status_id"
                             ShowFooter="True">
                             <RowStyle BackColor="#EEEEEE" ForeColor="Black" />
                             <Columns>

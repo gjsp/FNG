@@ -929,7 +929,7 @@
             </div>
             <div style="clear:both;text-align:center">
                       <asp:Button ID="btnDealTicket" runat="server" Text="Deal Ticket" />
-                            &nbsp;<asp:Button ID="btnUpdate" OnClientClick="showConfirm(this); return false;" runat="server" Text="Update" />
+                            &nbsp;<asp:Button ID="btnUpdate" runat="server" Text="Update" />
                             &nbsp;<asp:Button ID="btnClear" runat="server" Text="Clear" />
                             &nbsp;<asp:Button ID="btnBack" Visible="false" runat="server" Text="Back" />
                             <ajaxToolkit:ModalPopupExtender ID="mppDelete" BehaviorID="mppDel" runat="server"

@@ -26,30 +26,15 @@
 
                 $get('div_ifmTime').style.display = 'none';
                 $get('ifmTime').src = 'trade_timing.aspx';
-                //for content
-                //((conditions) ? "true" : "false")
-                var type = ''; var purity = ''; var price = ''; var quan = ''; var period = ''; var unit = '';
-                var orderContent = '';
-                var dbTime = '<%=dbTime %>';
-                var today = dbTime.toString().split('|')[0]
-                //รอบเช้า  ถึง 16.00  รอบบ่าย ถึง 24.00
-                //            if (dbTime.toString().split('|')[2] == 'PM' && parseInt(dbTime.toString().split('|')[1].split(':')[0]) >= 4) {
-                //                period = '24.00';
-                //            } else {
-                //                period = '16.00';
-                //            }
-                // ถ้าไม่แยกเป็น function จะ runtime error ??
-                var iHour = getHour();
-                if (parseInt(iHour) >= 16) {
-                    period = '24.00';
-                } else {
-                    period = '16.00';
-                }
+                $get('p99').style.display = 'none';
+                $get('p96').style.display = 'none';
 
+                //for content
+                var type = ''; var purity = ''; var price = ''; var quan = ''; var period = ''; var unit = '';
+              
                 //Order 99
                 if (source.id == $get('<%=btn99Accept.ClientId %>').id || source.id == $get('<%=btn99Accept2.ClientId %>').id) {
-                    var ddl99Quan = $get('<%=ddl99Quan.ClientId %>');
-                    if (ddl99Quan.selectedIndex == 0) { alert('โปรดเลือกปริมาณที่ต้องการ'); ddl99Quan.focus(); return };
+                    
                     if (source.id == $get('<%=btn99Accept.ClientId %>').id) {
                         type = 'Sell';
                         price = $get('<%=hdfBid99.ClientId %>').value;
@@ -57,15 +42,16 @@
                         type = 'Buy';
                         price = $get('<%=hdfAsk99.ClientId %>').value;
                     }
-                    quan = ddl99Quan.options[ddl99Quan.selectedIndex].value;
+                    //quan = ddl99Quan.options[ddl99Quan.selectedIndex].value;
                     purity = '99.99';
                     unit = ' KG';
+                    $get('p99').style.display = '';
+                    $get('<%=ddl99Quan.ClientID%>').selectedIndex = 0;
+                    $get('<%=ddl96Quan.ClientID%>').selectedIndex = 1; //set for RequiredFieldValidator
                 }
                 //Order 96
                 if (source.id == $get('<%=btn96Accept.ClientId %>').id || source.id == $get('<%=btn96Accept2.ClientId %>').id) {
-                    var ddl96Quan = $get('<%=ddl96Quan.ClientId %>');
-                    if (ddl96Quan.selectedIndex == 0) { alert('โปรดเลือกปริมาณที่ต้องการ'); ddl96Quan.focus(); return };
-
+                    
                     if (source.id == $get('<%=btn96Accept.ClientId %>').id) {
                         type = 'Sell';
                         price = $get('<%=hdfBid96.ClientId %>').value;
@@ -73,43 +59,22 @@
                         type = 'Buy';
                         price = $get('<%=hdfAsk96.ClientId %>').value;
                     }
-                    quan = ddl96Quan.options[ddl96Quan.selectedIndex].value;
+                    //quan = ddl96Quan.options[ddl96Quan.selectedIndex].value;
                     purity = '96.50';
                     unit = ' บาท';
-                }
-
-                //Order Mini 96
-                if (source.id == $get('<%=btn96MiniSellAcceptShow.ClientId %>').id || source.id == $get('<%=btn96MiniBuyAcceptShow.ClientId %>').id) {
-                    var ddl96MiniQuan = $get('<%=ddl96MiniQuan.ClientId %>');
-                    if (ddl96MiniQuan.selectedIndex == 0) { alert('โปรดเลือกปริมาณที่ต้องการ'); ddl96MiniQuan.focus(); return };
-                    var priceTemp = '';
-
-                    quan = ddl96MiniQuan.options[ddl96MiniQuan.selectedIndex].value;
-                    if (source.id == $get('<%=btn96MiniSellAcceptShow.ClientId %>').id) {
-                        type = 'Sell';
-                        //priceTemp = $get('<%=hdfBid96Mini.ClientId %>').value;
-                        //miniPrice = (priceTemp * quan) - (quan * 10);
-                        price = $get('<%=hdfBid96Mini.ClientId %>').value;
-                    } else {
-                        type = 'Buy';
-                        //priceTemp = $get('<%=hdfAsk96Mini.ClientId %>').value;
-                        //miniPrice = (priceTemp * quan) + (quan * 10);
-                        price = $get('<%=hdfAsk96Mini.ClientId %>').value;
-                    }
-                    purity = '96.50(Mini)';
-                    unit = ' บาท';
-                    //miniPrice = '\nรวมเป็นเงินทั้งหมด ' + addCommas(miniPrice);
+                    $get('p96').style.display = '';
+                    $get('<%=ddl96Quan.ClientID%>').selectedIndex = 0;
+                    $get('<%=ddl99Quan.ClientID%>').selectedIndex = 1; //set for RequiredFieldValidator
                 }
 
                 var type_content = '';
                 if (type == 'Sell') { type_content = 'ขาย'; } else { type_content = 'ซื้อ'; }
-                $get('pContent').innerHTML = 'คุณต้องการที่จะ' + type_content + 'ทองคำ ' + purity + '\nที่ราคา ' + addCommas(price) + ' จำนวน ' + quan + unit + orderContent ;
+                $get('pContent').innerHTML = 'คุณต้องการที่จะ' + type_content + 'ทองคำ ' + purity + '\nที่ราคา ' + addCommas(price);// + ' จำนวน ' + quan + unit + orderContent ;
                 $get('<%=hdfPriceCust.ClientId %>').value = price; //เก็บราคาใน 10 วิ
 
                 this._source = source;
                 this._popup = $find('mppAccept');
                 this._popup.show();
-                $get('<%=btnOk.ClientId %>').focus();
             } catch (e) {
                 alert('Error Code 101.');
             }
@@ -133,6 +98,12 @@
 
         function okClick() {
             try {
+                
+                if ($get('<%=ddl99Quan.ClientID%>').selectedIndex == 0)//ใช้รวมกับ RequiredFieldValidator
+                { return false }
+                if ($get('<%=ddl96Quan.ClientID%>').selectedIndex == 0)//ใช้รวมกับ RequiredFieldValidator
+                { return false }
+
                 this._popup.hide();
                 //__doPostBack(this._source.name, '');
                 switch (this._source.id) {
@@ -180,6 +151,7 @@
         function pageLoad() {
             getMessage();
         }
+        
         function getMessage() {
             PageMethods.getMessage(OnSucceeded, OnFailed);
         }
@@ -367,63 +339,28 @@
                     style="cursor: pointer" />
                 ส่งคำสั่งซื้อ/ขาย ณ ราคาปัจจุบัน</legend>
             <div id="div_order">
-                <table cellpadding="0" cellspacing="0" border="0">
+                <table cellpadding="10" cellspacing="10" border="0">
                     <tr>
                         <td>
                             <div id="div99" style="text-align: center; float: left; padding-left: 20px">
-                                <table cellpadding="1" cellspacing="1" border="0" width="400px">
-                                    <tr>
-                                        <td align="right">
-                                            ปริมาณ :
-                                        </td>
-                                        <td align="left">
-                                            <asp:DropDownList ID="ddl99Quan" runat="server">
-                                            </asp:DropDownList>
-                                            &nbsp;KG.
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            &nbsp;
-                                        </td>
-                                        <td align="left">
-                                            <asp:Button ID="btn99Accept" OnClientClick="showConfirm(this); return false;" runat="server"
-                                                Text="ลูกค้าขาย" CssClass="buttonPro small red" Width="80px" />
-                                            &nbsp;
+                                <div style="text-align: center;width:400px">
+                                    <asp:Button ID="btn99Accept" OnClientClick="showConfirm(this); return false;" runat="server"
+                                        Text="ลูกค้าขาย" CssClass="buttonPro small red" Width="80px" />
+                                    &nbsp;
                                             <asp:Button ID="btn99Accept2" OnClientClick="showConfirm(this); return false;" runat="server"
                                                 Text="ลูกค้าซื้อ" CssClass="buttonPro small blue" Width="80px" />
-                                        </td>
-                                    </tr>
-                                </table>
+                                </div>
                             </div>
                         </td>
                         <td>
                             <div id="div96" style="text-align: center; float: left; padding-left: 20px;">
-                                <table cellpadding="1" cellspacing="1" border="0" width="400px">
-                                    <tr>
-                                        <td align="right">
-                                            ปริมาณ :
-                                        </td>
-                                        <td align="left">
-                                            <asp:DropDownList ID="ddl96Quan" runat="server">
-                                            </asp:DropDownList>
-                                          
-                                            &nbsp;BAHT
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            &nbsp;
-                                        </td>
-                                        <td align="left">
-                                            <asp:Button ID="btn96Accept" OnClientClick="showConfirm(this); return false;" runat="server"
-                                                Text="ลูกค้าขาย" CssClass="buttonPro small red" Width="80px" />
-                                            &nbsp;
+                                <div style="text-align: center; width: 400px">
+                                    <asp:Button ID="btn96Accept" OnClientClick="showConfirm(this); return false;" runat="server"
+                                        Text="ลูกค้าขาย" CssClass="buttonPro small red" Width="80px" />
+                                    &nbsp;
                                             <asp:Button ID="btn96Accept2" OnClientClick="showConfirm(this); return false;" runat="server"
                                                 Text="ลูกค้าซื้อ" CssClass="buttonPro small blue" Width="80px" />
-                                        </td>
-                                    </tr>
-                                </table>
+                                </div>
                             </div>
                         </td>
                         <td>
@@ -431,7 +368,6 @@
                                 <table cellpadding="1" cellspacing="1" border="0" style="width: 400px">
                                     <tr>
                                         <td align="right">
-                                            ปริมาณ :
                                         </td>
                                         <td align="left">
                                             <asp:DropDownList ID="ddl96MiniQuan" runat="server">
@@ -462,11 +398,24 @@
             TargetControlID="Panel1" PopupControlID="Panel1" OkControlID="btnOk" OnOkScript="okClick();"
             CancelControlID="btnNo" OnCancelScript="cancelClick();" BackgroundCssClass="modalBackground">
         </ajaxToolkit:ModalPopupExtender>
-        <asp:Panel ID="Panel1" runat="server" Style="display: none" CssClass="modalPopup" DefaultButton="btnOk">
-           <asp:Panel ID="Panel2" runat="server" Style="cursor: move; background-color: #fff; border:none;color: Black">
+        <asp:Panel ID="Panel1" runat="server" Style="display:none" CssClass="modalPopup" DefaultButton="btnOk">
+           <asp:Panel ID="Panel2" runat="server" Style="cursor: move; background-color: #fff; border:none;color: Black" DefaultButton="btnOk">
                 <div style="text-align: center;">
-                    <p id="pContent" style="text-align: center; margin: 50px 20px 20px 20px; font-size:x-large;">
+                    <p id="pContent" style="text-align: center; margin: 50px 20px 0px 20px; font-size:x-large;">
                     </p>
+                    <p id="p99" style="font-size:x-large">
+                        ปริมาณ&nbsp;
+                        <asp:DropDownList ID="ddl99Quan" Font-Size="X-Large" runat="server"> </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="rfvQuan99" runat="server" ControlToValidate="ddl99Quan" ErrorMessage="*" SetFocusOnError="true" InitialValue="" ValidationGroup="sale" ></asp:RequiredFieldValidator>
+                         &nbsp;KG.
+                     </p>
+                    <p id="p96" style="font-size:x-large">
+                        ปริมาณ&nbsp;
+                        <asp:DropDownList ID="ddl96Quan" Font-Size="X-Large" runat="server"></asp:DropDownList>
+                      <asp:RequiredFieldValidator ID="rfvQuan96" runat="server" ControlToValidate="ddl96Quan" ErrorMessage="*" SetFocusOnError="true" InitialValue="" ValidationGroup="sale" ></asp:RequiredFieldValidator>
+                        &nbsp;BAHT
+                     </p>
+                                          
                     <div style="height: 60px">
                         <div id="div_ifmTime" style="display: none">
                             <iframe id="ifmTime" width="100%" height="60px" frameborder="0" scrolling="no" marginheight="0"
@@ -477,7 +426,7 @@
             </asp:Panel>
             <div>
                 <p style="text-align: center;">
-                    <asp:Button ID="btnOk" CssClass="buttonPro small black" runat="server" Text="Yes"
+                    <asp:Button ID="btnOk" CssClass="buttonPro small black" runat="server" Text="Yes"  ValidationGroup="sale"
                         Width="90px" />&nbsp;&nbsp;
                     <asp:Button ID="btnNo" CssClass="buttonPro small black" runat="server" Text="No"
                         Width="90px" />

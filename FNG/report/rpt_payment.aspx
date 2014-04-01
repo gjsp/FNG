@@ -12,19 +12,17 @@
             HasCrystalLogo="False" HasDrilldownTabs="False" HasDrillUpButton="False" HasPageNavigationButtons="True"
             HasToggleGroupTreeButton="False" HasExportButton="True" ReuseParameterValuesOnRefresh="True" ReportSourceID="CRS" />
         <CR:CrystalReportSource ID="CRS" runat="server">
-            <Report FileName="rptNobill.rpt">
+            <Report FileName="rptPayment.rpt">
                 <DataSources>
-                    <CR:DataSourceRef DataSourceID="ODS" TableName="rpt_ticket_order_nobill" />
+                    <CR:DataSourceRef DataSourceID="ODS" TableName="rpt_payment" />
                 </DataSources>
             </Report>
         </CR:CrystalReportSource>
-        <asp:ObjectDataSource ID="ODS" runat="server" SelectMethod="getTicketOrderNobill"
+        <asp:ObjectDataSource ID="ODS" runat="server" SelectMethod="getPaymentReport"
             TypeName="clsDB" OldValuesParameterFormatString="original_{0}">
             <SelectParameters>
-                <asp:Parameter Name="refno" Type="String" ConvertEmptyStringToNull="False" />
-                <asp:Parameter Name="preview" Type="Boolean" />
-                <asp:Parameter Name="report_by" Type="String" />
-                <asp:Parameter Name="view" Type="Boolean" />
+                <asp:Parameter Name="payment_id" Type="String" ConvertEmptyStringToNull="False" />
+                <asp:Parameter Name="report_by" Type="String" ConvertEmptyStringToNull="False" />
             </SelectParameters>
         </asp:ObjectDataSource>
 
