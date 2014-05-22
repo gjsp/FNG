@@ -191,7 +191,8 @@ Partial Class admin_trans2
                         CType(e.Row.FindControl("btnAccept99"), ImageButton).Visible = True
 
                         'price ที่แตะขอบพอดีต้อง เปลี่ยนสี
-                        Dim columnName As String = IIf(e.Row.DataItem("type").ToString = "sell", "bid", "ask") + IIf(e.Row.DataItem("gold_type_id").ToString = "96", "96", "99") + "_" + e.Row.DataItem("cust_level").ToString
+                        'Fng No level in customer
+                        Dim columnName As String = IIf(e.Row.DataItem("type").ToString = "sell", "bid", "ask") + IIf(e.Row.DataItem("gold_type_id").ToString = "96", "96", "99") + "_1" ' + e.Row.DataItem("cust_level").ToString
                         If e.Row.DataItem("leave_order").ToString <> "order" Then 'Leave order
                             If clsManage.convert2zero(e.Row.DataItem("price").ToString) = clsManage.convert2zero(htPrice(columnName).ToString) Then
                                 e.Row.BackColor = Drawing.Color.Pink
@@ -297,7 +298,8 @@ Partial Class admin_trans2
                         CType(e.Row.FindControl("btnAccept99"), ImageButton).Visible = True
 
                         'price ที่แตะขอบพอดีต้อง เปลี่ยนสี
-                        Dim columnName As String = IIf(e.Row.DataItem("type").ToString = "sell", "bid", "ask") + IIf(e.Row.DataItem("gold_type_id").ToString = "96", "96", "99") + "_" + e.Row.DataItem("cust_level").ToString
+                        'Fng No level in customer
+                        Dim columnName As String = IIf(e.Row.DataItem("type").ToString = "sell", "bid", "ask") + IIf(e.Row.DataItem("gold_type_id").ToString = "96", "96", "99") + "_1" ' + e.Row.DataItem("cust_level").ToString
                         If e.Row.DataItem("leave_order").ToString <> "order" Then 'Leave order
                             If clsManage.convert2zero(e.Row.DataItem("price").ToString) = clsManage.convert2zero(htPrice(columnName).ToString) Then
                                 e.Row.BackColor = Drawing.Color.Pink

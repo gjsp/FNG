@@ -26,6 +26,13 @@
             <asp:CheckBox ID="cbHalt" runat="server" />
            </td>
     </tr>
+    <tr>
+        <td style="width:150px;text-align:right">Login Lock :</td>
+        <td style="width:150px;text-align:left">  
+            <asp:Button ID="btnLock" runat="server" CssClass="buttonPro small grey" 
+                Text="" />
+           </td>
+    </tr>
     </table>
    <div style="text-align: center; margin-top:25px;">
         <asp:Button ID="Savebt" runat="server" CssClass="buttonPro small grey" Text="Save" />

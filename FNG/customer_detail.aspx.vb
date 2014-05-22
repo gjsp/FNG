@@ -43,9 +43,21 @@ Partial Class customer_detail
             txtFreeMargin.Attributes.Add("onkeypress", "numberOnly();")
             txtDisBuy.Attributes.Add("onkeypress", "numberOnly();")
             txtDisSell.Attributes.Add("onkeypress", "numberOnly();")
-            hdfPwd.Value = clsDB.getStockField("pwd_auth")
 
-            txtCredit_cash.Text = "0"
+            txtCredit_cash_create.Attributes.Add("onkeypress", "numberOnly();")
+            txtQuan96_create.Attributes.Add("onkeypress", "numberOnly();")
+            txtQuan99_create.Attributes.Add("onkeypress", "numberOnly();")
+            txtFreeMargin_create.Attributes.Add("onkeypress", "numberOnly();")
+
+            txtCredit_cash.Attributes.Add("onkeypress", "numberOnly();")
+            txtQuan96.Attributes.Add("onkeypress", "numberOnly();")
+            txtQuan99N.Attributes.Add("onkeypress", "numberOnly();")
+            txtFreeMargin.Attributes.Add("onkeypress", "numberOnly();")
+
+            hdfPwd.Value = clsDB.getStockField("pwd_auth")
+            btnSave.Attributes.Add("onclick", "return confirm('Do you want to save?');")
+
+            'txtCredit_cash.Text = "0"
 
             For i As Integer = 1 To 31 : ddlday.Items.Add(i) : Next
             For i As Integer = 1 To 12 : ddlMonth.Items.Add(i) : Next
@@ -55,10 +67,13 @@ Partial Class customer_detail
             cbCreateTradeOnline.Enabled = False
 
             If Request.QueryString("id") IsNot Nothing Then
+                'Edit
                 btnUpdate.Visible = True : btnSave.Visible = False : btnReset.Visible = False
+                pnAssetCreate.Visible = False : linkGaran.Visible = True
+                hdfCustId.Value = Request.QueryString("id").ToString
 
                 Dim dt As New Data.DataTable
-                dt = clsDB.getCustomerByCust_id(Request.QueryString("id").ToString())
+                dt = clsDB.getCustomerByCust_id(hdfCustId.Value)
                 If dt.Rows.Count > 0 Then
                     Dim dr As Data.DataRow = dt.Rows(0)
                     If Not dr("trade_type").ToString = "Call" Then
@@ -117,11 +132,12 @@ Partial Class customer_detail
                     txtFax.Text = dr("fax").ToString
                     rdoType.SelectedValue = dr("cust_type_id").ToString
                     txtRemark.Text = dr("remark").ToString
-                    txtCredit_cash.Text = clsManage.convert2StringNormal(dr("cash_credit").ToString)
-                   
-                    txtQuan96.Text = clsManage.convert2StringNormal(dr("quan_96").ToString)
-                    txtQuan99N.Text = clsManage.convert2StringNormal(dr("quan_99N").ToString)
-                    txtFreeMargin.Text = clsManage.convert2StringNormal(dr("free_margin").ToString)
+                    'txtCredit_cash.Text = clsManage.convert2StringNormal(dr("cash_credit").ToString)
+
+                    'txtQuan96.Text = clsManage.convert2StringNormal(dr("quan_96").ToString)
+                    'txtQuan99N.Text = clsManage.convert2StringNormal(dr("quan_99N").ToString)
+                    'txtFreeMargin.Text = clsManage.convert2StringNormal(dr("free_margin").ToString)
+
                     'If dr("VIP") IsNot DBNull.Value Then
                     '    cbVIP.Checked = dr("VIP")
                     '    If Not dr("VIP") Then
@@ -141,17 +157,18 @@ Partial Class customer_detail
                 End If
                 pnMain.DefaultButton = btnUpdate.ID
             Else
+                'Add
                 pnMain.DefaultButton = btnSave.ID
                 btnSave.Visible = True : btnUpdate.Visible = False : btnReset.Visible = False
-
+                linkGaran.Visible = False
             End If
         End If
         If Request.QueryString("id") IsNot Nothing Then
             'clsManage.Script(Page, "trRef.style.display='block';trTrade.style.display='block';trCash.style.display='none';tr96.style.display='none';tr99N.style.display='none';trDep.style.display='block';", "displayRefNo")
-            clsManage.Script(Page, "trRef.style.display='block';trTrade.style.display='block';trDep.style.display='block';trFolio.style.display='block'", "displayRefNo")
+            clsManage.Script(Page, "trRef.style.display='block';trTrade.style.display='block';trFolio.style.display='block'", "displayRefNo")
         Else
             'clsManage.Script(Page, "trRef.style.display='none';trTrade.style.display='none';trCash.style.display='block';tr96.style.display='block';tr99N.style.display='block';trDep.style.display='none';", "displayRefNo")
-            clsManage.Script(Page, "trRef.style.display='none';trTrade.style.display='none';trDep.style.display='none';trFolio.style.display='none'", "displayRefNo")
+            clsManage.Script(Page, "trRef.style.display='none';trTrade.style.display='none';trFolio.style.display='none'", "displayRefNo")
         End If
     End Sub
 
@@ -170,22 +187,21 @@ Partial Class customer_detail
             Dim cash_credit As Double = 0
             Dim quan96 As Double = 0
             Dim quan99 As Double = 0
-            Dim quan99L As Double = 0
-            Dim freeMargin As Double = IIf(txtFreeMargin.Text.Trim = "", 0, txtFreeMargin.Text)
+            'Dim quan99L As Double = 0
+            Dim freeMargin As Double = IIf(txtFreeMargin_create.Text.Trim = "", 0, txtFreeMargin_create.Text)
 
-            If txtQuan96.Text.Trim <> "" Then quan96 = txtQuan96.Text
-            If txtQuan99N.Text.Trim <> "" Then quan99 = txtQuan99N.Text
-            'If txtQuan99L.Text.Trim <> "" Then quan99L = txtQuan99L.Text
+            If txtQuan96_create.Text.Trim <> "" Then quan96 = txtQuan96_create.Text
+            If txtQuan99_create.Text.Trim <> "" Then quan99 = txtQuan99_create.Text
 
-            If txtCredit_cash.Text.Trim <> "" Then cash_credit = txtCredit_cash.Text
+            If txtCredit_cash_create.Text.Trim <> "" Then cash_credit = txtCredit_cash_create.Text
             If Request.QueryString("id") Is Nothing Then
                 Dim birthday As Date = DateTime.ParseExact(ddlday.SelectedValue + "/" + ddlMonth.SelectedValue + "/" + ddlYear.SelectedValue, clsManage.formatDateTime, Nothing)
                 Dim result As String = clsDB.insertCustomer("", rdoType.SelectedValue, ddlTitle.SelectedValue, txtFname.Text, txtLname.Text, txtFnameEng.Text, txtLnameEng.Text, idCard, birthday, txtEmail.Text, txtPerson.Text, txtAddress.Text, _
                 txtBankName1.Text, txtBankAccNo1.Text, txtBankAccName1.Text, txtBankAccType1.Text, txtBankAccBranch1.Text, _
                 txtBankName2.Text, txtBankAccNo2.Text, txtBankAccName2.Text, txtBankAccType2.Text, txtBankAccBranch2.Text, _
                 txtBankName3.Text, txtBankAccNo3.Text, txtBankAccName3.Text, txtBankAccType3.Text, txtBankAccBranch3.Text, _
-                txtMobilePhone.Text, txtTel.Text, txtFax.Text, cash_credit, txtRemark.Text, 0, 0, quan96, quan99, Session(clsManage.iSession.user_id_center.ToString).ToString, "", _
-                0, freeMargin, cbUnlimitedMargin.Checked, cbVIP.Checked, IIf(txtDisBuy.Text.Trim = "", 0, txtDisBuy.Text), IIf(txtDisSell.Text.Trim = "", 0, txtDisSell.Text))
+                txtMobilePhone.Text, txtTel.Text, txtFax.Text, cash_credit, txtRemark.Text, 0, 0, 0, 0, Session(clsManage.iSession.user_id_center.ToString).ToString, "", _
+                0, 0, cbUnlimitedMargin.Checked, cbVIP.Checked, IIf(txtDisBuy.Text.Trim = "", 0, txtDisBuy.Text), IIf(txtDisSell.Text.Trim = "", 0, txtDisSell.Text))
                 If result <> "" Then
                     Dim type As String = ""
                     Dim pure As String = ""
@@ -193,11 +209,30 @@ Partial Class customer_detail
                     Dim isUsed As Boolean = False
                     Dim adjust_value As Double = 0
 
-                    If cash_credit <> 0 Then
-                        'ฝากเงินพร้อมลงทะเบียน เฉพาะแบบ cash
-                        type = "ฝากเงิน"
-                        clsDB.insert_actual2("", "", Session(clsManage.iSession.user_id_center.ToString).ToString, "", 0, cash_credit, "999", txtRemark.Text, type, "D/W", cust_id, "000", "ฝากเงินในการลงทะเบียนครั้งแรก", "y", "n", "y", "Cash")
+                    'Add Customer Asset
+                    If cash_credit <> 0 And quan96 <> 0 And quan99 <> 0 And freeMargin <> 0 Then
+                        Dim db As New dcDBDataContext
+                        Dim ca = New customer_asset
+                        ca.cash_credit = cash_credit
+                        ca.quan96 = quan96
+                        ca.quan99 = quan99
+                        ca.cust_id = cust_id
+                        ca.free_margin = freeMargin
+                        ca.active = True
+                        ca.created_date = DateTime.Now
+                        ca.modifier_date = DateTime.Now
+                        ca.modifier_by = Session(clsManage.iSession.user_id_center.ToString).ToString
+                        ca.created_by = Session(clsManage.iSession.user_id_center.ToString).ToString
+
+                        db.customer_assets.InsertOnSubmit(ca)
+                        db.SubmitChanges()
                     End If
+
+                    ''ฝากเงินพร้อมลงทะเบียน เฉพาะแบบ cash
+                    'If cash_credit <> 0 Then
+                    '    type = "ฝากเงิน"
+                    '    clsDB.insert_actual2("", "", Session(clsManage.iSession.user_id_center.ToString).ToString, "", 0, cash_credit, "999", txtRemark.Text, type, "D/W", cust_id, "000", "ฝากเงินในการลงทะเบียนครั้งแรก", "y", "n", "y", "Cash")
+                    'End If
 
                     If cbCreateTradeOnline.Checked = True Then
                         Dim username As String = genUsername()
@@ -256,15 +291,13 @@ Partial Class customer_detail
 
     Protected Sub lblDeposit_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lblDeposit.Click
         If Request.QueryString("id") IsNot Nothing Then
-            Dim cust_id As String = Request.QueryString("id").ToString
-            clsManage.Script(Page, "window.open('customer_trans.aspx?cust_id=" & cust_id + "')")
+            clsManage.Script(Page, "window.open('customer_trans.aspx?cust_id=" & hdfCustId.Value + "')")
         End If
     End Sub
 
     Protected Sub linkPortfolio_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles linkPortfolio.Click
         If Request.QueryString("id") IsNot Nothing Then
-            Dim cust_id As String = Request.QueryString("id").ToString
-            clsManage.Script(Page, "window.open('customer_portfolio.aspx?id=" & cust_id + "')")
+            clsManage.Script(Page, "window.open('customer_portfolio.aspx?id=" & hdfCustId.Value + "')")
         End If
     End Sub
 
@@ -272,7 +305,6 @@ Partial Class customer_detail
         Try
             If Request.QueryString("id") IsNot Nothing Then
                 If Not validatetion() Then Exit Sub
-                Dim cust_id = Request.QueryString("id").ToString
                 Dim cash_credit As Double = 0 : If txtCredit_cash.Text.Trim <> "" Then cash_credit = txtCredit_cash.Text
                 Dim quan96 As Double = 0 : If txtQuan96.Text.Trim <> "" Then quan96 = txtQuan96.Text
                 Dim quan99 As Double = 0 : If txtQuan99N.Text.Trim <> "" Then quan99 = txtQuan99N.Text
@@ -287,7 +319,7 @@ Partial Class customer_detail
                 Dim disBuy As Double = 0 : If txtDisBuy.Text.Trim <> "" Then disBuy = txtDisBuy.Text
                 Dim disSell As Double = 0 : If txtDisSell.Text.Trim <> "" Then disSell = txtDisSell.Text
 
-                Dim result As Integer = da.UpdateQuery(cust_id, "", rdoType.SelectedValue, ddlTitle.SelectedValue, txtFname.Text, txtLname.Text, txtPerson.Text, txtAddress.Text, _
+                Dim result As Integer = da.UpdateQuery(hdfCustId.Value, "", rdoType.SelectedValue, ddlTitle.SelectedValue, txtFname.Text, txtLname.Text, txtPerson.Text, txtAddress.Text, _
                 txtBankName1.Text, txtBankAccNo1.Text, txtBankAccName1.Text, txtBankAccType1.Text, txtBankAccBranch1.Text, _
                 txtBankName2.Text, txtBankAccNo2.Text, txtBankAccName2.Text, txtBankAccType2.Text, txtBankAccBranch2.Text, _
                 txtBankName3.Text, txtBankAccNo3.Text, txtBankAccName3.Text, txtBankAccType3.Text, txtBankAccBranch3.Text, _
@@ -301,7 +333,7 @@ Partial Class customer_detail
                         Dim pwd As String = clsManage.genPwd(8)
                         Dim regCode As String = Session.SessionID
 
-                        Dim resultTrade As Integer = clsMain.InsertUsernames(username, pwd, cust_id, Session(clsManage.iSession.user_id_center.ToString).ToString, "cust", "1", regCode, "n")
+                        Dim resultTrade As Integer = clsMain.InsertUsernames(username, pwd, hdfCustId.Value, Session(clsManage.iSession.user_id_center.ToString).ToString, "cust", "1", regCode, "n")
                         If resultTrade > 0 Then
                             'send email to customer
                             Dim msgBody As String = String.Format("Please Click Link to Confirm Register.<br/>User Name : {0} <br/>Password : {3}<br/>" & _
@@ -318,7 +350,7 @@ Partial Class customer_detail
                         End If
                     End If
 
-                    clsManage.alert(Page, "Update Complete", , "customers.aspx")
+                    'clsManage.alert(Page, "Update Complete", , "customers.aspx")
                 End If
             End If
         Catch ex As Exception
@@ -377,5 +409,128 @@ Partial Class customer_detail
     '    If cbVIP.Checked Then
     '        txtDiscount.Focus()
     '    End If
+    'End Sub
+
+    Protected Sub linkGaran_Click(sender As Object, e As EventArgs) Handles linkGaran.Click
+        modalGar.Show()
+    End Sub
+
+    Protected Sub btnGarOk_Click(sender As Object, e As EventArgs) Handles btnGarOk.Click
+        Try
+            If txtCredit_cash.Text.Trim = "0" And txtQuan96.Text.Trim = "0" And txtQuan99N.Text.Trim = "0" And txtFreeMargin.Text.Trim = "0" Then
+                clsManage.alert(Page, "โปรดใส่ราคาที่มากกว่า 0", , , "err") : Exit Sub
+            End If
+            Dim db As New dcDBDataContext
+            Dim ca = New customer_asset
+            ca.cash_credit = IIf(txtCredit_cash.Text = "", 0, Convert.ToDecimal(txtCredit_cash.Text))
+            ca.quan96 = IIf(txtQuan96.Text = "", 0, Convert.ToDecimal(txtQuan96.Text))
+            ca.quan99 = IIf(txtQuan99N.Text = "", 0, Convert.ToDecimal(txtQuan99N.Text))
+            ca.cust_id = hdfCustId.Value
+            ca.free_margin = IIf(txtFreeMargin.Text = "", 0, Convert.ToDecimal(txtFreeMargin.Text))
+            ca.active = True
+
+            ca.created_date = DateTime.Now
+            ca.modifier_date = DateTime.Now
+            ca.modifier_by = Session(clsManage.iSession.user_id_center.ToString).ToString
+            ca.created_by = Session(clsManage.iSession.user_id_center.ToString).ToString
+
+            db.customer_assets.InsertOnSubmit(ca)
+            db.SubmitChanges()
+
+            'txtCredit_cash.Text = clsManage.convert2StringNormal(dr("cash_credit").ToString)
+            'txtQuan96.Text = clsManage.convert2StringNormal(dr("quan_96").ToString)
+            'txtQuan99N.Text = clsManage.convert2StringNormal(dr("quan_99N").ToString)
+            'txtFreeMargin.Text = clsManage.convert2StringNormal(dr("free_margin").ToString)
+            modalGar.Hide()
+            gvAsset.DataBind()
+        Catch ex As Exception
+            clsManage.alert(Page, ex.Message)
+        End Try
+    End Sub
+
+    Protected Sub imgDel_Click(sender As Object, e As ImageClickEventArgs)
+        Try
+            Dim i As Integer = CType(CType(sender, ImageButton).Parent.Parent, GridViewRow).RowIndex
+            Dim id As String = gvAsset.DataKeys(i).Value
+            Dim dc As New dcDBDataContext
+            Dim ca = (From cas In dc.customer_assets Where cas.id = id).FirstOrDefault
+            ca.active = False
+            ca.modifier_date = DateTime.Now
+            ca.modifier_by = Session(clsManage.iSession.user_id_center.ToString).ToString
+            dc.SubmitChanges()
+            gvAsset.DataBind()
+        Catch ex As Exception
+            clsManage.alert(Page, ex.Message, , , "err")
+        End Try
+    End Sub
+
+    Protected Sub gvAsset_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvAsset.RowDataBound
+
+        If e.Row.RowType = DataControlRowType.Header Then
+            ViewState("cash") = 0
+            ViewState("q96") = 0
+            ViewState("q99") = 0
+            ViewState("free") = 0
+        End If
+
+        If e.Row.RowType = DataControlRowType.DataRow Then
+            ViewState("cash") += clsManage.convert2zero(e.Row.DataItem("cash_credit"))
+            ViewState("q96") += clsManage.convert2zero(e.Row.DataItem("quan96"))
+            ViewState("q99") += clsManage.convert2zero(e.Row.DataItem("quan99"))
+            ViewState("free") += clsManage.convert2zero(e.Row.DataItem("free_margin"))
+            CType(e.Row.FindControl("imgDel"), ImageButton).Attributes.Add("onclick", "return confirm('Do you want to Delete?');")
+        End If
+
+
+        If e.Row.RowType = DataControlRowType.Footer Then
+
+            Dim cash As String = Double.Parse(ViewState("cash"))
+            Dim q96 As String = Double.Parse(ViewState("q96"))
+            Dim q99 As String = Double.Parse(ViewState("q99"))
+            Dim free As String = Double.Parse(ViewState("free"))
+
+            Dim formatQuan As String = "##0"
+            Dim formatAmount As String = "##0"
+
+            Dim creatCels As New SortedList
+            creatCels.Add("1", "Summary,2,1") ' add rows this
+            creatCels.Add("2", "" + Double.Parse(cash).ToString(formatAmount) + ",1,1")
+            creatCels.Add("3", "" + Double.Parse(q96).ToString(formatQuan) + ",1,1")
+            creatCels.Add("4", "" + Double.Parse(q99).ToString(formatAmount) + ",1,1")
+            creatCels.Add("5", "" + Double.Parse(free).ToString(formatAmount) + ",1,1")
+            creatCels.Add("6", ",1,1")
+
+            getMultiFooter(e, creatCels)
+        End If
+
+    End Sub
+
+    Private Sub getMultiFooter(ByVal e As GridViewRowEventArgs, ByVal getCels As SortedList)
+        Dim row As GridViewRow
+        Dim enumCels As IDictionaryEnumerator = getCels.GetEnumerator
+        row = New GridViewRow(-1, -1, DataControlRowType.Footer, DataControlRowState.Normal)
+
+        While (enumCels.MoveNext)
+            Dim cont As String() = enumCels.Value.ToString.Split(",")
+            Dim cell As New TableCell
+            cell.RowSpan = cont(2).ToString
+            cell.ColumnSpan = cont(1).ToString
+            cell.Controls.Add(New LiteralControl(clsManage.convert2Summary(cont(0).ToString)))
+            cell.BackColor = New Drawing.ColorConverter().ConvertFromString("#274B98")
+            cell.ForeColor = System.Drawing.Color.White
+            cell.Font.Bold = True
+            If cont(0) = "Summary" Then
+                cell.HorizontalAlign = HorizontalAlign.Center
+            Else
+                cell.HorizontalAlign = HorizontalAlign.Right
+            End If
+            row.Cells.Add(cell)
+            e.Row.Parent.Controls.AddAt(gvAsset.Rows.Count + 1, row)
+        End While
+    End Sub
+
+    'Protected Sub linkReceipt_Click(sender As Object, e As System.EventArgs) Handles linkReceipt.Click
+
+    '    clsManage.Script(Page, "window.open('report/rpt_asset.aspx?cid=" + hdfCustId.Value + "','_blank');")
     'End Sub
 End Class

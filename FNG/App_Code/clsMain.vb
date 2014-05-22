@@ -2131,7 +2131,7 @@ Public Class clsMain
                 End If
             End If
             Dim sql_orderby As String = "order by modifier_date desc,created_date desc"
-            Dim sql As String = " select trade_id,ref_no,case leave_order when 'n' then 'order' when 'y' then 'leave order' else '' end as leave_order, " & _
+            Dim sql As String = " select trade_id,ref_no,cu.cust_id,case leave_order when 'n' then 'order' when 'y' then 'leave order' else '' end as leave_order, " & _
                                 " tc.modifier_date,tc.created_date,type,firstname,ip,gold_type_id,price,quantity,amount,mode,reject_type,cust_level, " & _
                                 " " + sql_max_trade_id + " " & _
                                 " ,case when gold_type_id= '96' then price/.965 else price end as price_compare " & _
@@ -2525,88 +2525,44 @@ Public Class clsMain
 
     End Function
 
-    Public Shared Function checkPriceLimitLeaveOrder(ByVal id As String, ByVal price As Double, ByVal purity As String, ByVal type As String) As Boolean
+    Public Shared Function checkPriceLimitLeaveOrder(ByVal price As Double, ByVal purity As String, ByVal type As String, cust_id As String) As Boolean
         Try
-            Dim con As New SqlConnection(strcon)
-            Dim sql As String = ""
-            sql = String.Format("select cust_level,bid99_1,ask99_1,bid99_2,ask99_2,bid99_3,ask99_3,bid96_1,ask96_1,bid96_2,ask96_2,bid96_3,ask96_3 from usernames,stock_online where cust_id = (select cust_id from trade where trade_id='{0}')", id)
 
-            Dim cmd As New SqlCommand(sql, con)
-            Dim da As New SqlDataAdapter(cmd)
-            Dim dt As New DataTable
-            Dim dbPrice As Double = 0
             Dim bid As Double = 0
             Dim ask As Double = 0
 
             Dim bid991 As Double
-            Dim bid992 As Double
-            Dim bid993 As Double
             Dim ask991 As Double
-            Dim ask992 As Double
-            Dim ask993 As Double
             Dim bid961 As Double
-            Dim bid962 As Double
-            Dim bid963 As Double
             Dim ask961 As Double
-            Dim ask962 As Double
-            Dim ask963 As Double
 
-            da.Fill(dt)
-            If dt.Rows.Count > 0 Then
-                Dim level As Integer = Integer.Parse(dt.Rows(0)(0).ToString)
+            Dim spo As New clsSpot.SpotPrice
+            spo = clsSpot.getSpotPriceForCust(cust_id)
 
-                bid991 = dt.Rows(0)("bid99_1").ToString
-                bid992 = dt.Rows(0)("bid99_2").ToString
-                bid993 = dt.Rows(0)("bid99_3").ToString
-                ask991 = dt.Rows(0)("ask99_1").ToString
-                ask992 = dt.Rows(0)("ask99_2").ToString
-                ask993 = dt.Rows(0)("ask99_3").ToString
+            bid991 = spo.bid99Bg
+            ask991 = spo.ask99Bg
+            bid961 = spo.bid96Bg
+            ask961 = spo.ask99Bg
 
-                bid961 = dt.Rows(0)("bid96_1").ToString
-                bid962 = dt.Rows(0)("bid96_2").ToString
-                bid963 = dt.Rows(0)("bid96_3").ToString
-                ask961 = dt.Rows(0)("ask96_1").ToString
-                ask962 = dt.Rows(0)("ask96_2").ToString
-                ask963 = dt.Rows(0)("ask96_3").ToString
-
-
-                If purity <> "96" Then
-                    If level = 1 Then
-                        bid = bid991
-                        ask = ask991
-                    ElseIf level = 2 Then
-                        bid = bid992
-                        ask = ask992
-                    ElseIf level = 3 Then
-                        bid = bid993
-                        ask = ask993
-                    End If
-                Else
-                    '96
-                    If level = 1 Then
-                        bid = bid961
-                        ask = ask961
-                    ElseIf level = 2 Then
-                        bid = bid962
-                        ask = ask962
-                    ElseIf level = 3 Then
-                        bid = bid963
-                        ask = ask963
-                    End If
-                End If
-
-                If type = "sell" Then ' Bid
-                    If price >= ask Then
-                        Return False
-                    End If
-                Else 'Ask
-                    If price <= bid Then
-                        Return False
-                    End If
-                End If
-
-                Return True
+            If purity <> "96" Then
+                bid = bid991
+                ask = ask991
+            Else
+                bid = bid961
+                ask = ask961
             End If
+
+            If type = "sell" Then ' Bid
+                If price >= ask Then
+                    Return False
+                End If
+            Else 'Ask
+                If price <= bid Then
+                    Return False
+                End If
+            End If
+
+            Return True
 
         Catch ex As Exception
             Throw ex
@@ -3125,8 +3081,8 @@ Public Class clsMain
     End Function
     Public Shared Function getUsernamesValue(ByVal id As String) As DataTable
 
-        Dim sql As String = "select * from usernames where user_id =" + id
-
+        Dim time_unlock As String = AppSettings("UNLOCK_TIME").ToString
+        Dim sql As String = "select *,case when getdate() < DATEADD(minute," + time_unlock + ", lock_time) then 'y' else 'n' end as lock from usernames where user_id =" + id
 
         Dim con As New SqlConnection(strcon)
         Dim cmd As New SqlCommand(sql, con)

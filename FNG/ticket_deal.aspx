@@ -83,11 +83,11 @@
     function OnCompleteCust_id(result) {
         try {
              if(result!=''){
-                $get('ifmGrid').style.display = 'block';
+                $get('ifmGrid').style.display = '';
                 $get('ifmGrid').src="customer_grid.aspx?id=" + $get('ctl00_SampleContent_txtCustRef').value;
                // calculate_price();
               }else{
-                $get('ifmGrid').style.display = 'block';
+                $get('ifmGrid').style.display = '';
                 $get('ifmGrid').src="customer_grid.aspx?id="
               }
         }
@@ -100,11 +100,11 @@
         try 
         {
            if(result!=''){
-                $get('ifmGrid').style.display = 'block';
+                $get('ifmGrid').style.display = '';
                 $get('ifmGrid').src="customer_grid.aspx?name=" + $get('ctl00_SampleContent_txtCustName').value;
                 //calculate_price();
             }else{
-               $get('ifmGrid').style.display = 'block';
+               $get('ifmGrid').style.display = '';
                $get('ifmGrid').src="customer_grid.aspx?id=";
              }
         }
@@ -872,23 +872,23 @@
                                     <td>
                                         <table width="100%">
                                             <tr>
-                                                <td id="bank1" style="display: ;">
+                                                <td id="bank1">
                                                     Bank :
                                                 </td>
-                                                <td id="bank2" style="display: ;">
+                                                <td id="bank2">
                                                     <asp:DropDownList ID="ddlBank" runat="server">
                                                     </asp:DropDownList>
                                                 </td>
-                                                <td id="cheq1" style="display: ">
+                                                <td id="cheq1">
                                                     Cheque no :
                                                 </td>
-                                                <td id="cheq2" style="display: ;">
+                                                <td id="cheq2">
                                                     <asp:TextBox ID="txtCheq" runat="server" Width="80px"></asp:TextBox>
                                                 </td>
-                                                <td id="cheq3" style="display: ;">
+                                                <td id="cheq3">
                                                     Due date :
                                                 </td>
-                                                <td id="cheq4" style="display: ;">
+                                                <td id="cheq4">
                                                     <asp:TextBox ID="txtDuedate" runat="server" Width="70px"></asp:TextBox>
                                                     <ajaxToolkit:CalendarExtender ID="txtDuedate_CalendarExtender" runat="server" Enabled="True"
                                                         PopupButtonID="imgDuedate" PopupPosition="BottomRight" TargetControlID="txtDuedate">
@@ -978,7 +978,7 @@
                                 </div>
                             </asp:Panel>
             </div>
-                    <div id="div_log" style="display: block">
+                    <div id="div_log">
                                 <fieldset>
                                     <legend class="topic">Tickets Log Detail</legend>
                                     <asp:GridView ID="gvLog" runat="server" AutoGenerateColumns="False" BackColor="White"

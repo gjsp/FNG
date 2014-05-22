@@ -28,11 +28,11 @@
                 __doPostBack('upGrid', '');
             }
             else {
-                setTimeout("Check()", 4000);
+                setTimeout("Check()", 6000);
             }
         }
         function pageLoad() {
-            //setTimeout("Check()", 4000);
+            setTimeout("Check()", 6000);
         }
         function refreshGrid() {
             __doPostBack('upGrid', '');
@@ -182,7 +182,7 @@
             <div align="center">
                 <asp:Button ID="btnSearch" CssClass="buttonPro small grey" runat="server" Text="Search" />
             </div>
-            <div id="div_excel" style="padding-bottom: 5px; disply: none">
+            <div id="div_excel" style="padding-bottom: 5px; display: none">
                 <asp:LinkButton ID="linkExcel" runat="server" Text="Export"></asp:LinkButton>
             </div>
             <asp:UpdatePanel ID="upGrid" runat="server">
@@ -191,11 +191,11 @@
                 </Triggers>
                 <ContentTemplate>
                     <asp:GridView ID="gvTrade" runat="server" AutoGenerateColumns="False" BackColor="White"
-                        BorderColor="#999999" BorderStyle="None" BorderWidth="0px" CellPadding="3" DataKeyNames="trade_id,type,price,gold_type_id"
+                        BorderColor="#999999" BorderStyle="None" BorderWidth="0px" CellPadding="3" DataKeyNames="trade_id,type,price,gold_type_id,cust_id"
                         Width="99%" AllowSorting="True" DataSourceID="objSrcTrade" AllowPaging="True"
                         PageSize="20">
                         <Columns>
-                            <asp:BoundField DataField="ref_no" HeaderText="Ref_No" SortExpression="ref_no">
+                            <asp:BoundField DataField="trade_id" HeaderText="Ref_No" SortExpression="trade_id">
                                 <ItemStyle Wrap="False" />
                             </asp:BoundField>
                             <asp:BoundField DataField="leave_order" HeaderText="Status" SortExpression="leave_order">

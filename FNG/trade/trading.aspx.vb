@@ -41,7 +41,7 @@ Partial Class trading
 
                 hdfConfirm.Value = "n"
                 cbConfirm.Attributes.Add("onclick", "setConfirm(this);")
-                dbTime = DateTime.Now.ToString("dd/MM/yyyy|hh:mm:ss|tt")
+                dbTime = DateTime.Now.ToString("dd/MM/yyyy|HH")
                 Dim milTime As String = getMilisecondsTime()
                 clsManage.Script(Page, "getClientTime('" + milTime + "');", "getLocalTime")
 
@@ -139,13 +139,18 @@ Partial Class trading
                 Exit Sub
             End If
 
+            Dim spo As New clsSpot.SpotPrice
+            spo = clsSpot.getSpotPriceForCust(hdfCust_id.Value)
+
+            If spo.sysHalt = "y" Then
+                clsManage.alert(Page, "ขออภัย ขณะนี้ระบบได้หยุดการซื้อขายชั่วคราว", , "login.aspx?h=y", "syshalt") : Exit Sub
+            End If
+            If Not validateAccept(spo, gold_type, IIf(gold_type = clsFng.p96, ddl96Quan, ddl99Quan), type) Then Exit Sub
+
             If Me.Session(clsManage.iSession.timetrade.ToString) = False Then
                 clsManage.alert(Page, "หมดเวลาในการซื้อขาย โปรดทำรายการใหม่อีกครั้ง") : Exit Sub
             End If
 
-            Dim spo As New clsSpot.SpotPrice
-            spo = clsSpot.getSpotPriceForCust(hdfCust_id.Value)
-            If Not validateAccept(spo, gold_type, IIf(gold_type = clsFng.p96, ddl96Quan, ddl99Quan), type) Then Exit Sub
 
             Threading.Thread.Sleep(1000)
             Dim da As New dsTradeTableAdapters.tradeTableAdapter
@@ -153,23 +158,22 @@ Partial Class trading
             Dim dr As Data.DataRow = dt.NewRow
 
             Dim price As String = hdfPriceCust.Value
-            'If gold_type = "96" Then
-            '    If mini = True Then
-            '        price = IIf(type = "sell", spo.bid96Mn.ToString, spo.ask96Mn.ToString)
-            '    Else
-            '        price = IIf(type = "sell", spo.bid96Bg.ToString, spo.ask96Bg.ToString)
-            '    End If
-            'Else
-            '    price = IIf(type = "sell", spo.bid99Bg.ToString, spo.ask99Bg.ToString)
-            'End If
 
-            'If clsManage.convert2zero(hdfPriceCust.Value) <> clsManage.convert2zero(price) Then
-            '    clsManage.alert(Page, "มีการเปลี่ยนแปลงราคา กรุณาทำรายการใหม่", , "trading.aspx") : Exit Sub
-            'End If
+            'check price diff ไม่เกิน 10
+            Dim priceNow As Double = 0
+            If gold_type = clsFng.p99 Then
+                priceNow = IIf(type = "sell", spo.bid99Bg, spo.ask99Bg)
+            Else
+                priceNow = IIf(type = "sell", spo.bid96Bg, spo.ask96Bg)
+            End If
+            Dim resultPrice As Double = clsManage.convert2zero(price) - priceNow
+            If Math.Abs(resultPrice) > Convert.ToDouble(ConfigurationManager.AppSettings("PRICE_TRADE_DIFF")) Then
+                clsManage.alert(Page, "มีการเปลี่ยนแปลงราคา กรุณาทำรายการใหม่", , "trading.aspx") : Exit Sub
+            End If
 
             With dt
                 dr(.cust_idColumn) = hdfCust_id.Value
-                dr(dt.ref_noColumn) = clsFng.getTicketRunNo()
+                'dr(dt.ref_noColumn) = clsFng.getTicketRunNo()
                 dr(dt.typeColumn) = type
                 dr(dt.gold_type_idColumn) = gold_type
                 dr(dt.priceColumn) = price
@@ -222,7 +226,9 @@ Partial Class trading
                     End If
                 End If
 
-                clsManage.Script(Page, "$find('" + tcTrade.ClientID + "').set_activeTabIndex(0);" + script + "", "openTab")
+                'clsManage.Script(Page, "$find('" + tcTrade.ClientID + "').set_activeTabIndex(0);" + script + "", "openTab")
+                'Load page when buy or sell seccess
+                clsManage.Script(Page, script + ";window.location = 'trading.aspx'", "focusQuan")
 
             End If
         Catch ex As Exception
@@ -244,9 +250,10 @@ Partial Class trading
             Dim spo As New clsSpot.SpotPrice
             spo = clsSpot.getSpotPriceForCust(hdfCust_id.Value)
 
-
-            If Not checkAdminHalt() Then clsManage.alert(Page, "ขออภัย ขณะนี้ระบบได้หยุดการซื้อขายชั่วคราว") : Exit Sub
             If Not checkHalt() Then clsManage.alert(Page, "คำสั่งซื้อขายของท่านไม่สามารถดำเนินการได้") : Exit Sub
+            If spo.sysHalt = "y" Then clsManage.alert(Page, "ขออภัย ขณะนี้ระบบได้หยุดการซื้อขายชั่วคราว", , "login.aspx?h=y", "syshalt") : Exit Sub
+            'If Not checkAdminHalt() Then clsManage.alert(Page, "ขออภัย ขณะนี้ระบบได้หยุดการซื้อขายชั่วคราว") : Exit Sub
+
             If mini = True Then
                 'If Not checkMaxTrade(ddl96LeaveMiniQuan.SelectedValue, gold_type, sto) Then clsManage.alert(Page, "ซื้อขายเกินกว่าปริมาณที่กำหนด", ddl96LeaveMiniQuan.ClientID) : Exit Sub
             Else
@@ -302,7 +309,7 @@ Partial Class trading
             'Dim dtStockOnline As New Data.DataTable
             'dtStockOnline = clsMain.getStockOnlineUsers(hdfCust_id.Value)
 
-           
+
 
             'If gold_type <> "96" Then
             '    gold_type = dtStockOnline.Rows(0)("purity99_default").ToString
@@ -318,7 +325,7 @@ Partial Class trading
             End If
             With dt
                 dr(dt.cust_idColumn) = hdfCust_id.Value
-                dr(dt.ref_noColumn) = clsFng.getTicketRunNo()
+                'dr(dt.ref_noColumn) = clsFng.getTicketRunNo()
                 dr(dt.typeColumn) = type
                 dr(dt.gold_type_idColumn) = gold_type
 
@@ -335,20 +342,20 @@ Partial Class trading
                     End If
                 End If
 
-                    dr(dt.amountColumn) = amount
-                    dr(dt.leave_orderColumn) = "y"
-                    dr(dt.ipColumn) = Request.UserHostAddress
-                    dr(dt.created_byColumn) = Session(clsManage.iSession.user_id.ToString).ToString
+                dr(dt.amountColumn) = amount
+                dr(dt.leave_orderColumn) = "y"
+                dr(dt.ipColumn) = Request.UserHostAddress
+                dr(dt.created_byColumn) = Session(clsManage.iSession.user_id.ToString).ToString
                 dr(dt.created_dateColumn) = DateTime.Now
                 dr(dt.modifier_dateColumn) = DateTime.Now
 
-                    'only leave order must check price 
-                    Dim bidOrAskColumn As String = ""
+                'only leave order must check price 
+                Dim bidOrAskColumn As String = ""
                 'If type = "sell" Then bidOrAskColumn = "bid" Else bidOrAskColumn = "ask"
                 'If gold_type = "96" Then bidOrAskColumn += "96_" Else bidOrAskColumn += "99_"
                 'bidOrAskColumn += dtStockOnline.Rows(0)("cust_level").ToString
-                    'check price if < bit and ask >> accept now
-                    If type = "sell" Then
+                'check price if < bit and ask >> accept now
+                If type = "sell" Then
                     If clsManage.convert2zero(dr(dt.priceColumn)) <= clsManage.convert2zero(priceNow) Then
                         If clsMain.checkTranBeforeAccept(CInt(price).ToString, type, IIf(gold_type = "96", "96", "99"), dr(dt.quantityColumn).ToString) Then
                             dr(dt.accept_typeColumn) = "A"
@@ -361,7 +368,7 @@ Partial Class trading
                         dr(dt.modeColumn) = "tran"
                         dr(dt.accept_typeColumn) = "P"
                     End If
-                    Else
+                Else
                     If clsManage.convert2zero(dr(dt.priceColumn)) >= clsManage.convert2zero(priceNow) Then
                         If clsMain.checkTranBeforeAccept(CInt(price).ToString, type, IIf(gold_type = "96", "96", "99"), dr(dt.quantityColumn).ToString) Then
                             dr(dt.accept_typeColumn) = "A"
@@ -374,8 +381,8 @@ Partial Class trading
                         dr(dt.modeColumn) = "tran"
                         dr(dt.accept_typeColumn) = "P"
                     End If
-                    End If
-                    dt.Rows.Add(dr)
+                End If
+                dt.Rows.Add(dr)
             End With
             Dim result As Integer = 0
             result = da.Update(dr)

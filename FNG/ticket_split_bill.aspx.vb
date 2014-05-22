@@ -231,6 +231,11 @@ Partial Class ticket_split_bill
                     CType(e.Row.FindControl("imgDel"), ImageButton).ImageUrl = "~/images/i_del2.png"
                 End If
 
+                'payment
+                If e.Row.DataItem("payment_id").ToString <> "" Then
+                    CType(e.Row.FindControl("linkPayment"), HyperLink).NavigateUrl = String.Format("ticket_payment_detail.aspx?pid={0}&cid={1}", e.Row.DataItem("payment_id").ToString, e.Row.DataItem("cust_id").ToString)
+                End If
+
                 ViewState("sumAmount") += Double.Parse(e.Row.DataItem("amount"))
                 ViewState("sumQuan") += Double.Parse(e.Row.DataItem("quantity"))
             Catch ex As Exception

@@ -472,7 +472,7 @@
                             BorderColor="#999999" BorderStyle="None" BorderWidth="0px" CellPadding="3" DataKeyNames="trade_id,type,price,gold_type_id"
                             Width="99%" AllowSorting="True" DataSourceID="objSrcTrade">
                             <Columns>
-                                <asp:BoundField DataField="ref_no" HeaderText="Ref_No" SortExpression="ref_no">
+                                <asp:BoundField DataField="trade_id" HeaderText="Ref_No" SortExpression="trade_id">
                                     <ItemStyle Wrap="False" />
                                 </asp:BoundField>
                                 <asp:BoundField DataField="leave_order" HeaderText="Status" SortExpression="leave_order">
@@ -484,7 +484,8 @@
                                 </asp:BoundField>
                                 <asp:BoundField DataField="firstname" HeaderText="Customer Name" SortExpression="firstname">
                                 </asp:BoundField>
-                                <asp:BoundField DataField="cust_level" HeaderText="Level" SortExpression="cust_level">
+                                <%--FNG No level--%>
+                                <asp:BoundField DataField="cust_level" HeaderText="Level" SortExpression="cust_level" Visible="false">
                                     <ItemStyle HorizontalAlign="Center" />
                                 </asp:BoundField>
                                 <asp:BoundField DataField="gold_type_id" HeaderText="Purity" SortExpression="gold_type_id">
@@ -1017,7 +1018,8 @@
                 </asp:UpdatePanel>
             </div>
             <br /><br />
-            <div align="left">
+            <div align="left" >
+            <div>
             <asp:UpdateProgress ID="pgBuy" runat="server" AssociatedUpdatePanelID="upBuy">
                 <ProgressTemplate>
                     <div id="divPgBuy" align="center" valign="middle" runat="server" style="position: absolute;
@@ -1028,7 +1030,8 @@
                     </div>
                 </ProgressTemplate>
             </asp:UpdateProgress>
-           
+            </div>
+               <div style="clear:both"></div>
             <asp:UpdatePanel ID="upBuy" runat="server">
                 <ContentTemplate>
                     <fieldset class="k-fieldset" style="width: 98%;">
@@ -1037,7 +1040,7 @@
                             BorderColor="#999999" BorderStyle="None" BorderWidth="0px" CellPadding="3" DataKeyNames="trade_id,type,price,gold_type_id"
                             Width="99%" DataSourceID="objSrcTradeBuy" AllowSorting="True">
                             <Columns>
-                                <asp:BoundField DataField="ref_no" HeaderText="Ref_No" SortExpression="ref_no" FooterText="Ref_No">
+                                <asp:BoundField DataField="trade_id" HeaderText="Ref_No" SortExpression="trade_id" FooterText="trade_id">
                                     <FooterStyle HorizontalAlign="Center" />
                                     <ItemStyle Wrap="False" />
                                 </asp:BoundField>
@@ -1055,7 +1058,8 @@
                                     FooterText="Customer Name">
                                     <FooterStyle HorizontalAlign="Center" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="cust_level" HeaderText="Level" SortExpression="cust_level">
+                                 <%--FNG No level--%>
+                                <asp:BoundField DataField="cust_level" HeaderText="Level" SortExpression="cust_level" Visible="false">
                                     <ItemStyle HorizontalAlign="Center" />
                                 </asp:BoundField>
                                 <asp:BoundField DataField="gold_type_id" HeaderText="Purity" SortExpression="gold_type_id"

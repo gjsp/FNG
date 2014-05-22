@@ -50,12 +50,7 @@
                     }
                 }
             }
-
-            
-
         }
-
-
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="SampleContent" runat="Server">
@@ -85,7 +80,7 @@
         <asp:Button ID="btnSearch" runat="server" Text="Search" />
         </span>
         <uc1:ucPortFolio ID="ucPortFolio1" runat="server" />
-        <ajaxToolkit:TabContainer ID="tcTrans" runat="server" ActiveTabIndex="1" 
+        <ajaxToolkit:TabContainer ID="tcTrans" runat="server" ActiveTabIndex="0" 
             Width="100%">
             <ajaxToolkit:TabPanel runat="server" HeaderText="Cash" ID="tpCash">
                 <ContentTemplate>
@@ -135,25 +130,25 @@
                                                     </asp:DropDownList>
                                                 </td>
                                                 <td>
-                                                    <table>
+                                                    <table style="width:100%">
                                                         <tr>
-                                                            <td id="bank1" style="display: block">
+                                                            <td id="bank1">
                                                                 Bank :
                                                             </td>
-                                                            <td id="bank2" style="display: block">
+                                                            <td id="bank2">
                                                                 <asp:DropDownList ID="ddlBank" runat="server">
                                                                 </asp:DropDownList>
                                                             </td>
-                                                            <td id="cheq1" style="display: block">
+                                                            <td id="cheq1">
                                                                 Cheque no :
                                                             </td>
-                                                            <td id="cheq2" style="display: block">
+                                                            <td id="cheq2"">
                                                                 <asp:TextBox ID="txtCheq" runat="server" Width="80px"></asp:TextBox>
                                                             </td>
-                                                            <td id="cheq3" style="display: block">
+                                                            <td id="cheq3">
                                                                 Due date :
                                                             </td>
-                                                            <td id="cheq4" style="display: block">
+                                                            <td id="cheq4">
                                                                 <asp:TextBox ID="txtDuedate" runat="server" Width="70px"></asp:TextBox><ajaxToolkit:CalendarExtender
                                                                     ID="txtDuedate_CalendarExtender" runat="server" Enabled="True" PopupButtonID="imgDuedate"
                                                                     PopupPosition="BottomRight" TargetControlID="txtDuedate">
@@ -302,7 +297,7 @@
                                     <td class="style40">
                                         Date* :
                                     </td>
-                                    <td class="style48">
+                                    <td>
                                         <asp:TextBox ID="txtDate2" runat="server" Width="100px" /><ajaxToolkit:CalendarExtender
                                             ID="txtDate2_CalendarExtender" runat="server" Enabled="True" PopupButtonID="imgCalDate2"
                                             PopupPosition="BottomRight" TargetControlID="txtDate2">
@@ -353,7 +348,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td valign="top" class="style40">
+                                    <td class="style40" valign="top">
                                         Remark :
                                     </td>
                                     <td valign="top">
@@ -361,7 +356,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td valign="top" class="style40">
+                                    <td class="style40" valign="top">
                                         &nbsp;&nbsp;
                                     </td>
                                     <td valign="top">
@@ -369,14 +364,13 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td valign="top" class="style40">
+                                    <td class="style40" valign="top">
                                         &nbsp;&nbsp;
                                     </td>
                                     <td valign="top">
                                         <div style="text-align: right">
                                             <asp:LinkButton ID="linkReportGold" runat="server" Text="Receipt"></asp:LinkButton>
                                         </div>
-
                                         <asp:GridView ID="gvTrans2" runat="server" AllowSorting="True" AutoGenerateColumns="False"
                                             BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px"
                                             CellPadding="3" DataKeyNames="cust_tran_id" DataSourceID="objSrcTrans2" GridLines="Vertical"

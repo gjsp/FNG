@@ -45,7 +45,7 @@ Partial Class ticket_deal
 
                 txtDateNow.Attributes.Add("onkeypress", "return false;")
                 For i = 1 To 20 : ddlClearing.Items.Add(New ListItem(i.ToString, i.ToString)) : Next
-                ddlClearing.SelectedValue = "3"
+                ddlClearing.SelectedValue = ConfigurationManager.AppSettings("CLEARING_DAY")
 
                 txtDateDelivery.Attributes.Add("onkeypress", "return false;")
 

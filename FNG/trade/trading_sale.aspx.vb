@@ -129,7 +129,19 @@ Partial Class trading_sale
             Dim dr As Data.DataRow = dt.NewRow
 
             Dim price As String = hdfPriceCust.Value
-          
+
+            'check price diff ไม่เกิน 10
+            Dim priceNow As Double = 0
+            If gold_type = clsFng.p99 Then
+                priceNow = IIf(type = "sell", spo.bid99Bg, spo.ask99Bg)
+            Else
+                priceNow = IIf(type = "sell", spo.bid96Bg, spo.ask96Bg)
+            End If
+            Dim resultPrice As Double = clsManage.convert2zero(price) - priceNow
+            If Math.Abs(resultPrice) > Convert.ToDouble(ConfigurationManager.AppSettings("PRICE_TRADE_DIFF")) Then
+                clsManage.alert(Page, "มีการเปลี่ยนแปลงราคา กรุณาทำรายการใหม่", , "trading_sale.aspx") : Exit Sub
+            End If
+
             With dt
                 dr(.cust_idColumn) = hdfCust_id.Value
                 dr(dt.ref_noColumn) = clsFng.getTicketRunNo()
@@ -193,7 +205,8 @@ Partial Class trading_sale
                 End If
 
                 clsManage.Script(Page, "$find('" + tcTrade.ClientID + "').set_activeTabIndex(0);" + script + "", "openTab")
-
+                'Load page when buy or sell seccess
+                'clsManage.Script(Page, script + ";window.location = 'trading.aspx'", "focusQuan")
             End If
         Catch ex As Exception
             clsManage.alert(Page, ex.Message, , , "error")

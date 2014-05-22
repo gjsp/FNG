@@ -29,6 +29,7 @@ Public Class clsDB
             Throw ex
         End Try
     End Function
+
 #Region "customer And Usernames"
 
     Public Shared Function delCustomerAndUsernames(ByVal cust_id As String) As Boolean
@@ -448,52 +449,53 @@ Public Class clsDB
                 If cust_id = "" Then cust_id = "10001"
                 cmd = Nothing
 
-                Dim dt_stock As New Data.DataTable
-                dt_stock = getStockSumDeposit()
-                Dim price As Double = clsManage.convert2zero(dt_stock.Rows(0)("priceDep"))
-                Dim G96 As Double = clsManage.convert2zero(dt_stock.Rows(0)("G96Dep"))
-                'Dim G99N As Double = clsManage.convert2zero(dt_stock.Rows(0)("G99NDep"))
-                'Dim G99L As Double = clsManage.convert2zero(dt_stock.Rows(0)("G99LDep"))
-                Dim G99 As Double = clsManage.convert2zero(dt_stock.Rows(0)("G99Dep"))
-                Dim cash_stock As Double = clsManage.convert2zero(dt_stock.Rows(0)("cash"))
-                Dim trans_stock As Double = clsManage.convert2zero(dt_stock.Rows(0)("trans"))
-                Dim cheq_stock As Double = clsManage.convert2zero(dt_stock.Rows(0)("cheq"))
+                'Dim dt_stock As New Data.DataTable
+                'dt_stock = getStockSumDeposit()
+                'Dim price As Double = clsManage.convert2zero(dt_stock.Rows(0)("priceDep"))
+                'Dim G96 As Double = clsManage.convert2zero(dt_stock.Rows(0)("G96Dep"))
+                ''Dim G99N As Double = clsManage.convert2zero(dt_stock.Rows(0)("G99NDep"))
+                ''Dim G99L As Double = clsManage.convert2zero(dt_stock.Rows(0)("G99LDep"))
+                'Dim G99 As Double = clsManage.convert2zero(dt_stock.Rows(0)("G99Dep"))
+                'Dim cash_stock As Double = clsManage.convert2zero(dt_stock.Rows(0)("cash"))
+                'Dim trans_stock As Double = clsManage.convert2zero(dt_stock.Rows(0)("trans"))
+                'Dim cheq_stock As Double = clsManage.convert2zero(dt_stock.Rows(0)("cheq"))
 
-                Dim sql_act As String = ""
-                Dim sql_dep As String = ""
-                Dim quan_dep As Double = 0
-                Dim gold_type As String = ""
-                If cash_credit <> 0 Then
-                    sql_dep = String.Format(";INSERT INTO [customer_trans] ([cust_id], [datetime], [type], [ticket_refno], [gold_type_id], [quantity], [amount], [remark], [created_by], [created_date]) VALUES " & _
-                                          "('{0}', getdate(), 'Deposit', '{1}', '{2}', {3}, {4}, 'Customer Deposit First.', '{5}', getdate())", cust_id, "", gold_type, quan_dep, cash_credit, created_by)
-                End If
-                If quan_96 <> "0" Then
-                    gold_type = "96"
-                    quan_dep = quan_96
-                    sql_dep += String.Format(";INSERT INTO [customer_trans] ([cust_id], [datetime], [type], [ticket_refno], [gold_type_id], [quantity], [amount], [remark], [created_by], [created_date]) VALUES " & _
-                                           "('{0}', getdate(), 'Deposit', '{1}', '{2}', {3}, {4}, 'Customer Deposit First.', '{5}', getdate())", cust_id, "", gold_type, quan_dep, "0", created_by)
+                'Dim sql_act As String = ""
+                'Dim sql_dep As String = ""
+                'Dim quan_dep As Double = 0
+                'Dim gold_type As String = ""
+                'If cash_credit <> 0 Then
+                '    sql_dep = String.Format(";INSERT INTO [customer_trans] ([cust_id], [datetime], [type], [ticket_refno], [gold_type_id], [quantity], [amount], [remark], [created_by], [created_date]) VALUES " & _
+                '                          "('{0}', getdate(), 'Deposit', '{1}', '{2}', {3}, {4}, 'Customer Deposit First.', '{5}', getdate())", cust_id, "", gold_type, quan_dep, cash_credit, created_by)
+                'End If
+                'If quan_96 <> "0" Then
+                '    gold_type = "96"
+                '    quan_dep = quan_96
+                '    sql_dep += String.Format(";INSERT INTO [customer_trans] ([cust_id], [datetime], [type], [ticket_refno], [gold_type_id], [quantity], [amount], [remark], [created_by], [created_date]) VALUES " & _
+                '                           "('{0}', getdate(), 'Deposit', '{1}', '{2}', {3}, {4}, 'Customer Deposit First.', '{5}', getdate())", cust_id, "", gold_type, quan_dep, "0", created_by)
 
-                    G96 += quan_96
-                    sql_act = String.Format(";INSERT INTO [actual] ([asset_id], [ref_no], [asset_type], [created_by], [datetime], [purity], [quantity], [amount], [status_id], [status_name], [type], [order_type], [price_base], [G96_base], [G99_base], [cust_id], [before_status_id], [note], [payment], [cash], [trans], [cheq]) " & _
-                                                     "VALUES ('{0}', '{1}', '{2}', '{3}', getdate(), '{4}', {5}, {6}, '{7}', '{8}', '{9}', '{10}', {11}, {12}, {13}, {14},'{15}','{16}','{17}',{18},{19},{20})" & _
-                                                     "", "0", "", "Gold", created_by, gold_type, quan_96, "0", "999", "", "ฝากทอง", "D/W", price, G96, G99, cust_id, "000", "ฝากทองในการลงทะเบียนครั้งแรก", "", cash_stock, trans_stock, cheq_stock)
-                    '"VALUES ('{0}', '{1}', '{2}', '{3}', getdate(), '{4}', {5}, {6}, '{7}', '{8}', '{9}', '{10}', {11}, {12}, {13}, {14},'{16}','{17}','{18}',{19},{20},{21})" & _
-                End If
-                If quan_99 <> "0" Then
-                    gold_type = "99"
-                    quan_dep = quan_99
-                    sql_dep += String.Format(";INSERT INTO [customer_trans] ([cust_id], [datetime], [type], [ticket_refno], [gold_type_id], [quantity], [amount], [remark], [created_by], [created_date]) VALUES " & _
-                                           "('{0}', getdate(), 'Deposit', '{1}', '{2}', {3}, {4}, 'Customer Deposit First.', '{5}', getdate())", cust_id, "", gold_type, quan_dep, "0", created_by)
-                    G99 += quan_99
-                    sql_act += String.Format(";INSERT INTO [actual] ([asset_id], [ref_no], [asset_type], [created_by], [datetime], [purity], [quantity], [amount], [status_id], [status_name], [type], [order_type], [price_base], [G96_base], [G99_base], [cust_id], [before_status_id], [note], [payment], [cash], [trans], [cheq]) " & _
-                                                    "VALUES ('{0}', '{1}', '{2}', '{3}', getdate(), '{4}', {5}, {6}, '{7}', '{8}', '{9}', '{10}', {11}, {12}, {13}, {14},'{15}','{16}','{17}',{18},{19},{20})" & _
-                                                    "", "0", "", "Gold", created_by, gold_type, quan_99, "0", "999", "", "ฝากทอง", "D/W", price, G96, G99, cust_id, "000", "ฝากทองในการลงทะเบียนครั้งแรก", "", cash_stock, trans_stock, cheq_stock)
-                End If
+                '    G96 += quan_96
+                '    sql_act = String.Format(";INSERT INTO [actual] ([asset_id], [ref_no], [asset_type], [created_by], [datetime], [purity], [quantity], [amount], [status_id], [status_name], [type], [order_type], [price_base], [G96_base], [G99_base], [cust_id], [before_status_id], [note], [payment], [cash], [trans], [cheq]) " & _
+                '                                     "VALUES ('{0}', '{1}', '{2}', '{3}', getdate(), '{4}', {5}, {6}, '{7}', '{8}', '{9}', '{10}', {11}, {12}, {13}, {14},'{15}','{16}','{17}',{18},{19},{20})" & _
+                '                                     "", "0", "", "Gold", created_by, gold_type, quan_96, "0", "999", "", "ฝากทอง", "D/W", price, G96, G99, cust_id, "000", "ฝากทองในการลงทะเบียนครั้งแรก", "", cash_stock, trans_stock, cheq_stock)
+                '    '"VALUES ('{0}', '{1}', '{2}', '{3}', getdate(), '{4}', {5}, {6}, '{7}', '{8}', '{9}', '{10}', {11}, {12}, {13}, {14},'{16}','{17}','{18}',{19},{20},{21})" & _
+                'End If
+                'If quan_99 <> "0" Then
+                '    gold_type = "99"
+                '    quan_dep = quan_99
+                '    sql_dep += String.Format(";INSERT INTO [customer_trans] ([cust_id], [datetime], [type], [ticket_refno], [gold_type_id], [quantity], [amount], [remark], [created_by], [created_date]) VALUES " & _
+                '                           "('{0}', getdate(), 'Deposit', '{1}', '{2}', {3}, {4}, 'Customer Deposit First.', '{5}', getdate())", cust_id, "", gold_type, quan_dep, "0", created_by)
+                '    G99 += quan_99
+                '    sql_act += String.Format(";INSERT INTO [actual] ([asset_id], [ref_no], [asset_type], [created_by], [datetime], [purity], [quantity], [amount], [status_id], [status_name], [type], [order_type], [price_base], [G96_base], [G99_base], [cust_id], [before_status_id], [note], [payment], [cash], [trans], [cheq]) " & _
+                '                                    "VALUES ('{0}', '{1}', '{2}', '{3}', getdate(), '{4}', {5}, {6}, '{7}', '{8}', '{9}', '{10}', {11}, {12}, {13}, {14},'{15}','{16}','{17}',{18},{19},{20})" & _
+                '                                    "", "0", "", "Gold", created_by, gold_type, quan_99, "0", "999", "", "ฝากทอง", "D/W", price, G96, G99, cust_id, "000", "ฝากทองในการลงทะเบียนครั้งแรก", "", cash_stock, trans_stock, cheq_stock)
+                'End If
 
                 sql = "INSERT INTO [customer] ([cust_id], [cust_refno], [cust_type_id], [titlename], [firstname], [lastname], [firstname_eng], [lastname_eng], [email], [id_card], [birthday], [person_contact], [bill_address], [bank1], [account_no1], [account_name1], [account_type1], [account_branch1], [bank2], [account_no2], [account_name2], [account_type2], [account_branch2], [bank3], [account_no3], [account_name3], [account_type3], [account_branch3], [mobile], [tel], [fax], [remark], [cash_credit], [margin], [margin_call], [quan_96], [quan_99N], [created_by], [created_date], [team_id], [trade_limit], [free_margin],[margin_unlimit],[VIP],[discount_buy],[discount_sell]) VALUES " & _
                       "(@cust_id, @cust_refno, @cust_type_id, @titlename, @firstname, @lastname, @firstname_eng, @lastname_eng, @email, @id_card, @birthday, @person_contact, @bill_address, @bank1, @account_no1, @account_name1, @account_type1, @account_branch1, @bank2, @account_no2, @account_name2, @account_type2, @account_branch2, @bank3, @account_no3, @account_name3, @account_type3, @account_branch3, @mobile, @tel, @fax, @remark, @cash_credit, @margin, @margin_call, @quan_96, @quan_99N,@created_by,getdate(),@team_id,@trade_limit,@free_margin,@margin_unlimit,@VIP,@discount_buy,@discount_sell)"
 
-                cmd = New SqlCommand(sql + sql_dep + sql_act, con)
+                'cmd = New SqlCommand(sql + sql_dep + sql_act, con)
+                cmd = New SqlCommand(sql, con)
 
                 Dim parameter As New SqlParameter("@cust_id", SqlDbType.VarChar, 5)
                 parameter.Value = cust_id
@@ -3436,7 +3438,7 @@ Public Class clsDB
             Dim sql As String = String.Format("" & _
 "SELECT     ticket_split.ticket_sp_id, ticket_split.ref_no, ticket_split.run_no, ticket_split.row, ticket_split.type, ticket_split.quantity, ticket_split.price, ticket_split.amount, ticket_split.payment, " & _
 "                      ticket_split.payment_bank, ticket_split.payment_cheq_no, ticket_split.payment_duedate, ticket_split.created_date, ticket_split.status_id, " & _
-"                      (select user_name from users where user_id = ticket_split.created_by) as created_by," & _
+"                      (select user_name from users where user_id = ticket_split.created_by) as created_by, ticket_split.payment_id, ticket_split.payment_by," & _
 "                      ticket_split.receipt, ticket_split.paid, ticket_split.dep, bank.bank_id, bank.bank_name, tickets.cust_id, tickets.billing, tickets.trade, tickets.type AS order_type " & _
 "FROM         ticket_split INNER JOIN " & _
 "                      tickets ON ticket_split.ref_no = tickets.ref_no LEFT OUTER JOIN " & _
@@ -4728,7 +4730,6 @@ Public Class clsDB
         End Try
     End Function
 
-
     Public Shared Function getReportTrans(ByVal refno As String) As DataTable
 
         Dim sql As String = "SELECT        customer.cust_id, customer.cust_refno, customer.firstname, customer_trans.datetime, customer_trans.cust_tran_id, customer_trans.cash_type, customer_trans.type, " & _
@@ -4880,7 +4881,6 @@ Public Class clsDB
         End Try
     End Function
 
-
     Public Shared Function getTicketOrderNobill(ByVal refno As String, preview As Boolean, report_by As String, Optional view As Boolean = False) As DataTable
         'parameter optional view for ค้นหาจาก runno อาจมีหลาย ticket
         'Change Requirment from jack 07/0/12014 >> report by to modifer_by
@@ -5015,23 +5015,52 @@ Public Class clsDB
         End Try
     End Function
 
+
 #Region "Payment"
     Public Shared Function getPaymentReport(payment_id As String, report_by As String) As DataTable
 
-
-        Dim sql As String = "SELECT case when type='sell' then cast(ticket.price as varchar) else '' end as sell " & _
+        'table >>ticket UNION split UNION transaction
+        Dim sql As String = String.Format("SELECT 0 as trans_dep,0 as trans_wit,ticket.Amount" & _
+ ",case when type='sell' then cast(ticket.price as varchar) else '' end as sell " & _
  ",case when type='buy' then cast(ticket.price as varchar) else '' end as buy " & _
  ",case when ticket.gold_type_id ='96' then ticket.quantity else 0 end as G96 " & _
  ",case when substring(cast(ticket.gold_type_id as varchar),1,2)='99' then ticket.quantity else 0 end as G99 " & _
- ",(select top 1  paid_cash from payment where payment_id = " + payment_id + " ) as paid" & _
- ",ticket.Amount,ticket.ref_no,ticket.cust_id, customer.firstname,ticket.gold_type_id as purity,u.user_name as report_by,payment_id  " & _
+ ",ticket.ref_no,ticket.cust_id, customer.firstname,ticket.gold_type_id as purity,u.user_name as report_by" & _
+ ",ticket.payment_id,0 as gold_dep96,0 as gold_dep99 " & _
  "FROM  (" & _
  "	select t.[type],t.price,gold_type_id,t.ref_no,t.cust_id,payment_id," & _
  "	case when t.type ='sell' then -(t.quantity) else t.quantity end as quantity, " & _
  "	case when t.type ='sell' then -(t.amount) else t.amount end as amount,modifier_by " & _
- "	from v_ticket_sum_split t " & _
- ")ticket INNER JOIN  customer ON ticket.cust_id = customer.cust_id left join users u on u.user_id = ticket.modifier_by " & _
- "Where payment_id = " + payment_id
+ "	from tickets t " & _
+ "  where payment_id = {0} " & _
+ "  union all" & _
+ "	select t.[type],t.price,gold_type_id,s.ref_no,t.cust_id,s.payment_id," & _
+ "	case when t.type ='sell' then -(s.quantity) else s.quantity end as quantity, " & _
+ "	case when t.type ='sell' then -(s.amount) else s.amount end as amount,s.created_by as modifier_by " & _
+ "	from ticket_split s inner join tickets t on t.ref_no = s.ref_no " & _
+ "	where s.payment_id = {0} " & _
+ ")ticket INNER JOIN  customer ON ticket.cust_id = customer.cust_id " & _
+ "left join users u on u.user_id = ticket.modifier_by " & _
+ "union select " & _
+ "case when (type = 'Deposit') then amount else 0 end as trans_dep," & _
+ "case when (type = 'Withdraw') then amount else 0 end as trans_wit," & _
+ "case 	when (gold_type_id='' and type = 'Deposit') then -amount when (gold_type_id='' and type = 'Withdraw') then amount else 0 end as Amount," & _
+ "'' as sell,'' as buy,0 as G96,0 as G99,ref_no,c.cust_id,c.firstname," & _
+ "gold_type_id as purity,u.user_name as report_by,payment_id," & _
+ "case when (type = 'Deposit' and gold_type_id = '96') then amount when (type = 'Withdraw' and gold_type_id = '96') then -amount else 0 end as gold_dep96, " & _
+ "case when (type = 'Deposit' and gold_type_id = '99') then amount when (type = 'Withdraw' and gold_type_id = '99') then -amount else 0 end as gold_dep99 " & _
+ "from (" & _
+ "		select case when gold_type_id = '' then amount else quantity end as amount ,cust_id," & _
+ "		type,gold_type_id,quantity,price,created_by,created_date,payment_id,payment_by," & _
+ "      case " & _
+ "			when gold_type_id = '' then 'Cash' " & _
+ "			when gold_type_id = '99' then 'Gold 99.99%' " & _
+ "			when gold_type_id = '96' then 'Gold 96.50%' " & _
+ "			else '' " & _
+ "		end as ref_no " & _
+ "		from customer_trans  " & _
+ "	   ) ct INNER JOIN  customer c on ct.cust_id = c.cust_id  left join users u on u.user_id = ct.created_by " & _
+ "where payment_id = {0}", payment_id)
 
         Dim con As New SqlConnection(strcon)
         Try
@@ -5048,6 +5077,45 @@ Public Class clsDB
     End Function
 #End Region
 
+
+#Region "Report Guarantree"
+    Public Shared Function getAssetReport(custId As String) As DataTable
+
+        Dim sql As New StringBuilder
+        sql.Append("select a.cust_id,asset_type,asset,firstname from ")
+        sql.Append("( ")
+        sql.Append("select cust_id,sum(cash_credit) as asset,'เงินสด(บาท)' as asset_type  ")
+        sql.Append("from customer_asset	where active = 1 and cust_id = {0} group by cust_id ")
+        sql.Append("union  ")
+        sql.Append("select cust_id,sum(quan96) as sum96,'ทอง 96.50%(บาท)' as asset_type  ")
+        sql.Append("from customer_asset	where active = 1 and cust_id = {0} group by cust_id ")
+        sql.Append("union  ")
+        sql.Append("select cust_id,sum(quan99) as sum99,'ทอง 99.99%(กิโล)' as asset_type  ")
+        sql.Append("from customer_asset	where active = 1 and cust_id = {0} group by cust_id ")
+        sql.Append(")a inner join customer c on c.cust_id = a.cust_id ")
+        Dim sql2 As String = String.Format(sql.ToString, custId)
+        Dim con As New SqlConnection(strcon)
+        Try
+            Dim da As New SqlDataAdapter(sql2, con)
+            Dim dt As New DataTable
+            da.Fill(dt)
+            If dt.Rows.Count > 0 Then
+                'ถ้าเป็น 0 ไม่ต้องโชว์
+                Dim dt2 As New DataTable
+                dt2 = dt.Clone
+                For Each dr As DataRow In dt.Rows
+                    If dr("asset") <> 0 Then
+                        dt2.ImportRow(dr)
+                    End If
+                Next
+                Return dt2
+            End If
+            Return Nothing
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+#End Region
 
     'Public Shared Function getTradeBuySellReport(ByVal refno As String, bill As String, editType As String) As DataTable
 
@@ -5124,6 +5192,24 @@ Public Class clsDB
 
 #Region "User"
 
+    Public Shared Function getUsers() As DataTable
+
+        Dim sql As String = "select user_id,user_name from users"
+        Dim con As New SqlConnection(strcon)
+        Try
+            Dim da As New SqlDataAdapter(sql, con)
+            Dim dt As New DataTable
+            da.Fill(dt)
+            If dt.Rows.Count > 0 Then
+                Return dt
+            Else
+                Return Nothing
+            End If
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
 
     Public Structure roles
 
@@ -5468,4 +5554,5 @@ Public Class clsDB
         End Try
     End Function
 #End Region
+
 End Class

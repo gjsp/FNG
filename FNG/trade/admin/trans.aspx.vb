@@ -6,8 +6,10 @@ Partial Class admin_trans
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             If Request.QueryString("m") IsNot Nothing Then
+                hdfIsRealtime.Value = "n"
                 If Request.QueryString("m").ToString = "leave" Then
                     hdfMode.Value = clsManage.tradeMode.tran.ToString
+                    hdfIsRealtime.Value = "y"
                 Else
                     hdfMode.Value = Request.QueryString("m").ToString
                 End If
@@ -20,7 +22,8 @@ Partial Class admin_trans
                 'cbPurity.Items(0).Attributes.Add("onclick", "refreshGrid()")
                 'cbPurity.Items(1).Attributes.Add("onclick", "refreshGrid()")
                 'cbPurity.Items(2).Attributes.Add("onclick", "refreshGrid()")
-                hdfIsRealtime.Value = "y"
+
+
                 hdfConfirm.Value = "n"
                 For i As Integer = 0 To 23 : ddl1Hour.Items.Add(i) : ddl2Hour.Items.Add(i) : ddl3Hour.Items.Add(i) : Next
                 For i As Integer = 0 To 59 : ddl1Min.Items.Add(i.ToString("00")) : ddl2Min.Items.Add(i.ToString("00")) : ddl3Min.Items.Add(i.ToString("00")) : Next
@@ -164,10 +167,10 @@ Partial Class admin_trans
             Dim type As String = gv.DataKeys(i).Values(1).ToString
             Dim price As String = gv.DataKeys(i).Values(2).ToString
             Dim purity As String = gv.DataKeys(i).Values(3).ToString
-
+            Dim cust_id As String = gv.DataKeys(i).Values("cust_id").ToString
             'validate only accept mode
             If mode = clsManage.tradeMode.accept.ToString Then
-                If Not clsMain.checkPriceLimitLeaveOrder(id, price, purity, type) Then
+                If Not clsMain.checkPriceLimitLeaveOrder(price, purity, type, cust_id) Then
                     If type = "sell" Then
                         clsManage.alert(Page, "Price Bid Higher than Ask", , , "safetylevel")
                         Exit Sub

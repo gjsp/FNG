@@ -54,24 +54,7 @@
                 //top.window.location = 'login.aspx?h=y';
                 top.window.location = 'cust_halt.aspx';
             }
-//            if (halt == 'y') {
-//                top.window.location = 'cust_halt.aspx';
-//            }
-//            if (result.toString().split('|')[1] == 'y') {
-//                top.window.location = 'cust_halt.aspx';
-//            }
 
-
-//            if (halt == 'y') {
-//                setColor('silver');
-//            } else {
-//                if (result.toString().split('|')[1] == 'y') {
-//                    setColor('black');
-
-//                } else {
-//                    setColor('silver');
-//                }
-//            }
             if (bidask != newBidAsk) {
                 __doPostBack('upPrice', '');
             }
@@ -79,6 +62,7 @@
                 setTimeout("Check()", 3000);
             }
         }
+
         function pageLoad() {
             setTimeout("Check()", 3000);
         }
@@ -160,7 +144,9 @@
             });
         }
 
-        function OnFailed(error, userContext, methodName) { }
+        function OnFailed(error, userContext, methodName) {
+            top.window.location = 'login.aspx?h=y';
+        }
     </script>
     <style type="text/css">
         .strBid

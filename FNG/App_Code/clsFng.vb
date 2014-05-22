@@ -297,7 +297,7 @@ Public Class clsFng
         Dim result As New Dictionary(Of String, String)
 
         Dim dc As New dcDBDataContext
-        Dim ctm = (From c In dc.customers Where c.cust_id = cust_id).FirstOrDefault
+        Dim ctm = (From c In dc.v_customer_sum_assets Where c.cust_id = cust_id).FirstOrDefault
 
         If ctm.margin_unlimit Then
             result.Add("Unlimit", "Unlimit")
@@ -346,7 +346,7 @@ Public Class clsFng
 
     Public Shared Function checkGuarantee(cust_id As String, type As String, purity As String, quan As Double, leave As Boolean, trade As Boolean) As String
         Dim dc As New dcDBDataContext
-        Dim ctm = (From c In dc.customers Where c.cust_id = cust_id).FirstOrDefault
+        Dim ctm = (From c In dc.v_customer_sum_assets Where c.cust_id = cust_id).FirstOrDefault
 
         If ctm.margin_unlimit Then
             Return ""
@@ -556,6 +556,27 @@ Public Class clsFng
         End Try
     End Function
 
+    Public Shared Function getCustomerAsset(cust_id As String) As DataTable
+        Try
+            If cust_id = "" Then Return Nothing
+            Dim sql As New StringBuilder()
+            sql.Append("select id,cash_credit,quan96,quan99,free_margin,created_date,modifier_date,user_name as modifier_by from customer_asset c inner join users u on c.modifier_by = u.user_id ")
+            sql.Append("where cust_id = '" + cust_id + "' and active = 1")
+
+            Using con As New SqlConnection(strcon)
+                Using da As New SqlDataAdapter(sql.ToString, con)
+                    Using dt As New DataTable
+                        da.Fill(dt)
+                        Return dt
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
+
 #End Region
 
 #Region "Tickets"
@@ -632,7 +653,7 @@ Public Class clsFng
         Try
             Dim msg As String = ""
             refno = refno.Replace(",", "','")
-            Dim sql As String = String.Format("select billing,run_no,sp_quan,payment,payment_id from v_ticket_sum_split where ref_no in ('{0}') ", refno)
+            Dim sql As String = String.Format("select billing,run_no,sp_quan,payment,payment_id,status_id from v_ticket_sum_split where ref_no in ('{0}') ", refno)
             Using con As New SqlConnection(strcon)
                 Using da As New SqlDataAdapter(sql, con)
                     Using dt As New DataTable
@@ -640,6 +661,9 @@ Public Class clsFng
                         If dt.Rows.Count > 0 Then
                             For Each dr As DataRow In dt.Rows
                                 'check ว่าbilling ตรงกับ ฐานข้อมูลหรือป่าว
+                                If Not dr("status_id").ToString.Contains("9") Then
+                                    Return "โปรดเลือกรายการที่ Complete แล้ว"
+                                End If
                                 If dr("billing").ToString <> billing Then
                                     Return "ข้อมูลมีการเปลี่ยนแปลง โปรดทำรายการใหม่อีกครั้ง"
                                 End If
@@ -651,6 +675,10 @@ Public Class clsFng
                                 End If
                                 If dr("payment_id").ToString <> "" Then
                                     msg = "โปรดเลือกรายการที่ยังไม่ออก Payment"
+                                End If
+
+                                If dr("sp_quan").ToString <> "" Then
+                                    msg = "โปรดเลือก Ticket ที่ยังไม่มีการแยกบิล"
                                 End If
                             Next
                         End If
@@ -715,7 +743,7 @@ Public Class clsFng
 #Region "Payment"
     Public Shared Function getPayment() As DataTable
         Try
-            Dim sql As String = "select *,(select  user_name from users where user_id = created_by) as payment_by_name  from payment order by payment_id desc"
+            Dim sql As String = "select *,(select  user_name from users where user_id = created_by) as payment_by_name  from payment where active = 1 order by payment_id desc"
             Using con As New SqlConnection(strcon)
                 Using da As New SqlDataAdapter(sql, con)
                     Using dt As New DataTable
@@ -745,9 +773,9 @@ Public Class clsFng
         End Try
     End Function
 
-    Public Shared Function getPaymentDetail(payment_id As String) As DataTable
+    Public Shared Function getPaymentTicket(payment_id As String) As DataTable
         Try
-            Dim sql As String = "select *,(select  user_name from users where user_id = payment_by) as payment_by_name  from v_ticket_sum_split where payment_id =  " + payment_id
+            Dim sql As String = "select *,(select  user_name from users where user_id = payment_by) as payment_by_name  from tickets where payment_id =  " + payment_id
             Using con As New SqlConnection(strcon)
                 Using da As New SqlDataAdapter(sql, con)
                     Using dt As New DataTable
@@ -761,11 +789,45 @@ Public Class clsFng
         End Try
     End Function
 
-    Public Shared Function getPaymentDetailPopUp(ticket_idList As String, cust_id As String, purity As String, billing As String) As DataTable
+    Public Shared Function getPaymentSplit(payment_id As String) As DataTable
         Try
-            Dim sql As String = "select *,(select  user_name from users where user_id = payment_by) as payment_by_name from v_ticket_sum_split " & _
-                                "Where status_id = 101 And payment_id Is NULL and (run_no = '' or run_no is NULL) and cust_id = " + cust_id + " " & _
-                                "and gold_type_id = '" + purity + "' and billing = '" + billing + "' " & _
+            Dim sql As String = "SELECT s.ticket_sp_id, s.ref_no, s.created_by, s.payment_id, s.payment_by, t.type,s.quantity,t.price,s.amount, u.user_name as  payment_by_name " & _
+                                "FROM ticket_split AS s INNER JOIN tickets AS t ON s.ref_no = t.ref_no LEFT OUTER JOIN users AS u ON t.user_id = u.user_id " & _
+                                "where s.payment_id = " + payment_id
+            Using con As New SqlConnection(strcon)
+                Using da As New SqlDataAdapter(sql, con)
+                    Using dt As New DataTable
+                        da.Fill(dt)
+                        Return dt
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
+    Public Shared Function getPaymentTrans(payment_id As String) As DataTable
+        Try
+            Dim sql As String = "select *,(select  user_name from users where user_id = payment_by) as payment_by_name  from customer_trans where payment_id =  " + payment_id
+            Using con As New SqlConnection(strcon)
+                Using da As New SqlDataAdapter(sql, con)
+                    Using dt As New DataTable
+                        da.Fill(dt)
+                        Return dt
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
+
+    Public Shared Function getPaymentTicketPopUp(ticket_idList As String, cust_id As String) As DataTable
+        Try
+            Dim sql As String = "select * from tickets t left join users u on t.created_by = u.user_id " & _
+                                "Where status_id in(901,902,903) And payment_id Is NULL and (run_no = '' or run_no is NULL) and cust_id = " + cust_id + " " & _
                                 "and ref_no not in ('" + ticket_idList + "')  order by ticket_id desc"
             Using con As New SqlConnection(strcon)
                 Using da As New SqlDataAdapter(sql, con)
@@ -779,5 +841,51 @@ Public Class clsFng
             Throw ex
         End Try
     End Function
+
+    Public Shared Function getPaymentSplitPopUp(ticket_idList As String, cust_id As String) As DataTable
+        Try
+            Dim sql As String = "select t.ticket_sp_id, t.ref_no, t.run_no, t.quantity, tk.price, t.amount, t.created_by, t.payment_id, t.payment_by, u.user_id, " & _
+                                "u.user_name, u.team_id, u.password, u.firstname,u.lastname, u.status, u.position, u.position_id, tk.type " & _
+                                "from ticket_split t inner join tickets tk on t.ref_no = tk.ref_no left join users u on t.created_by = u.user_id " & _
+                                "Where t.status_id in(901,902,903) And t.payment_id Is NULL and (t.run_no = '' or t.run_no is NULL) " & _
+                                "and t.ref_no in (select ref_no from tickets where cust_id = " + cust_id + ") " & _
+                                "and t.ticket_sp_id not in ('" + ticket_idList + "')  order by ticket_sp_id desc"
+            Using con As New SqlConnection(strcon)
+                Using da As New SqlDataAdapter(sql, con)
+                    Using dt As New DataTable
+                        da.Fill(dt)
+                        Return dt
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
+    Public Shared Function getPaymentTransPopUp(idList As String, cust_id As String) As DataTable
+        Try
+            'Dim sql As String = "select *,(select  user_name from users where user_id = payment_by) as payment_by_name from customer_trans " & _
+            '                    "Where payment_id Is NULL and cust_id = " + cust_id + " " & _
+            '                    "and cust_tran_id not in ('" + idList + "')  order by cust_tran_id desc"
+
+            Dim sql As String = "select * from customer_trans c right join users u on c.created_by = u.user_id " & _
+                                "Where payment_id Is NULL and cust_id = " + cust_id + " " & _
+                                "and cust_tran_id not in ('" + idList + "')  order by cust_tran_id desc"
+
+
+            Using con As New SqlConnection(strcon)
+                Using da As New SqlDataAdapter(sql, con)
+                    Using dt As New DataTable
+                        da.Fill(dt)
+                        Return dt
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
 #End Region
 End Class

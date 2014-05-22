@@ -22,6 +22,12 @@
         var _source;
         var _popup;
 
+        function showPopup(source) {
+            this._source = source;
+            this._popup = $find('modalGar');
+            this._popup.show();
+        }
+
         function showConfirm(source) {
             this._source = source;
             this._popup = $find('mppUpdate');
@@ -73,6 +79,11 @@
             this._source = null;
             this._popup = null;
         }
+
+       function modalHide() {
+           $find("ctl00_SampleContent_modalGar").hide();
+       }
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="SampleContent" runat="Server">
@@ -90,8 +101,56 @@
         </div>
         <asp:UpdatePanel ID="udpMain" runat="server">
             <ContentTemplate>
+                <div>
+                                        <asp:Button ID="btnModalPopUp" runat="server" Style="display: none" />
+                                        <ajaxToolkit:ModalPopupExtender ID="modalGar" runat="server" BackgroundCssClass="modalBackground" CancelControlID="btnGarNo" OkControlID="btnOk" PopupControlID="pnlPopUp" TargetControlID="btnModalPopUp">
+                                        </ajaxToolkit:ModalPopupExtender>
+                                        <asp:Panel ID="pnlPopUp" runat="Server">
+                                            <div id="divPopup" style="overflow: auto; text-align: center; max-height: 500px;background-color:white;width:400px;padding:50px 50px 50px 50px">
+                                                <table border="0" cellpadding="2" cellspacing="2">
+                                                    <tr id="trCash">
+                                                        <td align="right">เงินสด(บาท) : </td>
+                                                        <td align="left">
+                                                            <asp:TextBox ID="txtCredit_cash" runat="server" />
+                                                            <asp:RequiredFieldValidator ID="rfvCash" runat="server" ControlToValidate="txtCredit_cash" ErrorMessage="*" ValidationGroup="Gar"></asp:RequiredFieldValidator>
+                                                        </td>
+                                                    </tr>
+                                                    <tr id="tr96">
+                                                        <td align="right">ทองคำ 96.50(บาท) : </td>
+                                                        <td align="left">
+                                                            <asp:TextBox ID="txtQuan96" runat="server" />
+                                                            <asp:RequiredFieldValidator ID="rfvQ96" runat="server" ControlToValidate="txtQuan96" ErrorMessage="*" ValidationGroup="Gar"></asp:RequiredFieldValidator>
+                                                        </td>
+                                                    </tr>
+                                                    <tr id="tr99N">
+                                                        <td align="right">ทองคำ 99.99(kg) : </td>
+                                                        <td align="left">
+                                                            <asp:TextBox ID="txtQuan99N" runat="server" />
+                                                            <asp:RequiredFieldValidator ID="rfvQ99" runat="server" ControlToValidate="txtQuan99N" ErrorMessage="*" ValidationGroup="Gar"></asp:RequiredFieldValidator>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">Free Margin :</td>
+                                                        <td align="left">
+                                                            <asp:TextBox ID="txtFreeMargin" runat="server" />
+                                                            <asp:RequiredFieldValidator ID="rfvFreeMargin" runat="server" ControlToValidate="txtFreeMargin" ErrorMessage="*" ValidationGroup="Gar"></asp:RequiredFieldValidator>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>
+                                                            <asp:Button ID="btnGarOk" runat="server" Text="Save" ValidationGroup="Gar" Width="80px" />
+                                                            &nbsp;
+                                                            <asp:Button ID="btnGarNo" runat="server" OnClientClick="modalHide();" Text="Cancel" Width="80px" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </asp:Panel>
+                                    </div>
+
                 <asp:Panel ID="pnMain" runat="server">
-                    ell<table border="0" cellpadding="2">
+                    <table border="0" cellpadding="2" cellspacing="2">
                          <tr id="trFolio" style="display: block">
                             <td valign="top">
                                 Link to :
@@ -417,60 +476,100 @@
                         </tr>
                         <tr>
                             <td valign="top">
-                                Asset :
+                                หลักประกัน :
                             </td>
                             <td>
-                                <table cellpadding="2" cellspacing="2" border="0">
-                                    <tr id="trCash">
-                                        <td align="right">
-                                            เงินสด :
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="txtCredit_cash" runat="server" />
-                                            &nbsp;บาท
-                                        </td>
-                                    </tr>
-                                    <tr id="tr96">
-                                        <td align="right">
-                                            ทองคำ 96.50 :
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="txtQuan96" runat="server" />
-                                            &nbsp;บาท
-                                        </td>
-                                    </tr>
-                                    <tr id="tr99N">
-                                        <td align="right" class="style3">
-                                            ทองคำ 99.99 :
-                                        </td>
-                                        <td class="style3">
-                                            <asp:TextBox ID="txtQuan99N" runat="server" />
-                                            &nbsp;kg
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right" class="style3">
-                                            Free Margin :</td>
-                                        <td class="style3">
-                                            <asp:TextBox ID="txtFreeMargin" runat="server" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right" class="style3">
-                                            Unlimited Margin :</td>
-                                        <td class="style3">
-                                            <asp:CheckBox ID="cbUnlimitedMargin" runat="server" Text="" />
-                                        </td>
-                                    </tr>
-                                    <tr id="trDep">
-                                        <td align="right" class="style3">
-                                            <asp:LinkButton ID="lblDeposit" runat="server">Doposit Data Customer</asp:LinkButton>
-                                        </td>
-                                        <td class="style3">
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                </table>
+                                <p style="padding:7px 0px 7px 0px">
+                                <asp:LinkButton ID="linkGaran" runat="server" Text="เพิ่มเงินหลักประกัน"></asp:LinkButton>
+                                &nbsp; &nbsp;
+                                <%--<asp:LinkButton ID="linkReceipt" runat="server" Text="Receipt"></asp:LinkButton>--%>
+                                <a id="aReceipt" href="report/rpt_asset.aspx?cid=<%=hdfCustId.value %>" target="_blank">Receipt</a>
+                                </p>
+                                <asp:GridView ID="gvAsset" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="odsAsset"
+                                    BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Vertical">
+                                    <Columns>
+                                        <asp:BoundField DataField="modifier_date" HeaderText="Update Date" SortExpression="modifier_date"  DataFormatString="{0:dd/MM/yyyy HH:mm}" ItemStyle-HorizontalAlign="Center" >
+                                        <ItemStyle HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="modifier_by" HeaderText="Update by" SortExpression="modifier_by" ItemStyle-HorizontalAlign="Center" >
+                                        <ItemStyle HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="cash_credit" HeaderText="เงินสด" SortExpression="cash_credit" DataFormatString="{0:#,##0}" ItemStyle-Width="80px" ItemStyle-HorizontalAlign="Right" >
+                                        <ItemStyle HorizontalAlign="Right" Width="80px" />
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="quan96" HeaderText="ทองคำ 96.50" SortExpression="quan96"  DataFormatString="{0:#,##0}" ItemStyle-HorizontalAlign="Right">
+                                        <ItemStyle HorizontalAlign="Right" />
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="quan99" HeaderText="ทองคำ 99.99" SortExpression="quan99"  DataFormatString="{0:#,##0}" ItemStyle-HorizontalAlign="Right">
+                                        <ItemStyle HorizontalAlign="Right" />
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="free_margin" HeaderText="Free Margin" SortExpression="free_margin"  DataFormatString="{0:#,##0}" ItemStyle-HorizontalAlign="Right">
+                                        <ItemStyle HorizontalAlign="Right" />
+                                        </asp:BoundField>
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <asp:ImageButton ID="imgDel" ImageUrl="~/images/i_del.png" runat="server" OnClick="imgDel_Click" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                    <RowStyle BackColor="#EEEEEE" ForeColor="Black" />
+                                    <FooterStyle BackColor="#666666" ForeColor="Black" />
+                                    <PagerStyle BackColor="#999999" ForeColor="Black" HorizontalAlign="Center" />
+                                    <SelectedRowStyle BackColor="#008A8C" Font-Bold="True" ForeColor="White" />
+                                    <HeaderStyle BackColor="#274B98" Font-Bold="True" ForeColor="White" />
+                                    <AlternatingRowStyle BackColor="Gainsboro" />
+                                </asp:GridView>
+                                
+                                <asp:ObjectDataSource ID="odsAsset" runat="server" SelectMethod="getCustomerAsset" TypeName="clsFng" OldValuesParameterFormatString="original_{0}">
+                                    <SelectParameters>
+                                        <asp:ControlParameter ControlID="hdfCustId" Name="cust_id" PropertyName="Value" Type="String" />
+                                    </SelectParameters>
+                                </asp:ObjectDataSource>
+
+                               <%-- <p>--%>
+                                    <asp:Panel runat="Server" ID="pnAssetCreate">
+                                        <table cellpadding="2" cellspacing="2" border="0">
+                                            <tr>
+                                                <td align="right">เงินสด(บาท) :
+                                                </td>
+                                                <td align="left">
+                                                    <asp:TextBox ID="txtCredit_cash_create" runat="server" />
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">ทองคำ 96.50(บาท) :
+                                                </td>
+                                                <td align="left">
+                                                    <asp:TextBox ID="txtQuan96_create" runat="server" />
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">ทองคำ 99.99(kg) :
+                                                </td>
+                                                <td align="left">
+                                                    <asp:TextBox ID="txtQuan99_create" runat="server" />
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">Free Margin :</td>
+                                                <td align="left">
+                                                    <asp:TextBox ID="txtFreeMargin_create" runat="server" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </asp:Panel>
+                                    <p>
+                                        <asp:CheckBox ID="cbUnlimitedMargin" runat="server" Text="Unlimited Margin" />
+                                    </p>
+                                    <p>
+                                        <asp:LinkButton ID="lblDeposit" runat="server">Doposit Data Customer</asp:LinkButton>
+                                    </p>
+                                    
+                                                                     
+                               <%-- </p>--%>
                             </td>
                         </tr>
                         <tr>
@@ -561,6 +660,8 @@
                                 &nbsp;<input id="btnBack" onclick="location.href='customers.aspx';" type="button"
                                     value="Back" />
                                 <asp:HiddenField ID="hdfPwd" runat="server" />
+                                <asp:HiddenField ID="hdfCustId" runat="server" />
+
                                 <ajaxToolkit:ModalPopupExtender ID="mppUpdate" runat="server" BackgroundCssClass="modalBackground"
                                     BehaviorID="mppUpdate" CancelControlID="btnNo" OkControlID="btnOk" OnCancelScript="cancelClick();"
                                     OnOkScript="okClick();" PopupControlID="Panel1" TargetControlID="Panel1">

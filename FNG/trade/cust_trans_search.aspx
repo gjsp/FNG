@@ -233,7 +233,7 @@
                         BorderColor="#999999" BorderStyle="None" BorderWidth="0px" CellPadding="3" DataKeyNames="trade_id,type,price,gold_type_id"
                         Width="99%" AllowSorting="True" DataSourceID="objSrcTrade">
                         <Columns>
-                            <asp:BoundField DataField="ref_no" HeaderText="Ref_No" SortExpression="ref_no">
+                            <asp:BoundField DataField="trade_id" HeaderText="Ref_No" SortExpression="trade_id">
                                 <ItemStyle Wrap="False" />
                             </asp:BoundField>
                             <asp:BoundField DataField="leave_order" HeaderText="Mode" SortExpression="leave_order">

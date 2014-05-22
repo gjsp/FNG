@@ -277,7 +277,7 @@ Partial Class stock_tickets
 
             'payment
             If e.Row.DataItem("payment_id").ToString <> "" Then
-                CType(e.Row.FindControl("linkPayment"), HyperLink).NavigateUrl = "ticket_payment_detail.aspx?pid=" + e.Row.DataItem("payment_id").ToString
+                CType(e.Row.FindControl("linkPayment"), HyperLink).NavigateUrl = String.Format("ticket_payment_detail.aspx?pid={0}&cid={1}", e.Row.DataItem("payment_id").ToString, e.Row.DataItem("cust_id").ToString)
                 CType(e.Row.FindControl("linkUpdate"), LinkButton).Enabled = False
             End If
 
@@ -717,20 +717,20 @@ Partial Class stock_tickets
                             pid += "," + gvTicket.DataKeys(dr.RowIndex)("payment_id").ToString
                         End If
 
-                        If gvTicket.DataKeys(dr.RowIndex)("gold_type_id").ToString <> purity Then
-                            'case เลือก purity ไม่เหมือนกัน
-                            clsManage.alert(Page, "โปรดเลือกทองประเภทเดียวกัน") : Exit Sub
-                        End If
+                        'If gvTicket.DataKeys(dr.RowIndex)("gold_type_id").ToString <> purity Then
+                        '    case เลือก purity ไม่เหมือนกัน
+                        '    clsManage.alert(Page, "โปรดเลือกทองประเภทเดียวกัน") : Exit Sub
+                        'End If
 
                         If gvTicket.DataKeys(dr.RowIndex)(1).ToString <> cust_id Then
                             'case เลือก cust_id ไม่เหมือนกัน
                             clsManage.alert(Page, "Please Select Same Customer Ref No.") : Exit Sub
                         End If
 
-                        If CType(gvTicket.Rows(dr.RowIndex).FindControl("hdfBill"), HiddenField).Value <> billing Then
-                            'case เลือก billing ไม่เหมือนกัน
-                            clsManage.alert(Page, "โปรดเลือกบิลประเภทเดียวกัน") : Exit Sub
-                        End If
+                        'If CType(gvTicket.Rows(dr.RowIndex).FindControl("hdfBill"), HiddenField).Value <> billing Then
+                        '    'case เลือก billing ไม่เหมือนกัน
+                        '    clsManage.alert(Page, "โปรดเลือกบิลประเภทเดียวกัน") : Exit Sub
+                        'End If
                     End If
 
                     If pid <> "" Then
@@ -742,9 +742,9 @@ Partial Class stock_tickets
                         clsManage.alert(Page, "ทองคำ 96.50(กรัม) ไม่สามรถออก Payment ได้") : Exit Sub
                     End If
 
-                    If gvTicket.DataKeys(dr.RowIndex)("status_id").ToString <> "101" Then
-                        clsManage.alert(Page, "โปรดเลือกรายการที่มีสถานะเป็น pending") : Exit Sub
-                    End If
+                    'If gvTicket.DataKeys(dr.RowIndex)("status_id").ToString <> "101" Then
+                    '    clsManage.alert(Page, "โปรดเลือกรายการที่มีสถานะเป็น pending") : Exit Sub
+                    'End If
 
                     If gvTicket.DataKeys(dr.RowIndex)("payment").ToString = "" Then
                         clsManage.alert(Page, "โปรดเลือกประเภทของการชำระเงิน") : Exit Sub
@@ -792,7 +792,7 @@ Partial Class stock_tickets
                     dc.SubmitChanges()
                     dc.Transaction.Commit()
                     'Response.Redirect("ticket_payment_detail.aspx?pid=" + pm.payment_id)
-                    clsManage.Script(Page, "window.open('ticket_payment_detail.aspx?pid=" + pm.payment_id.ToString + "','_blank');")
+                    clsManage.Script(Page, "window.open('ticket_payment_detail.aspx?pid=" + pm.payment_id.ToString + "&cid=" + cust_id + "','_blank');")
                     btnSearchAdv_Click(Nothing, Nothing)
                 Catch ex As Exception
                     dc.Transaction.Rollback()

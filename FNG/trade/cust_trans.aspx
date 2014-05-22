@@ -76,7 +76,7 @@
                         Width="99%" AllowSorting="True" DataSourceID="objSrcTrade" 
                         AllowPaging="True" PageSize="20">
                         <Columns>
-                            <asp:BoundField DataField="ref_no" HeaderText="Ref_No" SortExpression="ref_no">
+                            <asp:BoundField DataField="trade_id" HeaderText="Ref_No" SortExpression="trade_id">
                                 <ItemStyle Wrap="False" />
                             </asp:BoundField>
                             <asp:BoundField DataField="leave_order" HeaderText="Mode" SortExpression="leave_order">

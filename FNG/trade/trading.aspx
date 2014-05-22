@@ -32,19 +32,12 @@
                 var orderContent = '';
                 var dbTime = '<%=dbTime %>';
                 var today = dbTime.toString().split('|')[0]
-                //รอบเช้า  ถึง 16.00  รอบบ่าย ถึง 24.00
-                //            if (dbTime.toString().split('|')[2] == 'PM' && parseInt(dbTime.toString().split('|')[1].split(':')[0]) >= 4) {
-                //                period = '24.00';
-                //            } else {
-                //                period = '16.00';
-                //            }
-                // ถ้าไม่แยกเป็น function จะ runtime error ??
-                var iHour = getHour();
-                if (parseInt(iHour) >= 16) {
-                    period = '24.00';
-                } else {
-                    period = '16.00';
-                }
+                period = '24.00'; //FNG Leave order มีเวลาเดียว
+                //if (parseInt(dbTime.toString().split('|')[1]) >= 16) {
+                //    period = '24.00';
+                //} else {
+                //    period = '16.00';
+                //}
 
                 //Order 99
                 if (source.id == $get('<%=btn99Accept.ClientId %>').id || source.id == $get('<%=btn99Accept2.ClientId %>').id) {
